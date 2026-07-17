@@ -1,0 +1,22 @@
+/* ============================================
+   FOOTER — Sayfanın en altındaki dar şerit
+   ============================================ */
+
+/* Footer kapsayıcı — logo solda, linkler sağda */
+.site-footer {
+  background: var(--bg2);
+  border-top: 1px solid var(--border2); /* Panel alanından ayıran ince çizgi */
+  padding: 24px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12px;
+  font-family: 'Space Mono', monospace;
+  color: var(--muted);
+}
+/* Footer linklerine hover rengi */
+.site-footer a { transition: color var(--transition); }
+.site-footer a:hover { color: var(--accent2); }
+
+/* "Privacy Policy · GitHub · Play Store" gibi sağ taraftaki linkler */
+.footer-links { display: flex; gap: 20px; }

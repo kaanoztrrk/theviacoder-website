@@ -1,0 +1,93 @@
+/* ============================================
+   RESPONSIVE — Farklı ekran boyutları için düzenlemeler
+   Bu dosya en son yüklenmeli (diğer stillerin üzerine yazar)
+   ============================================ */
+
+
+/* ---- Tablet & Küçük Dizüstü (max 900px) ---- */
+/* Genellikle iPad ve benzeri cihazları kapsar */
+@media (max-width: 900px) {
+
+  /* Hero sol-sağ boşluğunu küçült */
+  .hero-section { padding: 0 24px; }
+
+  /* Hero içeriği tek kolona düş — avatar altına geçer */
+  .hero-content { grid-template-columns: 1fr; padding-bottom: 40px; }
+
+  /* Avatar kartını gizle — dar ekranda yer kaplar */
+  .hero-right { display: none; }
+
+  /* About paneli tek kolona düş */
+  .about-layout { grid-template-columns: 1fr; }
+
+  /* Fotoğraf ve bilgi kartını yan yana göster (tek kolonda) */
+  .about-left { display: flex; gap: 24px; align-items: flex-start; }
+
+  /* Contact paneli tek kolona düş */
+  .contact-layout { grid-template-columns: 1fr; gap: 40px; }
+
+  /* Skills paneli tek kolona düş */
+  .skills-layout { grid-template-columns: 1fr; gap: 32px; }
+
+  /* Panel iç boşluğunu küçült */
+  .panel-inner { padding: 36px 24px; }
+
+  /* Footer'ı dikey sırala ve ortala */
+  .site-footer { flex-direction: column; gap: 12px; text-align: center; padding: 20px 24px; }
+}
+
+
+/* ---- Mobil (max 600px) ---- */
+/* Telefon boyutları — çoğunlukla 360-430px arası */
+@media (max-width: 600px) {
+
+  /* Topbar'ı sarmala — küçük ekranda üst üste gelir */
+  .hero-topbar { flex-wrap: wrap; gap: 12px; }
+
+  /* Topbar sağ grup boşluğunu azalt */
+  .topbar-right { gap: 12px; }
+
+  /* Sosyal medya ikonlarını gizle — yer yok */
+  .social-icons { display: none; }
+
+  /* Tab butonlarını sıkıştır */
+  .tab-btn { padding: 12px 12px 14px; font-size: 10px; }
+
+  /* Tab buton yazı etiketlerini gizle — sadece ikon kalsın */
+  .tab-btn span { display: none; }
+
+  /* İkonu biraz büyüt (yazı gizlenince dengeleme) */
+  .tab-icon { width: 22px; height: 22px; }
+
+  /* İsim fontunu küçült */
+  .hero-name { font-size: 48px; }
+
+  /* About sol kolonu dikey sıraya al */
+  .about-left { flex-direction: column; }
+
+  /* Bilgi kartı tam genişlik olsun */
+  .info-card { width: 100%; }
+
+  /* Apps grid tek kolona düş */
+  .apps-grid { grid-template-columns: 1fr; }
+
+  /* Articles grid tek kolona düş — panel.css'te değil, diğer tüm breakpoint kuralları burada */
+  .articles-grid { grid-template-columns: 1fr; }
+
+  /* İstatistik satırı sıkışırsa sarmalasın */
+  .stat-row { gap: 20px; flex-wrap: wrap; }
+}
+
+
+/* ---- Hareket Azaltma Tercihi ---- */
+/* Kullanıcı "Hareketi Azalt" seçeneğini açmışsa animasyonları durdur */
+@media (prefers-reduced-motion: reduce) {
+  /* Yüzen şekil, imleç ve yeşil nokta animasyonlarını durdur */
+  .shape, .cursor, .status-dot { animation: none; }
+
+  /* Skill bar dolma animasyonunu kaldır */
+  .skill-fill { transition: none; }
+
+  /* Panel geçiş animasyonunu kaldır */
+  .panel.active { animation: none; }
+}

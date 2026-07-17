@@ -1,0 +1,939 @@
+/* ============================================
+   PANELS — Her sekmenin kendi içerik stilleri
+   ============================================ */
+
+/* ============================================
+   ABOUT PANELİ
+   ============================================ */
+
+/* İki kolonlu düzen: sol fotoğraf/bilgi kartı, sağ metin */
+.about-layout {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 48px;
+  align-items: start;
+}
+
+/* Sol kolon — fotoğraf ve bilgi kartını taşır */
+.about-left {
+  position: relative;
+}
+
+/* Fotoğraf alanı — gölge efekti için iki üst üste katman */
+.about-photo-wrap {
+  position: relative;
+  width: 200px;
+  height: 240px;
+  margin-bottom: 24px;
+}
+
+/* Fotoğrafın arkasındaki ofset arka katman (derinlik efekti) */
+.about-photo-bg {
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  transform: translate(8px, 8px); /* Sağa-aşağı kaydırılmış gölge görünümü */
+}
+
+/* Asıl fotoğraf kartı — gradyan arka plan */
+.about-photo-card {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 16px;
+  background: linear-gradient(145deg, #221f3b, #14121e);
+  border: 1px solid rgba(108, 99, 255, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+/* Sağ üst köşe ışıma efekti */
+.about-photo-card::after {
+  content: "";
+  position: absolute;
+  top: -30px;
+  right: -30px;
+  width: 100px;
+  height: 100px;
+  background: radial-gradient(
+    circle,
+    rgba(108, 99, 255, 0.15),
+    transparent 70%
+  );
+}
+
+/* "KY" — fotoğraf yokken gösterilen baş harfler */
+.about-initials-lg {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 64px;
+  font-weight: 700;
+  color: var(--accent2);
+  opacity: 0.45;
+}
+
+/* Mor arka planlı bilgi kartı (isim, konum, durum) */
+.info-card {
+  background: var(--accent);
+  border-radius: 14px;
+  padding: 20px 22px;
+  width: 240px;
+}
+
+/* Kartın her bilgi satırı */
+.info-row {
+  padding: 9px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12); /* Satırlar arası soluk beyaz çizgi */
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+/* Son satırda alt çizgi olmasın */
+.info-row.no-border {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+/* "LOCATION", "STATUS" gibi küçük etiket */
+.info-label {
+  font-size: 11px;
+  font-family: "Space Mono", monospace;
+  color: rgba(255, 255, 255, 0.6);
+  letter-spacing: 0.5px;
+}
+
+/* Etiketin altındaki asıl değer */
+.info-val {
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  font-family: "Space Grotesk", sans-serif;
+}
+/* Info kartı içindeki accent-text — beyaza yakın */
+.info-card .accent-text {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* "3+ Apps Shipped / 2 Years" istatistik satırı */
+.stat-row {
+  display: flex;
+  gap: 32px;
+  padding: 24px 0;
+  margin-top: 8px;
+  border-top: 1px solid var(--border);
+}
+/* Büyük sayı — "3+", "2" */
+.stat-num {
+  display: block;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--accent2);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+/* Sayının altındaki açıklama */
+.stat-label {
+  font-size: 12px;
+  color: var(--muted);
+  font-family: "Space Mono", monospace;
+}
+
+/* ============================================
+   SKILLS PANELİ
+   ============================================ */
+
+/* İki kolonlu düzen: sol bar'lar, sağ pill'ler */
+.skills-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  margin-top: 32px;
+  margin-bottom: 40px;
+}
+
+/* "Core Skills", "Tools & Platforms" başlıkları */
+.skills-group-title {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 20px;
+  letter-spacing: -0.2px;
+}
+
+/* Yetenek bar'larını dikey sıralar */
+.skill-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* Her yetenek satırı (bar + yüzde) */
+.skill-item {
+}
+
+/* "Flutter %90" — üst kısım */
+.skill-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 7px;
+  font-size: 13px;
+}
+.skill-header span:first-child {
+  color: var(--text);
+  font-weight: 500;
+}
+/* Yüzde değeri — "90%" */
+.skill-pct {
+  font-family: "Space Mono", monospace;
+  font-size: 12px;
+  color: var(--accent2);
+}
+
+/* Bar'ın gri arka planı */
+.skill-bar {
+  height: 5px;
+  background: var(--bg2);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+/* Bar'ın dolan mor kısmı — JS ile width ayarlanır */
+.skill-fill {
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    var(--accent),
+    var(--accent2)
+  ); /* Soldan sağa mor gradyan */
+  border-radius: 4px;
+  width: 0;
+  transition: width 1s cubic-bezier(0.4, 0, 0.2, 1); /* Sayfa açılınca dolar animasyonu */
+}
+
+/* Teknoloji pill'leri bölümü (Firebase, Git, AdMob...) */
+.tech-pills-section {
+  margin-top: 0;
+}
+.tech-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+/* Her teknoloji etiketi */
+.tech-pill {
+  font-size: 12px;
+  font-family: "Space Mono", monospace;
+  padding: 5px 12px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  color: var(--accent2);
+  transition:
+    border-color var(--transition),
+    color var(--transition);
+}
+/* Hover'da kenarlık belirginleşir */
+.tech-pill:hover {
+  border-color: var(--accent);
+  color: var(--text);
+}
+
+/* ===========================
+   APPS GRID
+=========================== */
+
+.apps-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 24px;
+}
+
+/* ===========================
+   CARD
+=========================== */
+
+.app-card {
+  position: relative;
+
+  padding: 24px;
+
+  border-radius: 22px;
+
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.03),
+    rgba(255, 255, 255, 0.015)
+  );
+
+  border: 1px solid rgba(255, 255, 255, 0.07);
+
+  overflow: hidden;
+
+  transition: 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.app-card::before {
+  content: "";
+
+  position: absolute;
+
+  top: -90px;
+  right: -90px;
+
+  width: 180px;
+  height: 180px;
+
+  border-radius: 50%;
+
+  background: radial-gradient(rgba(108, 99, 255, 0.18), transparent 70%);
+
+  transition: 0.4s;
+}
+
+.app-card:hover {
+  transform: translateY(-8px);
+
+  border-color: rgba(108, 99, 255, 0.45);
+
+  box-shadow: 0 20px 50px rgba(108, 99, 255, 0.18);
+}
+
+.app-card:hover::before {
+  transform: scale(1.2);
+}
+.app-card-top {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: flex-start;
+
+  margin-bottom: 20px;
+}
+
+.app-info {
+  display: flex;
+
+  gap: 14px;
+
+  align-items: center;
+}
+
+.app-icon {
+  width: 72px;
+  height: 72px;
+
+  border-radius: 16px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+
+  background: linear-gradient(
+    145deg,
+    rgba(108, 99, 255, 0.18),
+    rgba(108, 99, 255, 0.05)
+  );
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.app-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Resmi kutuya sığdırır */
+  display: block;
+}
+
+.app-name {
+  margin: 0;
+
+  font-size: 20px;
+
+  font-weight: 700;
+
+  letter-spacing: -0.3px;
+}
+
+.app-category {
+  display: block;
+
+  margin-top: 3px;
+
+  font-size: 13px;
+
+  color: var(--muted);
+}
+.app-badge {
+  display: flex;
+
+  align-items: center;
+
+  gap: 6px;
+
+  padding: 6px 12px;
+
+  border-radius: 999px;
+
+  font-size: 11px;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.6px;
+
+  font-family: "Space Mono", monospace;
+}
+
+.app-badge.live {
+  color: #4ade80;
+
+  background: rgba(74, 222, 128, 0.1);
+
+  border: 1px solid rgba(74, 222, 128, 0.25);
+}
+
+.app-badge.indev {
+  color: #fbbf24;
+
+  background: rgba(251, 191, 36, 0.1);
+
+  border: 1px solid rgba(251, 191, 36, 0.25);
+}
+
+.badge-dot {
+  width: 7px;
+  height: 7px;
+
+  border-radius: 50%;
+
+  background: currentColor;
+
+  box-shadow: 0 0 8px currentColor;
+}
+.app-desc {
+  color: var(--muted);
+
+  line-height: 1.8;
+
+  margin-bottom: 22px;
+
+  font-size: 14px;
+}
+.app-tags {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 8px;
+
+  margin-bottom: 24px;
+}
+
+.tag {
+  padding: 6px 12px;
+
+  border-radius: 999px;
+
+  background: rgba(255, 255, 255, 0.04);
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  font-size: 11px;
+
+  font-family: "Space Mono", monospace;
+
+  transition: 0.25s;
+}
+
+.tag:hover {
+  background: var(--accent);
+
+  color: white;
+
+  border-color: transparent;
+}
+.app-link {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  text-decoration: none;
+
+  color: white;
+
+  font-weight: 600;
+
+  padding-top: 18px;
+
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+
+  transition: 0.25s;
+}
+
+.app-link span {
+  transition: 0.25s;
+}
+
+.app-link:hover {
+  color: var(--accent2);
+}
+
+.app-link:hover span {
+  transform: translateX(6px);
+}
+
+/* ============================================
+   APP CARDS — LIGHT THEME UYUMU
+   ============================================ */
+
+/* Kart arka planı ve kenarlığı — dark temada beyaz-bazlı saydam
+   katmanlar kullanılıyor, bunlar light zeminde görünmez oluyor.
+   Light temada hafif gri/mor tonlu bir yüzeye çeviriyoruz. */
+[data-theme="light"] .app-card {
+  background: linear-gradient(
+    180deg,
+    rgba(108, 99, 255, 0.04),
+    rgba(108, 99, 255, 0.015)
+  );
+  border: 1px solid var(--border);
+}
+
+/* Hover'daki mor parlama efekti aynı kalabilir, sadece kenarlık
+   ve gölge rengi light temada biraz daha soluk olsun */
+[data-theme="light"] .app-card:hover {
+  border-color: rgba(108, 99, 255, 0.35);
+  box-shadow: 0 20px 50px rgba(108, 99, 255, 0.12);
+}
+
+/* App icon kutusu — kenarlığı beyaz yerine tema border'ına bağlıyoruz */
+[data-theme="light"] .app-icon {
+  border: 1px solid var(--border);
+}
+
+/* Tag rozetleri — beyaz-bazlı saydam arka plan/kenarlık light'ta
+   görünmüyor, tema değişkenlerine bağlıyoruz */
+[data-theme="light"] .tag {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+
+/* Tag hover'da zaten background mora dönüp color:white kalıyor,
+   bu her temada okunur kalır — dokunmadım */
+
+/* "View on Play Store →" linki — dark temada sabit white,
+   light temada ana metin rengine dönmeli, yoksa görünmez olur */
+[data-theme="light"] .app-link {
+  color: var(--text);
+  border-top: 1px solid var(--border);
+}
+
+[data-theme="light"] .app-link:hover {
+  color: var(--accent);
+}
+
+/* ============================================
+   ARTICLES
+============================================ */
+
+.articles-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(380px, 420px));
+  justify-content: center;
+  gap: 32px;
+  margin-top: 40px;
+}
+
+/* Card */
+
+.article-card {
+  display: flex;
+  flex-direction: column;
+
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.03),
+    rgba(255, 255, 255, 0.015)
+  );
+
+  border: 1px solid var(--border);
+  border-radius: 24px;
+
+  overflow: hidden;
+  position: relative;
+
+  text-decoration: none;
+  color: inherit;
+
+  transition:
+    transform 0.35s ease,
+    border-color 0.35s ease,
+    box-shadow 0.35s ease;
+}
+
+.article-card::before {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  background: radial-gradient(
+    circle at top right,
+    rgba(108, 99, 255, 0.12),
+    transparent 45%
+  );
+
+  opacity: 0;
+  transition: 0.35s;
+  pointer-events: none;
+}
+
+.article-card:hover {
+  transform: translateY(-8px);
+
+  border-color: rgba(108, 99, 255, 0.45);
+
+  box-shadow:
+    0 25px 60px rgba(0, 0, 0, 0.45),
+    0 0 0 1px rgba(108, 99, 255, 0.12);
+}
+
+.article-card:hover::before {
+  opacity: 1;
+}
+
+/* ============================================
+   Cover
+============================================ */
+
+.article-cover {
+  position: relative;
+
+  height: 220px;
+
+  margin: 14px 14px 0;
+
+  border-radius: 18px;
+
+  overflow: hidden;
+
+  background: #14141b;
+}
+
+.article-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+
+  transition: transform 0.6s ease;
+}
+
+.article-card:hover .article-cover img {
+  transform: scale(1.08);
+}
+
+.article-cover::after {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  background: linear-gradient(180deg, transparent, rgba(14, 14, 20, 0.45));
+}
+
+/* ============================================
+   External Button
+============================================ */
+
+.article-open {
+  position: absolute;
+
+  top: 18px;
+  right: 18px;
+
+  width: 44px;
+  height: 44px;
+
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(18, 18, 28, 0.82);
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  backdrop-filter: blur(12px);
+
+  color: white;
+
+  z-index: 5;
+
+  transition: 0.3s;
+}
+
+.article-open svg {
+  width: 18px;
+  height: 18px;
+}
+
+.article-card:hover .article-open {
+  background: var(--accent);
+  transform: rotate(8deg);
+}
+
+/* ============================================
+   Content
+============================================ */
+
+.article-content {
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+
+  padding: 30px;
+}
+
+.article-tag {
+  display: inline-flex;
+  align-items: center;
+
+  align-self: flex-start;
+
+  padding: 7px 15px;
+
+  border-radius: 999px;
+
+  background: rgba(108, 99, 255, 0.12);
+
+  border: 1px solid rgba(108, 99, 255, 0.25);
+
+  color: var(--accent2);
+
+  font-size: 12px;
+
+  font-family: "Space Mono";
+
+  margin-bottom: 20px;
+}
+
+.article-title {
+  font-size: 28px;
+
+  font-weight: 700;
+
+  line-height: 1.3;
+
+  margin-bottom: 16px;
+
+  letter-spacing: -0.4px;
+}
+
+.article-desc {
+  color: var(--muted);
+
+  font-size: 15px;
+
+  line-height: 1.75;
+
+  margin-bottom: auto;
+}
+
+/* ============================================
+   Footer
+============================================ */
+
+.article-footer {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  padding: 22px 30px;
+
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+
+  background: rgba(255, 255, 255, 0.015);
+
+  font-size: 13px;
+
+  font-family: "Space Mono";
+}
+
+.article-source {
+  color: var(--accent2);
+
+  font-weight: 700;
+}
+
+.article-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  color: var(--muted);
+}
+
+/* ============================================
+   Mobile
+============================================ */
+
+@media (max-width: 768px) {
+  .articles-grid {
+    grid-template-columns: 1fr;
+
+    gap: 24px;
+  }
+
+  .article-cover {
+    height: 190px;
+  }
+  .article-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+    gap: 16px;
+  }
+
+  .article-title {
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1.3;
+    letter-spacing: -0.4px;
+  }
+
+  .article-desc {
+    color: var(--muted);
+    font-size: 15px;
+    line-height: 1.75;
+    flex: 1;
+  }
+}
+/* ============================================
+   CONTACT PANELİ
+   ============================================ */
+
+/* İki kolonlu düzen: sol bilgiler, sağ form */
+.contact-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: start;
+}
+
+/* Email, konum gibi iletişim bilgileri listesi */
+.contact-info-list {
+  margin-top: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Tek bir bilgi satırı — ikon + metin */
+.contact-info-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+/* Mor kare ikon kutusu */
+.contact-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0; /* Küçük ekranda sıkışmasın */
+}
+.contact-icon svg {
+  width: 20px;
+  height: 20px;
+  stroke: #fff;
+  fill: #fff;
+  color: #fff;
+}
+
+/* "EMAIL", "LOCATION" küçük etiketi */
+.contact-info-label {
+  font-size: 12px;
+  color: var(--muted);
+  font-family: "Space Mono", monospace;
+  margin-bottom: 2px;
+}
+/* Asıl değer — email adresi, şehir adı */
+.contact-info-val {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text);
+}
+
+/* ---- İletişim Formu ---- */
+/* Form alanlarını dikey sıralar */
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Her form satırı — etiket + input */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+/* "NAME", "EMAIL" etiketleri */
+.form-group label {
+  font-size: 12px;
+  font-family: "Space Mono", monospace;
+  color: var(--muted);
+  letter-spacing: 0.5px;
+}
+
+/* Text input ve textarea ortak stili */
+.contact-form input,
+.contact-form textarea {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 11px 14px;
+  font-size: 14px;
+  color: var(--text);
+  font-family: "Inter", sans-serif;
+  transition: border-color var(--transition);
+  outline: none; /* Tarayıcı varsayılan mavi çerçeveyi kaldır */
+  resize: vertical; /* Textarea sadece dikey boyutlandırılabilsin */
+}
+/* Placeholder metni soluk göster */
+.contact-form input::placeholder,
+.contact-form textarea::placeholder {
+  color: var(--muted);
+}
+/* Fokusta kenarlık mora döner */
+.contact-form input:focus,
+.contact-form textarea:focus {
+  border-color: var(--accent);
+}
+
+/* Form gönderildikten sonra gösterilen "✓ Message sent!" mesajı */
+.form-success {
+  font-size: 13px;
+  color: var(--success);
+  font-family: "Space Mono", monospace;
+  min-height: 1.4em; /* Mesaj yokken de yer kaplar — sayfa sıçramasın */
+}
