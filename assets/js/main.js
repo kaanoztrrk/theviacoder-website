@@ -48,6 +48,18 @@ const COPY = {
     apTitle: "Things I've built",
     apSub: "Real apps on Google Play. No tutorial projects.",
 
+    suCategory: "SaaS Project",
+    suBadge: "Founder",
+    suDesc:
+      "Multi-tenant B2B SaaS platform for beauty salons and barbershops. Manage appointments, customers, staff, inventory, services, and subscriptions with secure role-based access and real-time synchronization.",
+    suLink: "View on Web App",
+
+    fbCategory: "SaaS Project",
+    fbBadge: "Client",
+    fbDesc:
+      "Multi-tenant B2B SaaS for LPG conversion dealers. Manages customers, vehicles, installations, technicians, and product catalogs across a dealer network with real-time dashboards.",
+    fbLink: "View on GitHub",
+
     wvCategory: "Daily Puzzle Game",
     wvBadge: "Live",
     wvDesc:
@@ -86,8 +98,10 @@ const COPY = {
     flMsg: "Message",
     flSend: "Send message",
     formOk: "Message sent — thanks!",
+    formErr: "Something went wrong. Try emailing directly.",
+    formNetErr: "Connection error. Try again later.",
 
-    footerText: "Built with ♥ by Kaan · kaan.codes · 2026",
+    footerText: "Built with ♥ by M. Kaan Öztürk · 2026",
   },
 
   tr: {
@@ -134,6 +148,18 @@ const COPY = {
     apTitle: "Yaptıklarım",
     apSub: "Google Play'de gerçek uygulamalar. Tutorial projesi değil.",
 
+    suCategory: "SaaS Projesi",
+    suBadge: "Kurucu",
+    suDesc:
+      "Güzellik salonları ve berberler için çok kiracılı (multi-tenant) B2B SaaS platformu. Randevu, müşteri, personel, stok, hizmet ve abonelik yönetimi; güvenli rol tabanlı erişim ve gerçek zamanlı senkronizasyon.",
+    suLink: "Web Uygulamasını Aç",
+
+    fbCategory: "SaaS Projesi",
+    fbBadge: "Müşteri",
+    fbDesc:
+      "LPG dönüşüm bayileri için çok kiracılı (multi-tenant) B2B SaaS. Bayi ağı genelinde müşteri, araç, montaj, teknisyen ve ürün kataloglarını gerçek zamanlı panellerle yönetir.",
+    fbLink: "GitHub'da Gör",
+
     wvCategory: "Günlük Bulmaca Oyunu",
     wvBadge: "Yayında",
     wvDesc:
@@ -173,8 +199,10 @@ const COPY = {
     flMsg: "Mesaj",
     flSend: "Gönder",
     formOk: "Mesaj iletildi — teşekkürler!",
+    formErr: "Bir şeyler ters gitti. Doğrudan e-posta göndermeyi dene.",
+    formNetErr: "Bağlantı hatası. Daha sonra tekrar dene.",
 
-    footerText: "Kaan tarafından ♥ ile yapıldı · kaan.codes · 2026",
+    footerText: "M. Kaan Öztürk tarafından ♥ ile yapıldı · 2026",
   },
 };
 
@@ -282,6 +310,16 @@ function setLang(lang) {
   setText("ap-eyebrow", c.apEyebrow);
   setText("ap-title", c.apTitle);
   setText("ap-sub", c.apSub);
+
+  setText("su-category", c.suCategory);
+  setText("su-badge", c.suBadge);
+  setText("su-desc", c.suDesc);
+  setText("su-link", c.suLink);
+
+  setText("fb-category", c.fbCategory);
+  setText("fb-badge", c.fbBadge);
+  setText("fb-desc", c.fbDesc);
+  setText("fb-link", c.fbLink);
 
   setText("wv-category", c.wvCategory);
   setText("wv-badge", c.wvBadge);
@@ -396,11 +434,11 @@ async function handleSubmit(e) {
       e.target.reset();
     } else {
       successEl.style.color = "#f87171";
-      successEl.textContent = "Something went wrong. Try emailing directly.";
+      successEl.textContent = COPY[currentLang].formErr;
     }
   } catch (err) {
     successEl.style.color = "#f87171";
-    successEl.textContent = "Connection error. Try again later.";
+    successEl.textContent = COPY[currentLang].formNetErr;
   }
 
   submitBtn.disabled = false;
@@ -421,11 +459,7 @@ function toggleTheme() {
 }
 
 /* ---- Init ---- */
+// Tema index.html <head> içinde, sayfa çizilmeden önce ayarlanıyor.
 document.addEventListener("DOMContentLoaded", () => {
-  const saved = localStorage.getItem("theme");
-  const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-  const theme = saved || (prefersDark ? "dark" : "light");
-  document.documentElement.setAttribute("data-theme", theme);
-
   setLang(currentLang);
 });

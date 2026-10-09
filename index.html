@@ -14,6 +14,14 @@
       href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500&family=Space+Mono:wght@400;700&family=Rouge+Script&family=Birthstone&display=swap"
       rel="stylesheet"
     />
+    <!-- Tema, sayfa çizilmeden önce ayarlanır — açık temada koyu yanıp sönmeyi önler -->
+    <script>
+      document.documentElement.setAttribute(
+        "data-theme",
+        localStorage.getItem("theme") ||
+          (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"),
+      );
+    </script>
     <link rel="stylesheet" href="assets/css/base.css" />
     <link rel="stylesheet" href="assets/css/layout.css" />
     <link rel="stylesheet" href="assets/css/hero.css" />
@@ -164,14 +172,15 @@
       <!-- Hero content -->
       <div class="hero-content">
         <div class="hero-left">
-          <p class="hero-im" id="hero-im">I'm</p>
+          <p class="hero-im" id="hero-im">Hi, I'm</p>
           <h1 class="hero-name" id="hero-name">M. Kaan Öztürk</h1>
           <h2 class="hero-typed">
             <span id="typed-text"></span><span class="cursor"></span>
           </h2>
           <p class="hero-sub" id="hero-sub">
-            Solo Flutter developer from <strong>Turkey</strong>, building real
-            apps for international audiences.
+            Creating <strong>high-quality Flutter applications</strong> with a
+            focus on <strong>performance</strong> and
+            <strong>user experience</strong>.
           </p>
         </div>
         <div class="hero-right">
@@ -342,8 +351,10 @@
               </div>
               <div class="info-row no-border">
                 <span class="info-label">Mail</span>
-                <span class="info-val accent-text"
-                  >kaanoztrrk411@gmail.com</span
+                <a
+                  class="info-val accent-text"
+                  href="mailto:kaanoztrrk411@gmail.com"
+                  >kaanoztrrk411@gmail.com</a
                 >
               </div>
             </div>
@@ -352,20 +363,28 @@
           <!-- Right: bio -->
           <div class="about-right">
             <p class="panel-eyebrow" id="ab-eyebrow">ABOUT ME</p>
-            <h2 class="panel-title" id="ab-title">Indie mobile developer</h2>
+            <h2 class="panel-title" id="ab-title">
+              Flutter-focused mobile application developer
+            </h2>
             <p class="panel-body" id="ab-body1">
-              I design, build, and ship my own
-              <strong>Flutter apps</strong> targeting international audiences.
-              No freelancing — just real products that solve real problems.
+              I develop end-to-end mobile applications using Flutter. I manage
+              the full development cycle including UI/UX implementation,
+              scalable architecture design, state management with BLoC, REST API
+              integration, and application deployment. I follow clean
+              architecture principles to build maintainable, testable, and
+              production-ready codebases.
             </p>
             <p class="panel-body" id="ab-body2">
-              Currently focused on word puzzle games and utility apps. Building
-              in public under <strong>@theviacoder</strong>.
+              My focus area is building mobile applications that solve finance
+              and everyday life problems. In my spare time, I work on mobile game
+              projects. I prioritize performance, modular structure, and
+              long-term maintainability. I share my projects under the
+              @kaan.codes identity.
             </p>
             <div class="stat-row">
               <div class="stat-item">
                 <span class="stat-num">4+</span>
-                <span class="stat-label" id="sl-apps">Created apps</span>
+                <span class="stat-label" id="sl-apps">Published apps</span>
               </div>
 
               <div class="stat-item">
@@ -603,7 +622,7 @@
                   </div>
                 </div>
 
-                <span class="app-badge" id="nn-badge">Client</span>
+                <span class="app-badge" id="fb-badge">Client</span>
               </div>
 
               <p class="app-desc" id="fb-desc">
@@ -822,10 +841,10 @@
         <div class="panel-inner">
           <p class="panel-eyebrow" id="ar-eyebrow">WRITING</p>
 
-          <h2 class="panel-title" id="ar-title">Articles & Posts</h2>
+          <h2 class="panel-title" id="ar-title">Articles & posts</h2>
 
           <p class="panel-sub" id="ar-sub">
-            Thoughts on Flutter, architecture and software engineering.
+            Thoughts on indie development, Flutter, and building products.
           </p>
 
           <div class="articles-grid">
@@ -841,7 +860,7 @@
                   alt=""
                 />
 
-                <button class="article-open">
+                <span class="article-open" aria-hidden="true">
                   <svg
                     viewBox="0 0 24 24"
                     fill="none"
@@ -854,7 +873,7 @@
                     <polyline points="15 3 21 3 21 9" />
                     <line x1="10" y1="14" x2="21" y2="3" />
                   </svg>
-                </button>
+                </span>
               </div>
 
               <div class="article-content">
@@ -894,7 +913,7 @@
                   alt=""
                 />
 
-                <button class="article-open">
+                <span class="article-open" aria-hidden="true">
                   <svg
                     viewBox="0 0 24 24"
                     fill="none"
@@ -907,7 +926,7 @@
                     <polyline points="15 3 21 3 21 9" />
                     <line x1="10" y1="14" x2="21" y2="3" />
                   </svg>
-                </button>
+                </span>
               </div>
 
               <div class="article-content">
@@ -946,7 +965,7 @@
                   alt=""
                 />
 
-                <button class="article-open">
+                <span class="article-open" aria-hidden="true">
                   <svg
                     viewBox="0 0 24 24"
                     fill="none"
@@ -959,7 +978,7 @@
                     <polyline points="15 3 21 3 21 9" />
                     <line x1="10" y1="14" x2="21" y2="3" />
                   </svg>
-                </button>
+                </span>
               </div>
 
               <div class="article-content">
@@ -999,7 +1018,7 @@
                   alt=""
                 />
 
-                <button class="article-open">
+                <span class="article-open" aria-hidden="true">
                   <svg
                     viewBox="0 0 24 24"
                     fill="none"
@@ -1012,11 +1031,11 @@
                     <polyline points="15 3 21 3 21 9" />
                     <line x1="10" y1="14" x2="21" y2="3" />
                   </svg>
-                </button>
+                </span>
               </div>
 
               <div class="article-content">
-                <span class="article-tag">Flutter • API Integration</span>
+                <span class="article-tag">Flutter • Widgets</span>
 
                 <h3 class="article-title">
                   Create Your Own Widgets: A Step-by-Step Guide for Flutter
@@ -1050,7 +1069,7 @@
                   alt=""
                 />
 
-                <button class="article-open">
+                <span class="article-open" aria-hidden="true">
                   <svg
                     viewBox="0 0 24 24"
                     fill="none"
@@ -1063,7 +1082,7 @@
                     <polyline points="15 3 21 3 21 9" />
                     <line x1="10" y1="14" x2="21" y2="3" />
                   </svg>
-                </button>
+                </span>
               </div>
 
               <div class="article-content">
@@ -1123,7 +1142,11 @@
                 </div>
                 <div>
                   <p class="contact-info-label" id="ct-email-lbl">Email</p>
-                  <p class="contact-info-val">kaanoztrrk411@gmail.com</p>
+                  <a
+                    class="contact-info-val"
+                    href="mailto:kaanoztrrk411@gmail.com"
+                    >kaanoztrrk411@gmail.com</a
+                  >
                 </div>
               </div>
             </div>
@@ -1138,6 +1161,7 @@
                   id="f-name"
                   placeholder="Kaan"
                   autocomplete="name"
+                  required
                 />
               </div>
               <div class="form-group">
@@ -1147,11 +1171,17 @@
                   id="f-email"
                   placeholder="hi@example.com"
                   autocomplete="email"
+                  required
                 />
               </div>
               <div class="form-group">
                 <label for="f-msg" id="fl-msg">Message</label>
-                <textarea id="f-msg" rows="4" placeholder="..."></textarea>
+                <textarea
+                  id="f-msg"
+                  rows="4"
+                  placeholder="..."
+                  required
+                ></textarea>
               </div>
               <button type="submit" class="primary-btn" id="fl-send">
                 Send message
@@ -1166,8 +1196,7 @@
     <!-- ========== FOOTER ========== -->
     <footer class="site-footer">
       <p id="footer-text">
-        Built with <span class="accent-text"> * </span> by
-        <a href="https://kaan.codes" class="accent-text">kaan.codes</a> · 2026
+        Built with <span class="accent-text">♥</span> by M. Kaan Öztürk · 2026
       </p>
       <div class="footer-links">
         <a href="#">Privacy Policy</a>
