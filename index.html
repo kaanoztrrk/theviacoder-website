@@ -1,1208 +1,353 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta
-      name="description"
-      content="Kaan — Indie Flutter mobile developer building real apps for international audiences."
-    />
-    <title>Kaan | Mobile Developer</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500&family=Space+Mono:wght@400;700&family=Rouge+Script&family=Birthstone&display=swap"
-      rel="stylesheet"
-    />
-    <!-- Tema, sayfa çizilmeden önce ayarlanır — açık temada koyu yanıp sönmeyi önler -->
-    <script>
-      document.documentElement.setAttribute(
-        "data-theme",
-        localStorage.getItem("theme") ||
-          (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"),
-      );
-    </script>
-    <link rel="stylesheet" href="assets/css/base.css" />
-    <link rel="stylesheet" href="assets/css/layout.css" />
-    <link rel="stylesheet" href="assets/css/hero.css" />
-    <link rel="stylesheet" href="assets/css/panel.css" />
-    <link rel="stylesheet" href="assets/css/footer.css" />
-    <link rel="stylesheet" href="assets/css/responsive.css" />
-  </head>
-  <body class="dark">
-    <!-- ========== HERO SECTION ========== -->
-    <section class="hero-section" id="home">
-      <div class="deco deco-square-lg"></div>
-      <div class="deco deco-square-md"></div>
-      <div class="deco deco-square-sm"></div>
-      <div class="deco deco-tri-1"></div>
-      <div class="deco deco-tri-2"></div>
-      <div class="deco deco-circle-lg"></div>
-      <div class="deco deco-circle-sm"></div>
-      <div class="deco deco-line-h"></div>
-      <div class="deco deco-line-d"></div>
-      <div class="deco deco-plus"></div>
-      <div class="deco deco-ring"></div>
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>M. Kaan Öztürk — Flutter Mobile Developer</title>
+<meta name="description" content="M. Kaan Öztürk — Flutter mobile developer from Türkiye. Multi-tenant SaaS platforms, enterprise client apps and games on Google Play. This site works like a phone: unlock it and look around." />
+<link rel="canonical" href="https://theviacoder.com/" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://theviacoder.com/" />
+<meta property="og:title" content="M. Kaan Öztürk — Flutter Mobile Developer" />
+<meta property="og:description" content="I design, build and ship mobile apps. So this site works like one — unlock it and look around." />
+<meta property="og:image" content="https://theviacoder.com/assets/image/profile.jpg" />
+<meta name="twitter:card" content="summary" />
+<meta name="theme-color" content="#07070b" />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%236c63ff'/><text x='32' y='43' font-family='Georgia,serif' font-style='italic' font-size='30' fill='white' text-anchor='middle'>tv</text></svg>" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "M. Kaan Öztürk",
+  "jobTitle": "Flutter Mobile Developer",
+  "url": "https://theviacoder.com/",
+  "email": "mailto:kaanoztrrk411@gmail.com",
+  "address": { "@type": "PostalAddress", "addressCountry": "TR" },
+  "sameAs": ["https://github.com/kaanoztrrk", "https://instagram.com/kaanoztrrk", "https://medium.com/@kaanoztrrk411"]
+}
+</script>
+<!-- Tema ve dil, sayfa çizilmeden önce ayarlanır (yanıp sönmeyi önler) -->
+<script>
+  (function () {
+    var d = document.documentElement;
+    d.setAttribute("data-theme", localStorage.getItem("theme") ||
+      (matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark"));
+    var lang = localStorage.getItem("lang") ||
+      ((navigator.language || "").toLowerCase().indexOf("tr") === 0 ? "tr" : "en");
+    d.setAttribute("lang", lang);
+  })();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Birthstone&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/css/style.css" />
+<noscript>
+  <style>
+    body { overflow: auto; }
+    .stage, .side, .top-actions, .backdrop, .grain { display: none !important; }
+    .top { position: static; }
+    .pages { display: block; max-width: 640px; margin: 0 auto; padding: 24px; }
+    .pages .page { padding: 32px 0; border-bottom: 1px solid var(--line); }
+  </style>
+</noscript>
+</head>
+<body>
+  <div class="backdrop"></div>
+  <div class="grain"></div>
 
-      <!-- Dekoratif arka plan — kod sembolleri -->
-      <div class="deco deco-code deco-lt">&lt;</div>
-      <div class="deco deco-code deco-slash">/&gt;</div>
-      <div class="deco deco-code deco-brace-open">{</div>
-      <div class="deco deco-code deco-brace-close">}</div>
-      <div class="deco deco-code deco-paren">()</div>
-      <div class="deco deco-code deco-semi">;</div>
-      <div class="deco deco-code deco-underscore">_</div>
-      <div class="deco deco-code deco-arrow">=&gt;</div>
-      <!-- Top bar -->
-      <div class="hero-topbar">
-        <div class="logo">theviacoder</div>
-        <div class="topbar-right">
-          <div class="lang-toggle">
-            <button class="lang-btn active" id="btn-en" onclick="setLang('en')">
-              EN
-            </button>
-            <button class="lang-btn" id="btn-tr" onclick="setLang('tr')">
-              TR
-            </button>
-          </div>
-          <div class="social-icons">
-            <a
-              href="https://x.com/theviacoder"
-              target="_blank"
-              aria-label="X / Twitter"
-            >
-              <svg
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-              >
-                <path
-                  d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.253 5.622 5.911-5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"
-                />
-              </svg>
-            </a>
-            <a
-              href="https://instagram.com/kaanoztrrk"
-              target="_blank"
-              aria-label="Instagram"
-            >
-              <svg
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.8"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
-                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
-                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
-              </svg>
-            </a>
-            <a
-              href="https://github.com/theviacoder"
-              target="_blank"
-              aria-label="GitHub"
-            >
-              <svg
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-              >
-                <path
-                  d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"
-                />
-              </svg>
-            </a>
-          </div>
-          <button
-            class="theme-toggle"
-            onclick="toggleTheme()"
-            aria-label="Toggle theme"
-          >
-            <svg
-              class="icon-moon"
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
-            </svg>
-            <svg
-              class="icon-sun"
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <circle cx="12" cy="12" r="5" />
-              <line x1="12" y1="1" x2="12" y2="3" />
-              <line x1="12" y1="21" x2="12" y2="23" />
-              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
-              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
-              <line x1="1" y1="12" x2="3" y2="12" />
-              <line x1="21" y1="12" x2="23" y2="12" />
-              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
-              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
-            </svg>
-          </button>
-          <a
-            href="assets/cv/kaan_ozturk_cv.pdf"
-            download="Kaan-Ozturk-CV.pdf"
-            class="cv-btn"
-            id="cv-btn-top"
-            >Download CV</a
-          >
-        </div>
+  <header class="top">
+    <button class="logo" id="logo" data-i18n-aria="aria.lock" aria-label="Lock the phone">theviacoder</button>
+    <nav class="top-actions">
+      <div class="seg" role="group" data-i18n-aria="cc.language" aria-label="Language">
+        <button data-lang="en" aria-pressed="true">EN</button>
+        <button data-lang="tr" aria-pressed="false">TR</button>
       </div>
+      <button class="icon-btn" data-theme-toggle data-i18n-aria="aria.theme" aria-label="Toggle theme">
+        <svg class="only-dark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="only-light" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"/></svg>
+      </button>
+      <a class="pill" href="#contact" data-i18n="nav.contact">Contact</a>
+      <a class="pill solid" href="assets/cv/kaan_ozturk_cv.pdf" download="Kaan-Ozturk-CV.pdf" data-i18n="cv">Download CV</a>
+    </nav>
+  </header>
 
-      <!-- Hero content -->
-      <div class="hero-content">
-        <div class="hero-left">
-          <p class="hero-im" id="hero-im">Hi, I'm</p>
-          <h1 class="hero-name" id="hero-name">M. Kaan Öztürk</h1>
-          <h2 class="hero-typed">
-            <span id="typed-text"></span><span class="cursor"></span>
-          </h2>
-          <p class="hero-sub" id="hero-sub">
-            Creating <strong>high-quality Flutter applications</strong> with a
-            focus on <strong>performance</strong> and
-            <strong>user experience</strong>.
-          </p>
+  <aside class="side left">
+    <p class="eyebrow" data-i18n="side.eyebrow">Mobile developer · Flutter</p>
+    <h1>M. Kaan Öztürk</h1>
+    <p data-i18n="side.intro">I design, build and ship mobile apps. So this site works like one — unlock it and look around.</p>
+  </aside>
+
+  <aside class="side right hints">
+    <span><span data-i18n="hint.unlock">Unlock</span><kbd data-i18n="hint.swipe">swipe</kbd><kbd>↑</kbd></span>
+    <span><span data-i18n="hint.home">Back home</span><kbd data-i18n="hint.bar">home bar</kbd><kbd>esc</kbd></span>
+    <span><span data-i18n="hint.cc">Control Center</span><kbd data-i18n="hint.status">status bar</kbd></span>
+    <span><span data-i18n="hint.lock">Lock</span><kbd data-i18n="hint.power">side button</kbd></span>
+    <span>Türkiye · <span data-time>--:--</span></span>
+  </aside>
+
+  <div class="stage" id="stage">
+    <div class="phone" id="phone">
+      <span class="hw hw-vol1"></span>
+      <span class="hw hw-vol2"></span>
+      <button class="hw hw-power" id="power" data-i18n-aria="aria.lock" aria-label="Lock the phone"></button>
+
+      <div class="screen" id="screen">
+        <div class="wall"></div>
+        <div class="island" id="island"></div>
+        <div class="status" id="status" data-i18n-title="hint.cc" title="Control Center">
+          <span data-time>--:--</span>
+          <span class="sys">5G
+            <svg viewBox="0 0 25 12" aria-hidden="true">
+              <rect x=".5" y=".5" width="21" height="11" rx="3.5" fill="none" stroke="currentColor" opacity=".4" />
+              <rect x="2" y="2" width="16" height="8" rx="2" fill="currentColor" id="battery" />
+              <rect x="23" y="4" width="1.5" height="4" rx=".75" fill="currentColor" opacity=".4" />
+            </svg>
+          </span>
         </div>
-        <div class="hero-right">
-          <div class="avatar-frame">
-            <div class="avatar-accent-block"></div>
-            <div class="avatar-accent-block-2"></div>
+        <div class="pull-zone" id="pullZone"></div>
 
-            <div class="avatar-card">
-              <!-- Fotoğraf bulunamazsa otomatik gizlenir, initials gösterilir -->
-              <img
-                class="avatar-photo"
-                src="assets/image/profile.jpg"
-                alt="Kaan"
-                onerror="this.style.display = 'none'"
-                onload="
-                  document.querySelector('.avatar-initials').style.display =
-                    'none'
-                "
-              />
-
-              <div class="avatar-initials">K</div>
-
-              <div class="avatar-status">
-                <span class="status-dot"></span>
-                <span id="status-text">Available</span>
-              </div>
-            </div>
+        <!-- Kilit ekranı -->
+        <div class="lock" id="lock" role="button" tabindex="0" data-i18n-aria="aria.unlock" aria-label="Unlock: swipe up, click or press Enter">
+          <div class="lock-date mono" data-date></div>
+          <div class="lock-time" data-time>--:--</div>
+          <div class="lock-id"><b>M. Kaan Öztürk</b><span data-i18n="role">Flutter mobile developer</span></div>
+          <div class="notifs">
+            <button class="notif" data-open="contact">
+              <span class="n-ic n-logo">tv</span>
+              <span class="n-body">
+                <span class="n-meta"><b>theviacoder</b><span data-i18n="n.now">now</span></span>
+                <span class="n-t" style="display:block" data-i18n="n1.t">Kaan is available for new projects</span>
+                <span class="n-d" style="display:block" data-i18n="n1.d">Flutter apps, from idea to store. Tap to get in touch.</span>
+              </span>
+            </button>
+            <button class="notif" data-open="wordv">
+              <span class="n-ic"><img src="assets/image/apps/wordv_image.png" alt="" /></span>
+              <span class="n-body">
+                <span class="n-meta"><b>WordV</b><span data-i18n="n.2h">2h ago</span></span>
+                <span class="n-t" style="display:block" data-i18n="n2.t">Today's puzzle is live</span>
+                <span class="n-d" style="display:block" data-i18n="n2.d">Five letters, six tries. Can you get it?</span>
+              </span>
+            </button>
           </div>
+          <div class="lock-foot mono"><span class="arrow">↑</span><span data-i18n="lock.foot">Swipe up to explore</span></div>
         </div>
-      </div>
 
-      <!-- Bottom nav tabs -->
-      <nav class="tab-nav" role="tablist">
-        <button
-          class="tab-btn active"
-          data-tab="about"
-          onclick="switchTab('about', this)"
-          role="tab"
-          aria-selected="true"
-        >
-          <svg
-            class="tab-icon"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.8"
-          >
-            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-            <circle cx="12" cy="7" r="4" />
-          </svg>
-          <span id="tl-about">About Me</span>
-        </button>
-        <button
-          class="tab-btn"
-          data-tab="resume"
-          onclick="switchTab('resume', this)"
-          role="tab"
-          aria-selected="false"
-        >
-          <svg
-            class="tab-icon"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.8"
-          >
-            <path
-              d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
-            />
-            <polyline points="14 2 14 8 20 8" />
-            <line x1="16" y1="13" x2="8" y2="13" />
-            <line x1="16" y1="17" x2="8" y2="17" />
-            <polyline points="10 9 9 9 8 9" />
-          </svg>
-          <span id="tl-resume">Skills</span>
-        </button>
-        <button
-          class="tab-btn"
-          data-tab="apps"
-          onclick="switchTab('apps', this)"
-          role="tab"
-          aria-selected="false"
-        >
-          <svg
-            class="tab-icon"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.8"
-          >
-            <rect x="5" y="2" width="14" height="20" rx="2" ry="2" />
-            <line x1="12" y1="18" x2="12.01" y2="18" />
-          </svg>
-          <span id="tl-apps">Apps</span>
-        </button>
-        <button
-          class="tab-btn"
-          data-tab="articles"
-          onclick="switchTab('articles', this)"
-          role="tab"
-          aria-selected="false"
-        >
-          <svg
-            class="tab-icon"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.8"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
-            <path
-              d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"
-            />
-          </svg>
-          <span id="tl-writing">Writing</span>
-        </button>
-        <button
-          class="tab-btn"
-          data-tab="contact"
-          onclick="switchTab('contact', this)"
-          role="tab"
-          aria-selected="false"
-        >
-          <svg
-            class="tab-icon"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.8"
-          >
-            <path
-              d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
-            />
-            <polyline points="22,6 12,13 2,6" />
-          </svg>
-          <span id="tl-contact">Contact</span>
-        </button>
-      </nav>
-    </section>
-
-    <!-- ========== CONTENT PANELS ========== -->
-    <main class="panels-wrapper">
-      <!-- ABOUT PANEL -->
-      <section class="panel active" id="panel-about" role="tabpanel">
-        <div class="panel-inner about-layout">
-          <!-- Left: photo + info card -->
-          <div class="about-left">
-            <div class="about-photo-wrap">
-              <div class="about-photo-bg"></div>
-              <div class="about-photo-card">
-                <div class="about-initials-lg">K</div>
-              </div>
-            </div>
-            <div class="info-card">
-              <div class="info-row">
-                <span class="info-label" id="il-name">Name</span>
-                <span class="info-val">M. Kaan Öztürk</span>
-              </div>
-              <div class="info-row">
-                <span class="info-label" id="il-location">Location</span>
-                <span class="info-val">Türkiye 🇹🇷</span>
-              </div>
-              <div class="info-row">
-                <span class="info-label" id="il-focus">Focus</span>
-                <span class="info-val" id="il-focus-val">Flutter / Mobile</span>
-              </div>
-              <div class="info-row no-border">
-                <span class="info-label">Mail</span>
-                <a
-                  class="info-val accent-text"
-                  href="mailto:kaanoztrrk411@gmail.com"
-                  >kaanoztrrk411@gmail.com</a
-                >
-              </div>
-            </div>
-          </div>
-
-          <!-- Right: bio -->
-          <div class="about-right">
-            <p class="panel-eyebrow" id="ab-eyebrow">ABOUT ME</p>
-            <h2 class="panel-title" id="ab-title">
-              Flutter-focused mobile application developer
-            </h2>
-            <p class="panel-body" id="ab-body1">
-              I develop end-to-end mobile applications using Flutter. I manage
-              the full development cycle including UI/UX implementation,
-              scalable architecture design, state management with BLoC, REST API
-              integration, and application deployment. I follow clean
-              architecture principles to build maintainable, testable, and
-              production-ready codebases.
-            </p>
-            <p class="panel-body" id="ab-body2">
-              My focus area is building mobile applications that solve finance
-              and everyday life problems. In my spare time, I work on mobile game
-              projects. I prioritize performance, modular structure, and
-              long-term maintainability. I share my projects under the
-              @kaan.codes identity.
-            </p>
-            <div class="stat-row">
-              <div class="stat-item">
-                <span class="stat-num">4+</span>
-                <span class="stat-label" id="sl-apps">Published apps</span>
-              </div>
-
-              <div class="stat-item">
-                <span class="stat-num">4+</span>
-                <span class="stat-label" id="sl-years">Years experience</span>
-              </div>
-
-              <div class="stat-item">
-                <span class="stat-num">Dart & Flutter</span>
-                <span class="stat-label" id="sl-focus">Primary stack</span>
-              </div>
-            </div>
-            <a
-              href="assets/cv/kaan_ozturk_cv.pdf"
-              download="Kaan-Ozturk-CV.pdf"
-              class="cv-btn"
-              id="cv-btn-about"
-              >Download CV</a
-            >
-          </div>
-        </div>
-      </section>
-
-      <!-- SKILLS PANEL -->
-      <section class="panel" id="panel-resume" role="tabpanel">
-        <div class="panel-inner">
-          <p class="panel-eyebrow" id="sk-eyebrow">SKILLS</p>
-          <h2 class="panel-title" id="sk-title">Stack & expertise</h2>
-
-          <div class="skills-layout">
-            <!-- Tech skills -->
-            <div class="skills-col">
-              <h3 class="skills-group-title" id="sg-tech">Tech Stack</h3>
-              <div class="skill-bars">
-                <div class="skill-item">
-                  <div class="skill-header">
-                    <span>Flutter / Dart</span
-                    ><span class="skill-pct">95%</span>
-                  </div>
-                  <div class="skill-bar">
-                    <div class="skill-fill" data-width="95"></div>
-                  </div>
-                </div>
-                <div class="skill-item">
-                  <div class="skill-header">
-                    <span>BLoC / Cubit</span><span class="skill-pct">90%</span>
-                  </div>
-                  <div class="skill-bar">
-                    <div class="skill-fill" data-width="90"></div>
-                  </div>
-                </div>
-                <div class="skill-item">
-                  <div class="skill-header">
-                    <span>REST API</span><span class="skill-pct">90%</span>
-                  </div>
-                  <div class="skill-bar">
-                    <div class="skill-fill" data-width="90"></div>
-                  </div>
-                </div>
-                <div class="skill-item">
-                  <div class="skill-header">
-                    <span>Local Storage (Hive, Shared Preferences)</span
-                    ><span class="skill-pct">85%</span>
-                  </div>
-                  <div class="skill-bar">
-                    <div class="skill-fill" data-width="85"></div>
-                  </div>
-                </div>
-                <div class="skill-item">
-                  <div class="skill-header">
-                    <span>Firebase</span><span class="skill-pct">82%</span>
-                  </div>
-                  <div class="skill-bar">
-                    <div class="skill-fill" data-width="82"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Product skills -->
-            <div class="skills-col">
-              <h3 class="skills-group-title" id="sg-product">
-                Product & Monetization
-              </h3>
-              <div class="skill-bars">
-                <div class="skill-item">
-                  <div class="skill-header">
-                    <span>Clean Architecture</span
-                    ><span class="skill-pct">90%</span>
-                  </div>
-                  <div class="skill-bar">
-                    <div class="skill-fill" data-width="90"></div>
-                  </div>
-                </div>
-                <div class="skill-item">
-                  <div class="skill-header">
-                    <span>Responsive UI</span><span class="skill-pct">90%</span>
-                  </div>
-                  <div class="skill-bar">
-                    <div class="skill-fill" data-width="90"></div>
-                  </div>
-                </div>
-                <div class="skill-item">
-                  <div class="skill-header">
-                    <span>Git</span><span class="skill-pct">80%</span>
-                  </div>
-                  <div class="skill-bar">
-                    <div class="skill-fill" data-width="80"></div>
-                  </div>
-                </div>
-                <div class="skill-item">
-                  <div class="skill-header">
-                    <span>App Publishing</span
-                    ><span class="skill-pct">78%</span>
-                  </div>
-                  <div class="skill-bar">
-                    <div class="skill-fill" data-width="78"></div>
-                  </div>
-                </div>
-                <div class="skill-item">
-                  <div class="skill-header">
-                    <span>Google Mobile Ads</span
-                    ><span class="skill-pct">75%</span>
-                  </div>
-                  <div class="skill-bar">
-                    <div class="skill-fill" data-width="75"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Tech pill badges -->
-          <div class="tech-pills-section">
-            <h3 class="skills-group-title" id="sg-tools">Tools</h3>
-            <div class="tech-pills">
-              <span class="tech-pill">Flutter</span>
-              <span class="tech-pill">Dart</span>
-              <span class="tech-pill">BLoC</span>
-              <span class="tech-pill">Cubit</span>
-              <span class="tech-pill">Provider</span>
-              <span class="tech-pill">GetX</span>
-
-              <span class="tech-pill">Firebase</span>
-              <span class="tech-pill">REST API</span>
-              <span class="tech-pill">Hive</span>
-              <span class="tech-pill">SQLite</span>
-              <span class="tech-pill">SharedPreferences</span>
-
-              <span class="tech-pill">Git</span>
-              <span class="tech-pill">GitHub</span>
-              <span class="tech-pill">Figma</span>
-
-              <span class="tech-pill">Android Studio</span>
-              <span class="tech-pill">VS Code</span>
-
-              <span class="tech-pill">Google Play Console</span>
-              <span class="tech-pill">Firebase Crashlytics</span>
-              <span class="tech-pill">Firebase Analytics</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- APPS PANEL -->
-      <section class="panel" id="panel-apps" role="tabpanel">
-        <div class="panel-inner">
-          <p class="panel-eyebrow" id="ap-eyebrow">APPS</p>
-          <h2 class="panel-title" id="ap-title">Things I've built</h2>
-          <p class="panel-sub" id="ap-sub">
-            Real apps on Google Play. No tutorial projects.
-          </p>
-
-          <div class="apps-grid">
-            <!-- SalonUp -->
-            <div class="app-card">
-              <div class="app-card-top">
-                <div class="app-info">
-                  <div class="app-icon">
-                    <img
-                      src="assets/image/apps/salonup_image.png"
-                      alt="SalonUp"
-                    />
-                  </div>
-                  <div>
-                    <h3 class="app-name">SalonUp</h3>
-                    <span class="app-category" id="su-category">
-                      SaaS Project
-                    </span>
-                  </div>
-                </div>
-
-                <span class="app-badge" id="su-badge">Founder</span>
-              </div>
-
-              <p class="app-desc" id="su-desc">
-                Multi-tenant B2B SaaS platform for beauty salons and
-                barbershops. Manage appointments, customers, staff, inventory,
-                services, and subscriptions with secure role-based access and
-                real-time synchronization.
-              </p>
-
-              <div class="app-tags">
-                <span class="tag">Flutter</span>
-                <span class="tag">Firebase</span>
-                <span class="tag">Multi-tenant</span>
-                <span class="tag">BLoC</span>
-              </div>
-
-              <a
-                href="https://salonup-f7909.web.app"
-                class="app-link"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <span id="su-link">View on Web App</span>
-                <span>→</span>
-              </a>
-            </div>
-            <!-- Fema Bayi -->
-            <div class="app-card">
-              <div class="app-card-top">
-                <div class="app-info">
-                  <div class="app-icon">
-                    <img
-                      src="assets/image/apps/femabayi_image.png"
-                      alt="Fema Bayi"
-                    />
-                  </div>
-                  <div>
-                    <h3 class="app-name">Fema Bayi</h3>
-                    <span class="app-category" id="fb-category">
-                      SaaS Project
-                    </span>
-                  </div>
-                </div>
-
-                <span class="app-badge" id="fb-badge">Client</span>
-              </div>
-
-              <p class="app-desc" id="fb-desc">
-                Multi-tenant B2B SaaS for LPG conversion dealers. Manages
-                customers, vehicles, installations, technicians, and product
-                catalogs across a dealer network with real-time dashboards.
-              </p>
-
-              <div class="app-tags">
-                <span class="tag">Flutter</span>
-                <span class="tag">Firebase</span>
-                <span class="tag">Multi-tenant</span>
-                <span class="tag">BLoC</span>
-              </div>
-
-              <a
-                href="https://github.com/kaanoztrrk/FemaBayi"
-                class="app-link"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <span id="fb-link">View on GitHub</span>
-                <span>→</span>
-              </a>
-            </div>
-
-            <!-- WordV -->
-            <div class="app-card">
-              <div class="app-card-top">
-                <div class="app-info">
-                  <div class="app-icon">
-                    <img src="assets/image/apps/wordv_image.png" alt="WordV" />
-                  </div>
-                  <div>
-                    <h3 class="app-name">WordV</h3>
-                    <span class="app-category" id="wv-category">
-                      Daily Puzzle Game
-                    </span>
-                  </div>
-                </div>
-
-                <span class="app-badge live">
-                  <span class="badge-dot"></span>
-                  <span id="wv-badge">Live</span>
-                </span>
-              </div>
-
-              <p class="app-desc" id="wv-desc">
-                Daily word puzzle game. Wordle-style with Daily and Levels
-                modes, three themes (Dark / Light / Noir), and a one-time
-                premium IAP.
-              </p>
-
-              <div class="app-tags">
-                <span class="tag">Flutter</span>
-                <span class="tag">AdMob</span>
-                <span class="tag">RevenueCat</span>
-                <span class="tag">Puzzle</span>
-              </div>
-
-              <a
-                href="https://play.google.com/store/apps/details?id=com.theviacoder.wordv"
-                class="app-link"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <span id="wv-link">View on Play Store</span>
-                <span>→</span>
-              </a>
-            </div>
-
-            <!-- Poshta UA -->
-            <div class="app-card">
-              <div class="app-card-top">
-                <div class="app-info">
-                  <div class="app-icon">
-                    <img
-                      src="assets/image/apps/poshtaua_image.png"
-                      alt="Poshta UA"
-                    />
-                  </div>
-                  <div>
-                    <h3 class="app-name">Poshta UA</h3>
-                    <span class="app-category" id="pu-category">
-                      Enterprise Client Project
-                    </span>
-                  </div>
-                </div>
-
-                <span class="app-badge" id="pu-badge">
-                  Professional Project
-                </span>
-              </div>
-
-              <p class="app-desc" id="pu-desc">
-                Developed the corporate Flutter mobile application for Poshta
-                UA, a Ukrainian logistics and delivery company. Implemented the
-                mobile client, authentication flow, shipment tracking, and API
-                integration for production use.
-              </p>
-
-              <div class="app-tags">
-                <span class="tag">Flutter</span>
-                <span class="tag">REST API</span>
-                <span class="tag">Enterprise</span>
-                <span class="tag">Client Work</span>
-              </div>
-
-              <a
-                href="https://poshta.ua"
-                class="app-link"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <span id="pu-link">View Company</span>
-                <span>→</span>
-              </a>
-            </div>
-
-            <!-- MatchVest -->
-            <div class="app-card">
-              <div class="app-card-top">
-                <div class="app-info">
-                  <div class="app-icon">
-                    <img
-                      src="assets/image/apps/matchvest_image.png"
-                      alt="MatchVest"
-                    />
-                  </div>
-                  <div>
-                    <h3 class="app-name">MatchVest</h3>
-                    <span class="app-category" id="mv-category">
-                      Hackathon Winner
-                    </span>
-                  </div>
-                </div>
-
-                <span class="app-badge" id="mv-badge">🏆 Winner</span>
-              </div>
-
-              <p class="app-desc" id="mv-desc">
-                Built the mobile application for MatchVest during the Cube
-                Incubation Hackathon in the defense industry technopark.
-                Contributed as the Flutter Mobile Developer, delivering the MVP
-                that won
-                <strong>1st place</strong>.
-              </p>
-
-              <div class="app-tags">
-                <span class="tag">Flutter</span>
-                <span class="tag">Hackathon</span>
-                <span class="tag">Team Project</span>
-                <span class="tag">1st Place</span>
-              </div>
-
-              <a
-                href="https://github.com/mrttyyldrm/matchvest"
-                class="app-link"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <span id="mv-link">View on GitHub</span>
-                <span>→</span>
-              </a>
-            </div>
-
-            <!-- NullNull -->
-            <div class="app-card">
-              <div class="app-card-top">
-                <div class="app-info">
-                  <div class="app-icon">
-                    <img
-                      src="assets/image/apps/nullnull_image.png"
-                      alt="NullNull"
-                    />
-                  </div>
-                  <div>
-                    <h3 class="app-name">NullNull</h3>
-                    <span class="app-category" id="nn-category">
-                      Client Project
-                    </span>
-                  </div>
-                </div>
-
-                <span class="app-badge" id="nn-badge">Client</span>
-              </div>
-
-              <p class="app-desc" id="nn-desc">
-                Developed the first version of the NullNull mobile application
-                for a client. Built with Flutter, focusing on performance, clean
-                architecture, and a smooth user experience.
-              </p>
-
-              <div class="app-tags">
-                <span class="tag">Flutter</span>
-                <span class="tag">REST API</span>
-                <span class="tag">Firebase</span>
-                <span class="tag">Client Work</span>
-              </div>
-
-              <a
-                href="https://play.google.com/store/apps/details?id=info.nullnull.app"
-                class="app-link"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <span id="nn-link">View on Play Store</span>
-                <span>→</span>
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
-      <!-- ARTICLES PANEL -->
-      <section class="panel" id="panel-articles" role="tabpanel">
-        <div class="panel-inner">
-          <p class="panel-eyebrow" id="ar-eyebrow">WRITING</p>
-
-          <h2 class="panel-title" id="ar-title">Articles & posts</h2>
-
-          <p class="panel-sub" id="ar-sub">
-            Thoughts on indie development, Flutter, and building products.
-          </p>
-
-          <div class="articles-grid">
-            <a
-              class="article-card"
-              href="https://medium.com/@kaanoztrrk411/flutterda-state-management-bloc-cubit-melez-yaklaşımı-cee910dad726"
-              target="_blank"
-              rel="noopener"
-            >
-              <div class="article-cover">
-                <img
-                  src="https://miro.medium.com/v2/resize:fit:1100/format:webp/1*rq56e37Bdb2yUvpR8B3Ksg.png"
-                  alt=""
-                />
-
-                <span class="article-open" aria-hidden="true">
-                  <svg
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                  >
-                    <path
-                      d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"
-                    />
-                    <polyline points="15 3 21 3 21 9" />
-                    <line x1="10" y1="14" x2="21" y2="3" />
-                  </svg>
-                </span>
-              </div>
-
-              <div class="article-content">
-                <span class="article-tag">Flutter • State Management</span>
-
-                <h3 class="article-title">
-                  State Management in Flutter: BLoC + Cubit Hybrid Approach
-                </h3>
-
-                <p class="article-desc">
-                  A hybrid approach that combines the strengths of BLoC and
-                  Cubit to build scalable, maintainable, and testable Flutter
-                  applications.
-                </p>
-              </div>
-
-              <div class="article-footer">
-                <span class="article-source">Medium</span>
-
-                <div class="article-info">
-                  <span>2026</span>
-                  <span>•</span>
-                  <span>6 min</span>
-                </div>
-              </div>
-            </a>
-
-            <a
-              class="article-card"
-              href="https://medium.com/@kaanoztrrk411/mvvm-bloc-ile-flutter-uygulaması-geliştirmenin-avantajları-03367701fe64"
-              target="_blank"
-              rel="noopener"
-            >
-              <div class="article-cover">
-                <img
-                  src="https://miro.medium.com/v2/resize:fit:1100/format:webp/1*OGhOXvq0BDBthjkt3y06hA.png"
-                  alt=""
-                />
-
-                <span class="article-open" aria-hidden="true">
-                  <svg
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                  >
-                    <path
-                      d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"
-                    />
-                    <polyline points="15 3 21 3 21 9" />
-                    <line x1="10" y1="14" x2="21" y2="3" />
-                  </svg>
-                </span>
-              </div>
-
-              <div class="article-content">
-                <span class="article-tag">Flutter • Architecture</span>
-
-                <h3 class="article-title">
-                  Advantages of Developing Flutter Applications with MVVM + BLoC
-                </h3>
-
-                <p class="article-desc">
-                  Discover how combining MVVM with BLoC creates a clean,
-                  scalable, and testable architecture for modern Flutter
-                  applications.
-                </p>
-              </div>
-
-              <div class="article-footer">
-                <span class="article-source">Medium</span>
-
-                <div class="article-info">
-                  <span>2026</span>
-                  <span>•</span>
-                  <span>7 min</span>
-                </div>
-              </div>
-            </a>
-            <a
-              class="article-card"
-              href="https://medium.com/@kaanoztrrk411/flutterda-api-verisi-çekme-freezed-ve-bloc-ile-basit-adımlar-bfea69a87284"
-              target="_blank"
-              rel="noopener"
-            >
-              <div class="article-cover">
-                <img
-                  src="https://miro.medium.com/v2/resize:fit:1100/format:webp/1*ayRzCl9_ZCdVX5BZk10Q8w.jpeg"
-                  alt=""
-                />
-
-                <span class="article-open" aria-hidden="true">
-                  <svg
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                  >
-                    <path
-                      d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"
-                    />
-                    <polyline points="15 3 21 3 21 9" />
-                    <line x1="10" y1="14" x2="21" y2="3" />
-                  </svg>
-                </span>
-              </div>
-
-              <div class="article-content">
-                <span class="article-tag">Flutter • API Integration</span>
-
-                <h3 class="article-title">
-                  Fetching API Data in Flutter: Simple Steps with freezed and
-                  BLoC
-                </h3>
-
-                <p class="article-desc">
-                  Learn how to efficiently fetch and manage API data in Flutter
-                  using freezed for immutable data classes and BLoC for state
-                  management.
-                </p>
-              </div>
-
-              <div class="article-footer">
-                <span class="article-source">Medium</span>
-
-                <div class="article-info">
-                  <span>2024</span>
-                  <span>•</span>
-                  <span>7 min</span>
-                </div>
-              </div>
-            </a>
-            <a
-              class="article-card"
-              href="https://medium.com/@kaanoztrrk411/kendi-widgetlerinizi-oluşturun-flutter-i̇çin-adım-adım-kılavuz-818520d98435"
-              target="_blank"
-              rel="noopener"
-            >
-              <div class="article-cover">
-                <img
-                  src="https://miro.medium.com/v2/resize:fit:1100/format:webp/1*t-1voZYQrSAEM8eFB-FvAw.png"
-                  alt=""
-                />
-
-                <span class="article-open" aria-hidden="true">
-                  <svg
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                  >
-                    <path
-                      d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"
-                    />
-                    <polyline points="15 3 21 3 21 9" />
-                    <line x1="10" y1="14" x2="21" y2="3" />
-                  </svg>
-                </span>
-              </div>
-
-              <div class="article-content">
-                <span class="article-tag">Flutter • Widgets</span>
-
-                <h3 class="article-title">
-                  Create Your Own Widgets: A Step-by-Step Guide for Flutter
-                </h3>
-
-                <p class="article-desc">
-                  Learn how to create custom widgets in Flutter with this
-                  step-by-step guide, enhancing your app's UI and functionality.
-                </p>
-              </div>
-
-              <div class="article-footer">
-                <span class="article-source">Medium</span>
-
-                <div class="article-info">
-                  <span>2024</span>
-                  <span>•</span>
-                  <span>8 min</span>
-                </div>
-              </div>
-            </a>
-            <a
-              class="article-card"
-              href="https://medium.com/@kaanoztrrk411/flutterda-navigasyon-i̇şlemleri-uygulama-içi-rota-yönetimi-1913b0e017a7"
-              target="_blank"
-              rel="noopener"
-            >
-              <div class="article-cover">
-                <img
-                  src="https://miro.medium.com/v2/resize:fit:1100/format:webp/1*SpoTCg8uQamsiOg-md0OXg.png"
-                  alt=""
-                />
-
-                <span class="article-open" aria-hidden="true">
-                  <svg
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                  >
-                    <path
-                      d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"
-                    />
-                    <polyline points="15 3 21 3 21 9" />
-                    <line x1="10" y1="14" x2="21" y2="3" />
-                  </svg>
-                </span>
-              </div>
-
-              <div class="article-content">
-                <span class="article-tag">Flutter • Navigation</span>
-
-                <h3 class="article-title">
-                  Navigation Operations in Flutter: In-App Route Management
-                </h3>
-
-                <p class="article-desc">
-                  A comprehensive guide to managing in-app navigation and route
-                  handling in Flutter, ensuring a smooth user experience.
-                </p>
-              </div>
-
-              <div class="article-footer">
-                <span class="article-source">Medium</span>
-
-                <div class="article-info">
-                  <span>2024</span>
-                  <span>•</span>
-                  <span>8 min</span>
-                </div>
-              </div>
-            </a>
-          </div>
-        </div>
-      </section>
-
-      <!-- CONTACT PANEL -->
-      <section class="panel" id="panel-contact" role="tabpanel">
-        <div class="panel-inner contact-layout">
-          <div class="contact-left">
-            <p class="panel-eyebrow" id="ct-eyebrow">CONTACT</p>
-            <h2 class="panel-title" id="ct-title">Let's connect</h2>
-            <p class="panel-body" id="ct-body">
-              Open to feedback on my apps, collab ideas, or just a good
-              conversation about indie development.
-            </p>
-
-            <div class="contact-info-list">
-              <div class="contact-info-item">
-                <div class="contact-icon">
-                  <svg
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.8"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  >
-                    <path
-                      d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
-                    />
-                    <polyline points="22,6 12,13 2,6" />
-                  </svg>
-                </div>
-                <div>
-                  <p class="contact-info-label" id="ct-email-lbl">Email</p>
-                  <a
-                    class="contact-info-val"
-                    href="mailto:kaanoztrrk411@gmail.com"
-                    >kaanoztrrk411@gmail.com</a
-                  >
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="contact-right">
-            <form class="contact-form" onsubmit="handleSubmit(event)">
-              <div class="form-group">
-                <label for="f-name" id="fl-name">Your name</label>
-                <input
-                  type="text"
-                  id="f-name"
-                  placeholder="Kaan"
-                  autocomplete="name"
-                  required
-                />
-              </div>
-              <div class="form-group">
-                <label for="f-email" id="fl-email">Email</label>
-                <input
-                  type="email"
-                  id="f-email"
-                  placeholder="hi@example.com"
-                  autocomplete="email"
-                  required
-                />
-              </div>
-              <div class="form-group">
-                <label for="f-msg" id="fl-msg">Message</label>
-                <textarea
-                  id="f-msg"
-                  rows="4"
-                  placeholder="..."
-                  required
-                ></textarea>
-              </div>
-              <button type="submit" class="primary-btn" id="fl-send">
-                Send message
+        <!-- Ana ekran -->
+        <div class="home" id="home">
+          <div class="widget" style="--i: 0">
+            <div class="row">
+              <span class="live"><span class="dot"></span><span data-i18n="available">Available for work</span></span>
+              <button class="gear" id="gear" data-i18n-aria="hint.cc" aria-label="Control Center">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12M20 18h0"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/></svg>
               </button>
-              <p class="form-success" id="form-success"></p>
-            </form>
+            </div>
+            <h2>M. Kaan Öztürk</h2>
+            <p data-i18n="widget.sub">Flutter developer · 4+ years · Türkiye</p>
           </div>
+          <div class="label" data-i18n="projects">Projects</div>
+          <nav class="grid" data-i18n-aria="projects" aria-label="Projects">
+            <a class="tile" href="#salonup" data-app="salonup" style="--i:1"><span class="ic"><img src="assets/image/apps/salonup_image.png" alt="" /></span><span class="nm">SalonUp</span></a>
+            <a class="tile" href="#femabayi" data-app="femabayi" style="--i:2"><span class="ic"><img src="assets/image/apps/femabayi_image.png" alt="" /></span><span class="nm">Fema Bayi</span></a>
+            <a class="tile" href="#wordv" data-app="wordv" style="--i:3"><span class="ic"><img src="assets/image/apps/wordv_image.png" alt="" /></span><span class="nm">WordV</span></a>
+            <a class="tile" href="#poshtaua" data-app="poshtaua" style="--i:4"><span class="ic"><img src="assets/image/apps/poshtaua_image.png" alt="" /></span><span class="nm">Poshta UA</span></a>
+            <a class="tile" href="#matchvest" data-app="matchvest" style="--i:5"><span class="ic"><img src="assets/image/apps/matchvest_image.png" alt="" /></span><span class="nm">MatchVest</span></a>
+            <a class="tile" href="#nullnull" data-app="nullnull" style="--i:6"><span class="ic"><img src="assets/image/apps/nullnull_image.png" alt="" /></span><span class="nm">NullNull</span></a>
+          </nav>
+          <nav class="dock" aria-label="Menu">
+            <a class="tile" href="#about" data-app="about" style="--i:7"><span class="ic" data-glyph="about"></span><span class="nm" data-i18n="app.about">About</span></a>
+            <a class="tile" href="#skills" data-app="skills" style="--i:8"><span class="ic" data-glyph="skills"></span><span class="nm" data-i18n="app.skills">Skills</span></a>
+            <a class="tile" href="#writing" data-app="writing" style="--i:9"><span class="ic" data-glyph="writing"></span><span class="nm" data-i18n="app.writing">Writing</span></a>
+            <a class="tile" href="#contact" data-app="contact" style="--i:10"><span class="ic" data-glyph="contact"></span><span class="nm" data-i18n="app.contact">Contact</span></a>
+          </nav>
         </div>
-      </section>
-    </main>
 
-    <!-- ========== FOOTER ========== -->
-    <footer class="site-footer">
-      <p id="footer-text">
-        Built by M. Kaan Öztürk · 2026
-      </p>
-      <div class="footer-links">
-        <a href="#">Privacy Policy</a>
+        <!-- Açılan uygulama -->
+        <div class="app" id="app" role="dialog" aria-modal="true" aria-labelledby="appTitle">
+          <button class="app-back" id="appBack">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+            <span data-i18n="back">Home</span>
+          </button>
+          <div class="app-scroll" id="appScroll" tabindex="-1"></div>
+          <div class="app-bar" id="appBar"></div>
+          <div class="edge" id="edge"></div>
+        </div>
+
+        <!-- Denetim Merkezi -->
+        <div class="cc" id="cc" role="dialog" aria-modal="true" data-i18n-aria="hint.cc" aria-label="Control Center">
+          <div class="cc-grid">
+            <button class="cc-tile" data-theme-toggle>
+              <span class="cc-ic">
+                <svg class="only-dark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                <svg class="only-light" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"/></svg>
+              </span>
+              <span><span class="t" style="display:block" data-i18n="cc.appearance">Appearance</span><span class="s only-dark" data-i18n="cc.dark">Dark</span><span class="s only-light" data-i18n="cc.light">Light</span></span>
+            </button>
+            <div class="cc-tile">
+              <span class="cc-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg></span>
+              <span><span class="t" style="display:block" data-i18n="cc.language">Language</span>
+                <span class="seg" role="group" data-i18n-aria="cc.language" aria-label="Language" style="margin-top:6px;display:inline-flex">
+                  <button data-lang="en" aria-pressed="true">EN</button>
+                  <button data-lang="tr" aria-pressed="false">TR</button>
+                </span>
+              </span>
+            </div>
+            <button class="cc-tile wide" id="ccLock">
+              <span class="cc-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span>
+              <span><span class="t" style="display:block" data-i18n="cc.lock">Lock screen</span><span class="s" data-i18n="cc.lockSub">Back to the start</span></span>
+            </button>
+          </div>
+          <p class="cc-hint" data-i18n="cc.hint">Swipe up or tap outside to close</p>
+        </div>
+
+        <button class="homebar" id="homebar" data-i18n-aria="aria.home" aria-label="Go home"></button>
       </div>
-    </footer>
+    </div>
+  </div>
 
-    <script src="assets/js/main.js"></script>
-  </body>
+  <!-- ===== İçerik =====
+       Uygulama ekranlarının asıl içeriği. Arama motorları burayı okur;
+       bir ikon açıldığında JS ilgili sayfayı telefon ekranına kopyalar.
+       .a-actions bloğu ekranın altındaki sabit butonlara taşınır. -->
+  <main class="pages" id="pages">
+
+    <article class="page" data-page="salonup">
+      <div class="a-head">
+        <div class="a-icon"><img src="assets/image/apps/salonup_image.png" alt="" /></div>
+        <div><h2 class="a-name">SalonUp</h2><div class="a-cat">B2B SaaS</div><span class="a-badge" data-i18n="badge.founder">Founder</span></div>
+      </div>
+      <div class="a-sec"><h3 data-i18n="h.overview">Overview</h3>
+        <p data-i18n="salonup.desc">Multi-tenant SaaS for beauty salons and barbershops: appointments, customers, staff, inventory and subscriptions, with role-based access and real-time sync.</p></div>
+      <div class="a-sec"><h3 data-i18n="h.built">Built with</h3>
+        <div class="chips"><span class="chip">Flutter</span><span class="chip">Firebase</span><span class="chip">BLoC</span><span class="chip">Multi-tenant</span></div></div>
+      <div class="a-actions"><a class="a-cta" href="https://salonup-f7909.web.app" target="_blank" rel="noopener noreferrer"><span data-i18n="cta.web">Open web app</span> ↗</a></div>
+    </article>
+
+    <article class="page" data-page="femabayi">
+      <div class="a-head">
+        <div class="a-icon"><img src="assets/image/apps/femabayi_image.png" alt="" /></div>
+        <div><h2 class="a-name">Fema Bayi</h2><div class="a-cat">B2B SaaS</div><span class="a-badge" data-i18n="badge.client">Client</span></div>
+      </div>
+      <div class="a-sec"><h3 data-i18n="h.overview">Overview</h3>
+        <p data-i18n="femabayi.desc">Multi-tenant platform for LPG conversion dealers: customers, vehicles, installations, technicians and product catalogs across a dealer network, with real-time dashboards.</p></div>
+      <div class="a-sec"><h3 data-i18n="h.built">Built with</h3>
+        <div class="chips"><span class="chip">Flutter</span><span class="chip">Firebase</span><span class="chip">BLoC</span><span class="chip">Multi-tenant</span></div></div>
+      <div class="a-actions"><a class="a-cta" href="https://github.com/kaanoztrrk/FemaBayi" target="_blank" rel="noopener noreferrer"><span data-i18n="cta.github">View on GitHub</span> ↗</a></div>
+    </article>
+
+    <article class="page" data-page="wordv">
+      <div class="a-head">
+        <div class="a-icon"><img src="assets/image/apps/wordv_image.png" alt="" /></div>
+        <div><h2 class="a-name">WordV</h2><div class="a-cat" data-i18n="cat.puzzle">Daily puzzle game</div><span class="a-badge" data-i18n="badge.live">Live on Play</span></div>
+      </div>
+      <div class="a-sec"><h3 data-i18n="h.overview">Overview</h3>
+        <p data-i18n="wordv.desc">Daily word puzzle in the spirit of Wordle. Daily and Levels modes, three themes (Dark / Light / Noir) and a one-time premium purchase.</p></div>
+      <div class="a-sec"><h3 data-i18n="h.built">Built with</h3>
+        <div class="chips"><span class="chip">Flutter</span><span class="chip">AdMob</span><span class="chip">RevenueCat</span></div></div>
+      <div class="a-actions"><a class="a-cta" href="https://play.google.com/store/apps/details?id=com.theviacoder.wordv" target="_blank" rel="noopener noreferrer"><span data-i18n="cta.play">Get it on Google Play</span> ↗</a></div>
+    </article>
+
+    <article class="page" data-page="poshtaua">
+      <div class="a-head">
+        <div class="a-icon"><img src="assets/image/apps/poshtaua_image.png" alt="" /></div>
+        <div><h2 class="a-name">Poshta UA</h2><div class="a-cat" data-i18n="cat.logistics">Logistics</div><span class="a-badge" data-i18n="badge.enterprise">Enterprise client</span></div>
+      </div>
+      <div class="a-sec"><h3 data-i18n="h.overview">Overview</h3>
+        <p data-i18n="poshtaua.desc">Corporate mobile app for a Ukrainian logistics and delivery company: authentication, shipment tracking and production API integration.</p></div>
+      <div class="a-sec"><h3 data-i18n="h.built">Built with</h3>
+        <div class="chips"><span class="chip">Flutter</span><span class="chip">REST API</span><span class="chip">Enterprise</span></div></div>
+      <div class="a-actions"><a class="a-cta" href="https://poshta.ua" target="_blank" rel="noopener noreferrer"><span data-i18n="cta.company">Visit company</span> ↗</a></div>
+    </article>
+
+    <article class="page" data-page="matchvest">
+      <div class="a-head">
+        <div class="a-icon"><img src="assets/image/apps/matchvest_image.png" alt="" /></div>
+        <div><h2 class="a-name">MatchVest</h2><div class="a-cat">Hackathon</div><span class="a-badge" data-i18n="badge.first">1st place</span></div>
+      </div>
+      <div class="a-sec"><h3 data-i18n="h.overview">Overview</h3>
+        <p data-i18n="matchvest.desc">Mobile MVP built at the Cube Incubation Hackathon in a defense-industry technopark. I was the Flutter developer on the team that took first place.</p></div>
+      <div class="a-sec"><h3 data-i18n="h.built">Built with</h3>
+        <div class="chips"><span class="chip">Flutter</span><span class="chip" data-i18n="chip.team">Team project</span><span class="chip">MVP</span></div></div>
+      <div class="a-actions"><a class="a-cta" href="https://github.com/mrttyyldrm/matchvest" target="_blank" rel="noopener noreferrer"><span data-i18n="cta.github">View on GitHub</span> ↗</a></div>
+    </article>
+
+    <article class="page" data-page="nullnull">
+      <div class="a-head">
+        <div class="a-icon"><img src="assets/image/apps/nullnull_image.png" alt="" /></div>
+        <div><h2 class="a-name">NullNull</h2><div class="a-cat" data-i18n="cat.client">Client project</div><span class="a-badge">v1.0</span></div>
+      </div>
+      <div class="a-sec"><h3 data-i18n="h.overview">Overview</h3>
+        <p data-i18n="nullnull.desc">First version of the NullNull mobile app, built for a client with a focus on performance, clean architecture and a smooth experience.</p></div>
+      <div class="a-sec"><h3 data-i18n="h.built">Built with</h3>
+        <div class="chips"><span class="chip">Flutter</span><span class="chip">REST API</span><span class="chip">Firebase</span></div></div>
+      <div class="a-actions"><a class="a-cta" href="https://play.google.com/store/apps/details?id=info.nullnull.app" target="_blank" rel="noopener noreferrer"><span data-i18n="cta.play">Get it on Google Play</span> ↗</a></div>
+    </article>
+
+    <article class="page" data-page="about">
+      <img class="avatar" src="assets/image/profile.jpg" alt="M. Kaan Öztürk" />
+      <div class="a-sec" style="margin-top:18px">
+        <h2 class="big">M. Kaan Öztürk</h2>
+        <div class="a-cat" data-i18n="role">Flutter mobile developer</div>
+      </div>
+      <div class="a-sec">
+        <p data-i18n="about.p1">I design, build and ship Flutter apps end to end: UI, architecture, state management, APIs and the store release.</p>
+        <p data-i18n="about.p2">My own products and client work, from multi-tenant SaaS platforms to puzzle games. I care about performance, modular code and apps that are still easy to change a year later.</p>
+      </div>
+      <div class="a-sec rows">
+        <div><span data-i18n="row.based">Based in</span><span>Türkiye</span></div>
+        <div><span data-i18n="row.focus">Focus</span><span data-i18n="row.focusVal">Flutter · Mobile</span></div>
+        <div><span data-i18n="row.exp">Experience</span><span data-i18n="row.expVal">4+ years</span></div>
+        <div><span data-i18n="row.shipped">Shipped</span><span data-i18n="row.shippedVal">6 projects</span></div>
+      </div>
+      <div class="a-actions"><a class="a-cta" href="assets/cv/kaan_ozturk_cv.pdf" download="Kaan-Ozturk-CV.pdf"><span data-i18n="cv">Download CV</span> ↓</a></div>
+    </article>
+
+    <article class="page" data-page="skills">
+      <div class="a-head">
+        <div class="a-icon" data-glyph="skills"></div>
+        <div><h2 class="a-name" data-i18n="app.skills">Skills</h2><div class="a-cat" data-i18n="skills.sub">What I work with every day</div></div>
+      </div>
+      <div class="a-sec"><h3 data-i18n="sk.core">Core</h3><div class="chips"><span class="chip">Flutter</span><span class="chip">Dart</span><span class="chip">BLoC / Cubit</span><span class="chip">Provider</span><span class="chip">GetX</span><span class="chip">Clean Architecture</span></div></div>
+      <div class="a-sec"><h3 data-i18n="sk.data">Data &amp; backend</h3><div class="chips"><span class="chip">Firebase</span><span class="chip">REST API</span><span class="chip">Hive</span><span class="chip">SQLite</span><span class="chip">SharedPreferences</span></div></div>
+      <div class="a-sec"><h3 data-i18n="sk.product">Product</h3><div class="chips"><span class="chip">Responsive UI</span><span class="chip">App publishing</span><span class="chip">AdMob</span><span class="chip">RevenueCat</span><span class="chip">Crashlytics</span><span class="chip">Analytics</span></div></div>
+      <div class="a-sec"><h3 data-i18n="sk.tools">Tools</h3><div class="chips"><span class="chip">Git</span><span class="chip">GitHub</span><span class="chip">Figma</span><span class="chip">Android Studio</span><span class="chip">VS Code</span><span class="chip">Play Console</span></div></div>
+      <div class="a-actions"><a class="a-cta" href="assets/cv/kaan_ozturk_cv.pdf" download="Kaan-Ozturk-CV.pdf"><span data-i18n="cv">Download CV</span> ↓</a></div>
+    </article>
+
+    <article class="page" data-page="writing">
+      <div class="a-head">
+        <div class="a-icon" data-glyph="writing"></div>
+        <div><h2 class="a-name" data-i18n="app.writing">Writing</h2><div class="a-cat" data-i18n="writing.sub">Notes on Flutter and architecture</div></div>
+      </div>
+      <div class="a-sec list">
+        <a href="https://medium.com/@kaanoztrrk411/flutterda-state-management-bloc-cubit-melez-yaklaşımı-cee910dad726" target="_blank" rel="noopener"><div class="lt" data-i18n="w1">State Management in Flutter: BLoC + Cubit Hybrid Approach</div><div class="lm"><span data-i18n="w.meta">Medium · in Turkish</span> · 2026 · 6 <span data-i18n="min">min</span> ↗</div></a>
+        <a href="https://medium.com/@kaanoztrrk411/mvvm-bloc-ile-flutter-uygulaması-geliştirmenin-avantajları-03367701fe64" target="_blank" rel="noopener"><div class="lt" data-i18n="w2">Advantages of Developing Flutter Apps with MVVM + BLoC</div><div class="lm"><span data-i18n="w.meta">Medium · in Turkish</span> · 2026 · 7 <span data-i18n="min">min</span> ↗</div></a>
+        <a href="https://medium.com/@kaanoztrrk411/flutterda-api-verisi-çekme-freezed-ve-bloc-ile-basit-adımlar-bfea69a87284" target="_blank" rel="noopener"><div class="lt" data-i18n="w3">Fetching API Data in Flutter with freezed and BLoC</div><div class="lm"><span data-i18n="w.meta">Medium · in Turkish</span> · 2024 · 7 <span data-i18n="min">min</span> ↗</div></a>
+        <a href="https://medium.com/@kaanoztrrk411/kendi-widgetlerinizi-oluşturun-flutter-i̇çin-adım-adım-kılavuz-818520d98435" target="_blank" rel="noopener"><div class="lt" data-i18n="w4">Create Your Own Widgets: A Step-by-Step Guide</div><div class="lm"><span data-i18n="w.meta">Medium · in Turkish</span> · 2024 · 8 <span data-i18n="min">min</span> ↗</div></a>
+        <a href="https://medium.com/@kaanoztrrk411/flutterda-navigasyon-i̇şlemleri-uygulama-içi-rota-yönetimi-1913b0e017a7" target="_blank" rel="noopener"><div class="lt" data-i18n="w5">Navigation in Flutter: In-App Route Management</div><div class="lm"><span data-i18n="w.meta">Medium · in Turkish</span> · 2024 · 8 <span data-i18n="min">min</span> ↗</div></a>
+      </div>
+      <div class="a-actions"><a class="a-cta" href="https://medium.com/@kaanoztrrk411" target="_blank" rel="noopener noreferrer"><span data-i18n="cta.medium">All posts on Medium</span> ↗</a></div>
+    </article>
+
+    <article class="page" data-page="contact">
+      <div class="a-head">
+        <div class="a-icon" data-glyph="contact"></div>
+        <div><h2 class="a-name" data-i18n="app.contact">Contact</h2><div class="a-cat" data-i18n="contact.sub">Usually replies within a day</div></div>
+      </div>
+      <div class="a-sec"><div class="big" data-i18n="contact.big">Let's build something.</div>
+        <p style="margin-top:10px" data-i18n="contact.p">A product idea, a client project or feedback on one of my apps — write me.</p></div>
+      <div class="a-sec rows">
+        <a href="mailto:kaanoztrrk411@gmail.com"><span data-i18n="row.email">Email</span><span>kaanoztrrk411@gmail.com</span></a>
+        <a href="https://github.com/kaanoztrrk" target="_blank" rel="noopener"><span>GitHub</span><span>kaanoztrrk</span></a>
+        <a href="https://x.com/theviacoder" target="_blank" rel="noopener"><span>X</span><span>@theviacoder</span></a>
+        <a href="https://instagram.com/kaanoztrrk" target="_blank" rel="noopener"><span>Instagram</span><span>@kaanoztrrk</span></a>
+      </div>
+      <div class="a-actions">
+        <a class="a-cta" href="mailto:kaanoztrrk411@gmail.com"><span data-i18n="cta.email">Send an email</span> ↗</a>
+        <a class="a-cta ghost" href="assets/cv/kaan_ozturk_cv.pdf" download="Kaan-Ozturk-CV.pdf"><span data-i18n="cv">Download CV</span> ↓</a>
+      </div>
+    </article>
+  </main>
+
+  <script src="assets/js/main.js"></script>
+</body>
 </html>

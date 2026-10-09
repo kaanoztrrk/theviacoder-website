@@ -1,462 +1,510 @@
 /* ============================================
-   KAAN.CODES — Portfolio JavaScript
+   theviacoder — telefon davranışları
+   Kilit ekranı, ana ekran, uygulama açma/kapama,
+   jestler (kaydırma), Denetim Merkezi, dil ve tema.
    ============================================ */
 
-/* ---- Language copy ---- */
-const COPY = {
-  en: {
-    heroIm: "Hi, I'm",
-    phrases: [
-      "I build mobile products.",
-      "I write clean Flutter code.",
-      "I turn ideas into apps.",
-    ],
-    heroSub:
-      "Creating <strong>high-quality Flutter applications</strong> with a focus on <strong>performance</strong> and <strong>user experience</strong>.",
-    statusText: "Available",
-    cvBtn: "Download CV",
+/* ---- Türkçe metinler (İngilizceler HTML'de duruyor) ---- */
+const TR = {
+  title: "M. Kaan Öztürk — Flutter Mobil Geliştirici",
+  "nav.contact": "İletişim",
+  cv: "CV indir",
+  "side.eyebrow": "Mobil geliştirici · Flutter",
+  "side.intro": "Mobil uygulamalar tasarlıyor, geliştiriyor ve yayınlıyorum. Bu site de bir uygulama gibi çalışıyor — kilidi aç ve göz at.",
+  "hint.unlock": "Kilidi aç",
+  "hint.swipe": "kaydır",
+  "hint.home": "Ana ekran",
+  "hint.bar": "alt çubuk",
+  "hint.cc": "Denetim Merkezi",
+  "hint.status": "durum çubuğu",
+  "hint.lock": "Kilitle",
+  "hint.power": "yan tuş",
+  "aria.lock": "Telefonu kilitle",
+  "aria.theme": "Temayı değiştir",
+  "aria.unlock": "Kilidi aç: yukarı kaydır, tıkla ya da Enter'a bas",
+  "aria.home": "Ana ekrana dön",
+  role: "Flutter mobil geliştirici",
+  "n.now": "şimdi",
+  "n.2h": "2 sa önce",
+  "n1.t": "Kaan yeni projelere açık",
+  "n1.d": "Fikirden mağazaya Flutter uygulamaları. İletişime geçmek için dokun.",
+  "n2.t": "Bugünün bulmacası yayında",
+  "n2.d": "Beş harf, altı deneme. Bulabilir misin?",
+  "lock.foot": "Keşfetmek için yukarı kaydır",
+  available: "Yeni işlere açık",
+  "widget.sub": "Flutter geliştirici · 4+ yıl · Türkiye",
+  projects: "Projeler",
+  "app.about": "Hakkımda",
+  "app.skills": "Yetenekler",
+  "app.writing": "Yazılar",
+  "app.contact": "İletişim",
+  back: "Ana Ekran",
+  "cc.appearance": "Görünüm",
+  "cc.dark": "Koyu",
+  "cc.light": "Açık",
+  "cc.language": "Dil",
+  "cc.lock": "Ekranı kilitle",
+  "cc.lockSub": "Başa dön",
+  "cc.hint": "Kapatmak için yukarı kaydır ya da boşluğa dokun",
 
-    tlAbout: "About Me",
-    tlResume: "Skills",
-    tlApps: "Apps",
-    tlWriting: "Writing",
-    tlContact: "Contact",
+  "badge.founder": "Kurucu",
+  "badge.client": "Müşteri",
+  "badge.live": "Play'de yayında",
+  "badge.enterprise": "Kurumsal müşteri",
+  "badge.first": "Birincilik",
+  "cat.puzzle": "Günlük bulmaca oyunu",
+  "cat.logistics": "Lojistik",
+  "cat.client": "Müşteri projesi",
+  "h.overview": "Genel bakış",
+  "h.built": "Kullanılanlar",
+  "chip.team": "Takım projesi",
+  "salonup.desc": "Güzellik salonları ve berberler için çok kiracılı (multi-tenant) SaaS: randevu, müşteri, personel, stok ve abonelik yönetimi; rol tabanlı erişim ve gerçek zamanlı senkronizasyonla.",
+  "femabayi.desc": "LPG dönüşüm bayileri için çok kiracılı platform: bayi ağı genelinde müşteri, araç, montaj, teknisyen ve ürün kataloğu yönetimi, gerçek zamanlı panellerle.",
+  "wordv.desc": "Wordle tarzında günlük kelime bulmacası. Günlük ve Seviye modları, üç tema (Koyu / Açık / Noir) ve tek seferlik premium satın alma.",
+  "poshtaua.desc": "Ukrayna merkezli bir lojistik ve kargo şirketi için kurumsal mobil uygulama: kimlik doğrulama, gönderi takibi ve canlı ortam API entegrasyonu.",
+  "matchvest.desc": "Savunma sanayi teknoparkındaki Cube Incubation Hackathon'da geliştirilen mobil MVP. Birinci olan takımın Flutter geliştiricisiydim.",
+  "nullnull.desc": "Bir müşteri için geliştirdiğim NullNull mobil uygulamasının ilk sürümü; performans, temiz mimari ve akıcı bir deneyim odaklı.",
+  "cta.web": "Web uygulamasını aç",
+  "cta.github": "GitHub'da gör",
+  "cta.play": "Google Play'den indir",
+  "cta.company": "Şirketi ziyaret et",
+  "cta.medium": "Medium'daki tüm yazılar",
+  "cta.email": "E-posta gönder",
 
-    ilName: "Name",
-    ilLocation: "Location",
-    ilFocus: "Focus",
-    ilFocusVal: "Flutter / Mobile",
-
-    abEyebrow: "ABOUT ME",
-    abTitle: "Flutter-focused mobile application developer",
-    abBody1:
-      "I develop end-to-end mobile applications using Flutter. I manage the full development cycle including UI/UX implementation, scalable architecture design, state management with BLoC, REST API integration, and application deployment. I follow clean architecture principles to build maintainable, testable, and production-ready codebases.",
-    abBody2:
-      "My focus area is building mobile applications that solve finance and everyday life problems. In my spare time, I work on mobile game projects. I prioritize performance, modular structure, and long-term maintainability. I share my projects under the @kaan.codes identity.",
-    cvBtnAbout: "Download CV",
-    slApps: "Published apps",
-    slYears: "Years experience",
-    slFocus: "Primary stack",
-
-    skEyebrow: "SKILLS",
-    skTitle: "Stack & expertise",
-    sgTech: "Tech Stack",
-    sgProduct: "Product & Monetization",
-    sgTools: "Tools",
-
-    apEyebrow: "APPS",
-    apTitle: "Things I've built",
-    apSub: "Real apps on Google Play. No tutorial projects.",
-
-    suCategory: "SaaS Project",
-    suBadge: "Founder",
-    suDesc:
-      "Multi-tenant B2B SaaS platform for beauty salons and barbershops. Manage appointments, customers, staff, inventory, services, and subscriptions with secure role-based access and real-time synchronization.",
-    suLink: "View on Web App",
-
-    fbCategory: "SaaS Project",
-    fbBadge: "Client",
-    fbDesc:
-      "Multi-tenant B2B SaaS for LPG conversion dealers. Manages customers, vehicles, installations, technicians, and product catalogs across a dealer network with real-time dashboards.",
-    fbLink: "View on GitHub",
-
-    wvCategory: "Daily Puzzle Game",
-    wvBadge: "Live",
-    wvDesc:
-      "Daily word puzzle game. Wordle-style with Daily and Levels modes, three themes (Dark / Light / Noir), and a one-time premium IAP.",
-    wvLink: "View on Play Store",
-
-    puCategory: "Enterprise Client Project",
-    puBadge: "Professional Project",
-    puDesc:
-      "Developed the corporate Flutter mobile application for Poshta UA, a Ukrainian logistics and delivery company. Implemented the mobile client, authentication flow, shipment tracking, and API integration for production use.",
-    puLink: "View Company",
-
-    mvCategory: "Hackathon Winner",
-    mvBadge: "🏆 Winner",
-    mvDesc:
-      'Built the mobile application for MatchVest during the Cube Incubation Hackathon in the defense industry technopark. Contributed as the Flutter Mobile Developer, delivering the MVP that won <strong>1st place</strong>.',
-    mvLink: "View on GitHub",
-
-    nnCategory: "Client Project",
-    nnBadge: "Client",
-    nnDesc:
-      "Developed the first version of the NullNull mobile application for a client. Built with Flutter, focusing on performance, clean architecture, and a smooth user experience.",
-    nnLink: "View on Play Store",
-
-    arEyebrow: "WRITING",
-    arTitle: "Articles & posts",
-    arSub: "Thoughts on indie development, Flutter, and building products.",
-
-    ctEyebrow: "CONTACT",
-    ctTitle: "Let's connect",
-    ctBody:
-      "Open to feedback on my apps, collab ideas, or just a good conversation about indie development.",
-    ctEmailLbl: "Email",
-    flName: "Your name",
-    flEmail: "Email",
-    flMsg: "Message",
-    flSend: "Send message",
-    formOk: "Message sent — thanks!",
-    formErr: "Something went wrong. Try emailing directly.",
-    formNetErr: "Connection error. Try again later.",
-
-    footerText: "Built by M. Kaan Öztürk · 2026",
-  },
-
-  tr: {
-    heroIm: "Merhaba, Ben",
-    phrases: [
-      "Flutter ile geliştiriyorum.",
-      "Gerçek ürünler üretiyorum.",
-      "Kullanıcı odaklı düşünüyorum.",
-    ],
-    heroSub:
-      "Performans ve <strong>kullanıcı deneyimini</strong> odağına alan <strong>yüksek kaliteli Flutter uygulamaları</strong> geliştiriyorum.",
-    statusText: "Müsait",
-    cvBtn: "CV İndir",
-
-    tlAbout: "Hakkımda",
-    tlResume: "Beceriler",
-    tlApps: "Uygulamalar",
-    tlWriting: "Yazılar",
-    tlContact: "İletişim",
-
-    ilName: "İsim",
-    ilLocation: "Konum",
-    ilFocus: "Odak",
-    ilFocusVal: "Flutter / Mobil",
-
-    abEyebrow: "HAKKIMDA",
-    abTitle: "Flutter odaklı mobil uygulama geliştirici",
-    abBody1:
-      "Flutter kullanarak uçtan uca mobil uygulamalar geliştiriyorum. UI/UX implementasyonu, ölçeklenebilir mimari tasarımı, BLoC ile state management, REST API entegrasyonu ve uygulama yayınlama süreçlerinin tamamını yönetiyorum. Temiz mimari prensipleriyle sürdürülebilir, test edilebilir ve üretime hazır kod yapıları kuruyorum.",
-    abBody2:
-      "Odak alanım finans ve günlük hayat problemlerini çözen mobil uygulamalar geliştirmek. Boş zamanlarımda ise mobil oyun projeleriyle ilgileniyorum. Performans, modüler yapı ve uzun vadeli bakım kolaylığına önem veriyorum. Geliştirdiğim ürünleri @kaan.codes hesabı üzerinden paylaşıyorum.",
-    cvBtnAbout: "CV İndir",
-    slApps: "Yayınlanan uygulama",
-    slYears: "Yıllık deneyim",
-    slFocus: "Ana teknoloji",
-
-    skEyebrow: "BECERİLER",
-    skTitle: "Teknoloji yığını",
-    sgTech: "Teknoloji Yığını",
-    sgProduct: "Ürün & Monetizasyon",
-    sgTools: "Araçlar",
-
-    apEyebrow: "UYGULAMALAR",
-    apTitle: "Yaptıklarım",
-    apSub: "Google Play'de gerçek uygulamalar. Tutorial projesi değil.",
-
-    suCategory: "SaaS Projesi",
-    suBadge: "Kurucu",
-    suDesc:
-      "Güzellik salonları ve berberler için çok kiracılı (multi-tenant) B2B SaaS platformu. Randevu, müşteri, personel, stok, hizmet ve abonelik yönetimi; güvenli rol tabanlı erişim ve gerçek zamanlı senkronizasyon.",
-    suLink: "Web Uygulamasını Aç",
-
-    fbCategory: "SaaS Projesi",
-    fbBadge: "Müşteri",
-    fbDesc:
-      "LPG dönüşüm bayileri için çok kiracılı (multi-tenant) B2B SaaS. Bayi ağı genelinde müşteri, araç, montaj, teknisyen ve ürün kataloglarını gerçek zamanlı panellerle yönetir.",
-    fbLink: "GitHub'da Gör",
-
-    wvCategory: "Günlük Bulmaca Oyunu",
-    wvBadge: "Yayında",
-    wvDesc:
-      "Günlük kelime bulmacası. Günlük ve Seviye modları, üç tema (Koyu / Açık / Noir) ve tek seferlik premium IAP.",
-    wvLink: "Play Store'da Gör",
-
-    puCategory: "Kurumsal Müşteri Projesi",
-    puBadge: "Profesyonel Proje",
-    puDesc:
-      "Ukrayna merkezli bir lojistik ve kargo şirketi olan Poshta UA için kurumsal Flutter mobil uygulamasını geliştirdim. Mobil istemciyi, kimlik doğrulama akışını, gönderi takibini ve üretim ortamı için API entegrasyonunu uyguladım.",
-    puLink: "Şirketi Görüntüle",
-
-    mvCategory: "Hackathon Birincisi",
-    mvBadge: "🏆 Birinci",
-    mvDesc:
-      "Savunma sanayi teknoparkında düzenlenen Cube Incubation Hackathon'da MatchVest için mobil uygulamayı geliştirdim. Flutter Mobile Developer olarak katkı sağlayarak <strong>1. olan</strong> MVP'yi teslim ettim.",
-    mvLink: "GitHub'da Gör",
-
-    nnCategory: "Müşteri Projesi",
-    nnBadge: "Müşteri",
-    nnDesc:
-      "Bir müşteri için NullNull mobil uygulamasının ilk versiyonunu geliştirdim. Flutter ile performans, temiz mimari ve akıcı kullanıcı deneyimine odaklanarak inşa ettim.",
-    nnLink: "Play Store'da Gör",
-
-    arEyebrow: "YAZILAR",
-    arTitle: "Makaleler & yazılar",
-    arSub:
-      "Bağımsız geliştirme, Flutter ve ürün geliştirme üzerine düşünceler.",
-
-    ctEyebrow: "İLETİŞİM",
-    ctTitle: "Bağlanalım",
-    ctBody:
-      "Uygulamalar hakkında geri bildirim, iş birliği fikirleri veya bağımsız geliştirme üzerine sohbet için yazabilirsin.",
-    ctEmailLbl: "E-posta",
-    flName: "Adın",
-    flEmail: "E-posta",
-    flMsg: "Mesaj",
-    flSend: "Gönder",
-    formOk: "Mesaj iletildi — teşekkürler!",
-    formErr: "Bir şeyler ters gitti. Doğrudan e-posta göndermeyi dene.",
-    formNetErr: "Bağlantı hatası. Daha sonra tekrar dene.",
-
-    footerText: "M. Kaan Öztürk tarafından yapıldı · 2026",
-  },
+  "about.p1": "Flutter uygulamalarını uçtan uca tasarlıyor, geliştiriyor ve yayınlıyorum: arayüz, mimari, state management, API'ler ve mağaza yayını.",
+  "about.p2": "Kendi ürünlerim ve müşteri işlerim; çok kiracılı SaaS platformlarından bulmaca oyunlarına kadar. Performansa, modüler koda ve bir yıl sonra da kolayca değiştirilebilen uygulamalara önem veriyorum.",
+  "row.based": "Konum",
+  "row.focus": "Odak",
+  "row.focusVal": "Flutter · Mobil",
+  "row.exp": "Deneyim",
+  "row.expVal": "4+ yıl",
+  "row.shipped": "Projeler",
+  "row.shippedVal": "6 proje",
+  "row.email": "E-posta",
+  "skills.sub": "Her gün kullandıklarım",
+  "sk.core": "Temel",
+  "sk.data": "Veri & backend",
+  "sk.product": "Ürün",
+  "sk.tools": "Araçlar",
+  "writing.sub": "Flutter ve mimari üzerine notlar",
+  "w.meta": "Medium · Türkçe",
+  min: "dk",
+  w1: "Flutter'da State Management: BLoC + Cubit Melez Yaklaşımı",
+  w2: "MVVM + BLoC ile Flutter Uygulaması Geliştirmenin Avantajları",
+  w3: "Flutter'da API Verisi Çekme: freezed ve BLoC ile Basit Adımlar",
+  w4: "Kendi Widget'larınızı Oluşturun: Flutter İçin Adım Adım Kılavuz",
+  w5: "Flutter'da Navigasyon İşlemleri: Uygulama İçi Rota Yönetimi",
+  "contact.sub": "Genellikle bir gün içinde yanıtlar",
+  "contact.big": "Birlikte bir şey yapalım.",
+  "contact.p": "Bir ürün fikri, bir müşteri projesi ya da uygulamalarımdan biri hakkında geri bildirim — yaz bana.",
 };
 
-/* ---- State ---- */
-let currentLang = "en";
-let typingTimer = null;
-let phraseIdx = 0;
-let charIdx = 0;
-let isDeleting = false;
-let skillsAnimated = false;
+const SVG = (d) =>
+  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${d}</svg>`;
+const GLYPH = {
+  about: SVG('<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>'),
+  skills: SVG('<path d="M12 3 2 8l10 5 10-5-10-5z"/><path d="m2 12 10 5 10-5"/><path d="m2 16 10 5 10-5"/>'),
+  writing: SVG('<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/>'),
+  contact: SVG('<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/>'),
+};
 
-/* ---- Tab switching ---- */
-function switchTab(tabId, btn) {
-  document
-    .querySelectorAll(".panel")
-    .forEach((p) => p.classList.remove("active"));
-  document.querySelectorAll(".tab-btn").forEach((b) => {
-    b.classList.remove("active");
-    b.setAttribute("aria-selected", "false");
-  });
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const root = document.documentElement;
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const buzz = () => navigator.vibrate && navigator.vibrate(8);
 
-  const panel = document.getElementById("panel-" + tabId);
-  if (panel) panel.classList.add("active");
-  if (btn) {
-    btn.classList.add("active");
-    btn.setAttribute("aria-selected", "true");
+const screen = $("#screen");
+const lock = $("#lock");
+const home = $("#home");
+const app = $("#app");
+const appScroll = $("#appScroll");
+const appBar = $("#appBar");
+const cc = $("#cc");
+const island = $("#island");
+
+$$("[data-glyph]").forEach((el) => (el.innerHTML = GLYPH[el.dataset.glyph]));
+
+const PAGES = Object.fromEntries($$(".page").map((p) => [p.dataset.page, p]));
+
+/* ============ Dil ============ */
+// İngilizce metinler HTML'de; dil değişince geri dönebilmek için saklanır.
+const EN_TITLE = document.title;
+$$("[data-i18n]").forEach((el) => (el.dataset.en = el.textContent));
+$$("[data-i18n-aria]").forEach((el) => (el.dataset.enAria = el.getAttribute("aria-label")));
+$$("[data-i18n-title]").forEach((el) => (el.dataset.enTitle = el.title));
+
+let lang = root.lang === "tr" ? "tr" : "en";
+const t = (key, en) => (lang === "tr" && TR[key]) || en;
+
+function applyLang() {
+  root.lang = lang;
+  $$("[data-i18n]").forEach((el) => (el.textContent = t(el.dataset.i18n, el.dataset.en)));
+  $$("[data-i18n-aria]").forEach((el) => el.setAttribute("aria-label", t(el.dataset.i18nAria, el.dataset.enAria)));
+  $$("[data-i18n-title]").forEach((el) => (el.title = t(el.dataset.i18nTitle, el.dataset.enTitle)));
+  $$("[data-lang]").forEach((b) => b.setAttribute("aria-pressed", b.dataset.lang === lang));
+  updateTitle();
+  clock();
+}
+
+function updateTitle() {
+  const name = current && $(".a-name, .big", appScroll);
+  document.title = name ? `${name.textContent} · M. Kaan Öztürk` : t("title", EN_TITLE);
+}
+
+$$("[data-lang]").forEach((b) =>
+  b.addEventListener("click", () => {
+    lang = b.dataset.lang;
+    localStorage.setItem("lang", lang);
+    applyLang();
+  })
+);
+
+/* ============ Tema ============ */
+function syncThemeColor() {
+  $('meta[name="theme-color"]').content = root.dataset.theme === "light" ? "#ecebf5" : "#07070b";
+}
+$$("[data-theme-toggle]").forEach((b) =>
+  b.addEventListener("click", () => {
+    root.dataset.theme = root.dataset.theme === "light" ? "dark" : "light";
+    localStorage.setItem("theme", root.dataset.theme);
+    syncThemeColor();
+  })
+);
+
+/* ============ Telefon durumu ============ */
+let state = "lock"; // lock | home | app
+let current = null; // açık uygulamanın id'si
+let k = 1; // telefonun ekrandaki ölçeği (jest mesafeleri için)
+
+home.inert = true;
+app.inert = true;
+cc.inert = true;
+
+function unlock(instant) {
+  if (state !== "lock") return;
+  state = "home";
+  if (instant) {
+    lock.style.transition = "none";
+    requestAnimationFrame(() => requestAnimationFrame(() => (lock.style.transition = "")));
   }
+  lock.style.transform = "";
+  lock.classList.add("gone");
+  lock.inert = true;
+  home.inert = false;
+  home.classList.add("in");
+  if (!instant) buzz();
+}
 
-  if (tabId === "resume" && !skillsAnimated) {
-    setTimeout(animateSkillBars, 80);
-    skillsAnimated = true;
+function relock() {
+  closeCC();
+  if (current) {
+    closeApp(true);
+    history.replaceState(null, "", location.pathname + location.search);
   }
-
-  setTimeout(() => {
-    const wrapper = document.querySelector(".panels-wrapper");
-    if (wrapper) {
-      const top = wrapper.getBoundingClientRect().top + window.scrollY;
-      window.scrollTo({ top, behavior: "smooth" });
-    }
-  }, 50);
+  state = "lock";
+  lock.classList.remove("gone");
+  lock.inert = false;
+  home.inert = true;
+  home.classList.remove("in");
+  updateTitle();
+  buzz();
 }
 
-function animateSkillBars() {
-  document.querySelectorAll(".skill-fill").forEach((fill) => {
-    const target = fill.getAttribute("data-width");
-    if (target) fill.style.width = target + "%";
-  });
+// İkonun ekran içindeki yeri, clip-path inset() olarak.
+// offset* değerleri transform'dan etkilenmez; telefon ölçeklense de doğru çalışır.
+function insetFor(el) {
+  let x = 0, y = 0;
+  for (let n = el; n && n !== screen; n = n.offsetParent) { x += n.offsetLeft; y += n.offsetTop; }
+  const W = screen.clientWidth, H = screen.clientHeight;
+  return `inset(${y}px ${W - x - el.offsetWidth}px ${H - y - el.offsetHeight}px ${x}px round 17px)`;
 }
+const fullInset = () => `inset(0px 0px 0px 0px round ${getComputedStyle(screen).borderTopLeftRadius})`;
+const iconOf = (id) => $(`.home [data-app="${id}"] .ic`);
 
-/* ---- Helper: safe setter (element yoksa hata vermez) ---- */
-function setText(id, value) {
-  const el = document.getElementById(id);
-  if (el) el.textContent = value;
-}
-function setHTML(id, value) {
-  const el = document.getElementById(id);
-  if (el) el.innerHTML = value;
-}
+function openApp(id, instant) {
+  app.getAnimations().forEach((a) => a.cancel());
+  current = id;
+  state = "app";
 
-/* ---- Language switching ---- */
-function setLang(lang) {
-  currentLang = lang;
+  // Sayfayı kopyala; .a-actions içindeki butonlar alttaki sabit çubuğa gider
+  const page = PAGES[id].cloneNode(true);
+  const actions = $(".a-actions", page);
+  appBar.replaceChildren(...(actions ? actions.children : []));
+  actions && actions.remove();
+  page.className = "a-content";
+  page.removeAttribute("data-page");
+  $(".a-name, .big", page).id = "appTitle";
+  appScroll.replaceChildren(page);
+  appScroll.scrollTop = 0;
 
-  document.getElementById("btn-en").classList.toggle("active", lang === "en");
-  document.getElementById("btn-tr").classList.toggle("active", lang === "tr");
-  document.documentElement.setAttribute("lang", lang);
-
-  const c = COPY[lang];
-
-  // Hero
-  setText("hero-im", c.heroIm);
-  setHTML("hero-sub", c.heroSub);
-  setText("status-text", c.statusText);
-  setText("cv-btn-top", c.cvBtn);
-
-  // Tab labels
-  setText("tl-about", c.tlAbout);
-  setText("tl-resume", c.tlResume);
-  setText("tl-apps", c.tlApps);
-  setText("tl-writing", c.tlWriting);
-  setText("tl-contact", c.tlContact);
-
-  // About
-  setText("il-name", c.ilName);
-  setText("il-location", c.ilLocation);
-  setText("il-focus", c.ilFocus);
-  setText("il-focus-val", c.ilFocusVal);
-  setText("ab-eyebrow", c.abEyebrow);
-  setText("ab-title", c.abTitle);
-  setHTML("ab-body1", c.abBody1);
-  setHTML("ab-body2", c.abBody2);
-  setText("cv-btn-about", c.cvBtnAbout);
-  setText("sl-apps", c.slApps);
-  setText("sl-years", c.slYears);
-  setText("sl-focus", c.slFocus);
-
-  // Skills
-  setText("sk-eyebrow", c.skEyebrow);
-  setText("sk-title", c.skTitle);
-  setText("sg-tech", c.sgTech);
-  setText("sg-product", c.sgProduct);
-  setText("sg-tools", c.sgTools);
-
-  // Apps
-  setText("ap-eyebrow", c.apEyebrow);
-  setText("ap-title", c.apTitle);
-  setText("ap-sub", c.apSub);
-
-  setText("su-category", c.suCategory);
-  setText("su-badge", c.suBadge);
-  setText("su-desc", c.suDesc);
-  setText("su-link", c.suLink);
-
-  setText("fb-category", c.fbCategory);
-  setText("fb-badge", c.fbBadge);
-  setText("fb-desc", c.fbDesc);
-  setText("fb-link", c.fbLink);
-
-  setText("wv-category", c.wvCategory);
-  setText("wv-badge", c.wvBadge);
-  setText("wv-desc", c.wvDesc);
-  setText("wv-link", c.wvLink);
-
-  setText("pu-category", c.puCategory);
-  setText("pu-badge", c.puBadge);
-  setText("pu-desc", c.puDesc);
-  setText("pu-link", c.puLink);
-
-  setText("mv-category", c.mvCategory);
-  setText("mv-badge", c.mvBadge);
-  setHTML("mv-desc", c.mvDesc);
-  setText("mv-link", c.mvLink);
-
-  setText("nn-category", c.nnCategory);
-  setText("nn-badge", c.nnBadge);
-  setText("nn-desc", c.nnDesc);
-  setText("nn-link", c.nnLink);
-
-  // Writing / Articles
-  setText("ar-eyebrow", c.arEyebrow);
-  setText("ar-title", c.arTitle);
-  setText("ar-sub", c.arSub);
-
-  // Contact
-  setText("ct-eyebrow", c.ctEyebrow);
-  setText("ct-title", c.ctTitle);
-  setText("ct-body", c.ctBody);
-  setText("ct-email-lbl", c.ctEmailLbl);
-  setText("fl-name", c.flName);
-  setText("fl-email", c.flEmail);
-  setText("fl-msg", c.flMsg);
-  setText("fl-send", c.flSend);
-
-  // Footer
-  setText("footer-text", c.footerText);
-
-  // Reset typing
-  clearTimeout(typingTimer);
-  phraseIdx = 0;
-  charIdx = 0;
-  isDeleting = false;
-  const typedEl = document.getElementById("typed-text");
-  if (typedEl) typedEl.textContent = "";
-  tick();
-}
-
-/* ---- Typing animation ---- */
-function tick() {
-  const phrases = COPY[currentLang].phrases;
-  const current = phrases[phraseIdx];
-  const typedEl = document.getElementById("typed-text");
-  if (!typedEl) return;
-
-  if (!isDeleting) {
-    charIdx++;
-    typedEl.textContent = current.slice(0, charIdx);
-
-    if (charIdx === current.length) {
-      isDeleting = true;
-      typingTimer = setTimeout(tick, 1600);
-    } else {
-      typingTimer = setTimeout(tick, 70);
-    }
-  } else {
-    charIdx--;
-    typedEl.textContent = current.slice(0, charIdx);
-
-    if (charIdx === 0) {
-      isDeleting = false;
-      phraseIdx = (phraseIdx + 1) % phrases.length;
-      typingTimer = setTimeout(tick, 350);
-    } else {
-      typingTimer = setTimeout(tick, 38);
-    }
-  }
-}
-
-/* ---- Contact form ---- */
-async function handleSubmit(e) {
-  e.preventDefault();
-
-  const name = document.getElementById("f-name").value.trim();
-  const email = document.getElementById("f-email").value.trim();
-  const msg = document.getElementById("f-msg").value.trim();
-  const successEl = document.getElementById("form-success");
-  const submitBtn = document.getElementById("fl-send");
-
-  if (!name || !email || !msg) return;
-
-  submitBtn.disabled = true;
-  submitBtn.textContent = "...";
-
-  try {
-    const res = await fetch("https://formspree.io/f/mrewkepe", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-      body: JSON.stringify({ name, email, message: msg }),
+  app.classList.add("open");
+  app.inert = false;
+  home.classList.add("behind");
+  home.inert = true;
+  if (!instant) {
+    app.animate([{ clipPath: insetFor(iconOf(id)) }, { clipPath: fullInset() }], {
+      duration: reduce ? 1 : 540, easing: "cubic-bezier(.2,.9,.25,1)", fill: "forwards",
     });
-
-    if (res.ok) {
-      successEl.style.color = "var(--success)";
-      successEl.textContent = COPY[currentLang].formOk;
-      e.target.reset();
-    } else {
-      successEl.style.color = "#f87171";
-      successEl.textContent = COPY[currentLang].formErr;
-    }
-  } catch (err) {
-    successEl.style.color = "#f87171";
-    successEl.textContent = COPY[currentLang].formNetErr;
+    island.classList.add("pulse");
+    setTimeout(() => island.classList.remove("pulse"), 600);
+    buzz();
   }
-
-  submitBtn.disabled = false;
-  submitBtn.textContent = COPY[currentLang].flSend;
-
-  setTimeout(() => {
-    successEl.textContent = "";
-  }, 5000);
+  appScroll.focus({ preventScroll: true });
+  updateTitle();
 }
 
-/* ---- Theme ---- */
-function toggleTheme() {
-  const isDark =
-    document.documentElement.getAttribute("data-theme") !== "light";
-  const next = isDark ? "light" : "dark";
-  document.documentElement.setAttribute("data-theme", next);
-  localStorage.setItem("theme", next);
+// from: jestle sürüklenmiş uygulamanın o anki transform'u — kapanış oradan devam eder
+function closeApp(instant, from) {
+  if (!current) return;
+  const icon = iconOf(current);
+  current = null;
+  state = "home";
+  home.classList.remove("behind");
+  home.inert = false;
+  app.inert = true;
+  app.style.transition = "";
+  const anim = app.animate(
+    [
+      { clipPath: fullInset(), transform: from || "none" },
+      { clipPath: insetFor(icon), transform: "none" },
+    ],
+    { duration: reduce || instant ? 1 : 420, easing: "cubic-bezier(.4,0,.2,1)", fill: "forwards" }
+  );
+  app.style.transform = "";
+  anim.onfinish = () => {
+    app.classList.remove("open");
+    app.getAnimations().forEach((a) => a.cancel());
+    appScroll.replaceChildren();
+    appBar.replaceChildren();
+    icon.parentElement.focus({ preventScroll: true });
+  };
+  updateTitle();
 }
 
-/* ---- Init ---- */
-// Tema index.html <head> içinde, sayfa çizilmeden önce ayarlanıyor.
-document.addEventListener("DOMContentLoaded", () => {
-  setLang(currentLang);
+/* ============ Adres çubuğu (#salonup gibi paylaşılabilir linkler) ============ */
+// Ana ekrandan açılan uygulama geçmişe bir kayıt ekler; böylece tarayıcının
+// geri tuşu uygulamayı kapatır. Uygulamadan uygulamaya geçiş kaydı değiştirir,
+// "Ana Ekran" her zaman tek adımda ana ekrana döner.
+function go(id) {
+  if (!Object.hasOwn(PAGES, id) || current === id) return;
+  if (current) history.replaceState(history.state, "", "#" + id);
+  else history.pushState({ app: id }, "", "#" + id);
+  route();
+}
+
+function goHome(from) {
+  if (!current) return;
+  closeApp(false, from);
+  if (history.state && history.state.app) history.back();
+  else history.replaceState(null, "", location.pathname + location.search);
+}
+
+function route(instant) {
+  const id = location.hash.slice(1);
+  closeCC();
+  if (!Object.hasOwn(PAGES, id)) {
+    if (current) closeApp(instant);
+    return;
+  }
+  if (current === id) return;
+  if (state === "lock") {
+    unlock(instant);
+    if (!instant) {
+      setTimeout(() => location.hash.slice(1) === id && !current && openApp(id), reduce ? 0 : 550);
+      return;
+    }
+  }
+  if (current) closeApp(true);
+  openApp(id, instant);
+}
+
+addEventListener("popstate", () => route());
+
+// Sayfa içi #linkler: tarayıcı varsayılanı yerine go() — Ctrl/orta tık yeni sekmede açar
+document.addEventListener("click", (e) => {
+  const a = e.target.closest('a[href^="#"]');
+  if (!a || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey) return;
+  e.preventDefault();
+  go(a.hash.slice(1));
 });
+
+/* ============ Denetim Merkezi ============ */
+function openCC() {
+  if (cc.classList.contains("open")) return;
+  cc.classList.add("open");
+  cc.inert = false;
+  (state === "app" ? app : state === "home" ? home : lock).inert = true;
+  buzz();
+}
+function closeCC() {
+  if (!cc.classList.contains("open")) return;
+  cc.classList.remove("open");
+  cc.inert = true;
+  if (state === "app") app.inert = false;
+  else if (state === "home") home.inert = false;
+  else lock.inert = false;
+}
+$("#gear").addEventListener("click", openCC);
+$("#ccLock").addEventListener("click", relock);
+
+/* ============ Jestler ============ */
+// Ortak sürükleme yardımcısı. Mesafeler telefonun kendi pikseli cinsinden (k'ya bölünür).
+function drag(el, { start, move, end }) {
+  el.addEventListener("pointerdown", (e) => {
+    if (e.button !== 0 || (start && start(e) === false)) return;
+    const x0 = e.clientX, y0 = e.clientY;
+    el.setPointerCapture(e.pointerId);
+    const d = (ev) => [(ev.clientX - x0) / k, (ev.clientY - y0) / k];
+    const onMove = (ev) => move && move(...d(ev));
+    const onUp = (ev) => {
+      el.removeEventListener("pointermove", onMove);
+      el.removeEventListener("pointerup", onUp);
+      el.removeEventListener("pointercancel", onUp);
+      end(...d(ev), ev.type === "pointercancel");
+    };
+    el.addEventListener("pointermove", onMove);
+    el.addEventListener("pointerup", onUp);
+    el.addEventListener("pointercancel", onUp);
+  });
+}
+const isTap = (dx, dy) => Math.abs(dx) < 6 && Math.abs(dy) < 6;
+
+// Kilit ekranını yukarı kaydır (bildirime dokunmak ilgili uygulamayı açar)
+let lockTarget = null;
+const lockDrag = {
+  start: (e) => {
+    if (state !== "lock") return false;
+    lockTarget = e.target.closest("[data-open]");
+    lock.style.transition = "none";
+  },
+  move: (dx, dy) => (lock.style.transform = `translateY(${Math.min(0, dy)}px)`),
+  end: (dx, dy, cancelled) => {
+    lock.style.transition = "";
+    if (!cancelled && isTap(dx, dy) && lockTarget) go(lockTarget.dataset.open);
+    else if (!cancelled && (dy < -60 || isTap(dx, dy))) unlock();
+    else lock.style.transform = "";
+  },
+};
+drag(lock, lockDrag);
+
+// Alt çubuk: uygulamayı yukarı sürükleyerek kapat; kilit ekranında kilidi açar
+const homebar = $("#homebar");
+drag(homebar, {
+  start: () => {
+    if (state === "lock") return lockDrag.start({ target: homebar });
+    if (state === "app") app.style.transition = "none";
+  },
+  move: (dx, dy) => {
+    if (state === "lock") return lockDrag.move(dx, dy);
+    if (state !== "app") return;
+    const up = Math.min(0, dy);
+    const p = Math.min(1, -up / 320);
+    app.style.transform = `translate(${dx * 0.5}px, ${up * 0.7}px) scale(${1 - p * 0.3})`;
+  },
+  end: (dx, dy, cancelled) => {
+    if (state === "lock") return lockDrag.end(dx, dy, cancelled);
+    if (state !== "app") return;
+    if (!cancelled && (dy < -70 || isTap(dx, dy))) return goHome(app.style.transform);
+    app.style.transition = "transform .35s var(--ease)";
+    app.style.transform = "";
+  },
+});
+$("#appBack").addEventListener("click", () => goHome());
+homebar.addEventListener("click", (e) => {
+  if (e.detail === 0) state === "lock" ? unlock() : goHome(); // klavyeyle
+});
+
+// Sol kenardan sağa kaydır: geri
+drag($("#edge"), {
+  start: () => { if (state !== "app") return false; app.style.transition = "none"; },
+  move: (dx) => {
+    const x = Math.max(0, dx);
+    app.style.transform = `translateX(${x}px) scale(${1 - Math.min(1, x / 400) * 0.08})`;
+  },
+  end: (dx, dy, cancelled) => {
+    if (!cancelled && dx > 90) return goHome(app.style.transform);
+    app.style.transition = "transform .35s var(--ease)";
+    app.style.transform = "";
+  },
+});
+
+// Durum çubuğundan aşağı çek (ya da dokun): Denetim Merkezi
+const pullCC = { end: (dx, dy, cancelled) => !cancelled && (dy > 30 || isTap(dx, dy)) && openCC() };
+drag($("#status"), pullCC);
+drag($("#pullZone"), pullCC);
+
+// Denetim Merkezi: boşluğa dokun ya da yukarı kaydır → kapat
+drag(cc, {
+  start: (e) => { if (e.target.closest(".cc-tile")) return false; },
+  end: (dx, dy, cancelled) => !cancelled && (dy < -30 || isTap(dx, dy)) && closeCC(),
+});
+
+// Yan tuş ve logo: kilitle / kilidi aç
+const togglePower = () => (state === "lock" ? unlock() : relock());
+$("#power").addEventListener("click", togglePower);
+$("#logo").addEventListener("click", togglePower);
+
+// Bildirime klavyeyle basmak (fareyle dokunma lockDrag'de)
+$$(".notif").forEach((n) =>
+  n.addEventListener("click", (e) => { if (e.detail === 0) go(n.dataset.open); })
+);
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") {
+    if (cc.classList.contains("open")) closeCC();
+    else goHome();
+    return;
+  }
+  if (state === "lock" && ["Enter", " ", "ArrowUp"].includes(e.key)) {
+    if (document.activeElement.closest(".notif, .top, .homebar")) return;
+    e.preventDefault();
+    unlock();
+  }
+});
+
+/* ============ Telefonu ekrana sığdır ============ */
+const stage = $("#stage");
+const phone = $("#phone");
+const mobile = matchMedia("(max-width: 600px)");
+function fit() {
+  if (mobile.matches) {
+    k = 1;
+    phone.style.transform = "";
+    stage.style.width = stage.style.height = "";
+    return;
+  }
+  k = Math.min(1, (innerHeight - 40) / 868, (innerWidth - 32) / 414);
+  phone.style.transform = `scale(${k})`;
+  stage.style.width = 414 * k + "px";
+  stage.style.height = 868 * k + "px";
+}
+addEventListener("resize", fit);
+
+/* ============ Saat (Türkiye) ve pil ============ */
+const tz = "Europe/Istanbul";
+const fTime = new Intl.DateTimeFormat("en-GB", { timeZone: tz, hour: "2-digit", minute: "2-digit" });
+function clock() {
+  const d = new Date();
+  const fDate = new Intl.DateTimeFormat(lang === "tr" ? "tr-TR" : "en-US", {
+    timeZone: tz, weekday: "long", month: "long", day: "numeric",
+  });
+  $$("[data-time]").forEach((n) => (n.textContent = fTime.format(d)));
+  $$("[data-date]").forEach((n) => (n.textContent = fDate.format(d)));
+}
+setInterval(clock, 15000);
+
+// Destekleyen tarayıcılarda gerçek pil seviyesi
+if (navigator.getBattery) {
+  navigator.getBattery().then((b) => {
+    const set = () => $("#battery").setAttribute("width", Math.max(2, 16 * b.level));
+    set();
+    b.addEventListener("levelchange", set);
+  }).catch(() => {});
+}
+
+/* ============ Başlangıç ============ */
+fit();
+syncThemeColor();
+applyLang();
+route(true); // #salonup gibi bir linkle gelindiyse doğrudan o uygulamayı aç
