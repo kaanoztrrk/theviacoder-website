@@ -101,7 +101,7 @@ const COPY = {
     formErr: "Something went wrong. Try emailing directly.",
     formNetErr: "Connection error. Try again later.",
 
-    footerText: "Built with ♥ by M. Kaan Öztürk · 2026",
+    footerText: "Built by M. Kaan Öztürk · 2026",
   },
 
   tr: {
@@ -202,7 +202,7 @@ const COPY = {
     formErr: "Bir şeyler ters gitti. Doğrudan e-posta göndermeyi dene.",
     formNetErr: "Bağlantı hatası. Daha sonra tekrar dene.",
 
-    footerText: "M. Kaan Öztürk tarafından ♥ ile yapıldı · 2026",
+    footerText: "M. Kaan Öztürk tarafından yapıldı · 2026",
   },
 };
 
@@ -357,10 +357,7 @@ function setLang(lang) {
   setText("fl-send", c.flSend);
 
   // Footer
-  setHTML(
-    "footer-text",
-    c.footerText.replace("♥", '<span class="accent-text">♥</span>'),
-  );
+  setText("footer-text", c.footerText);
 
   // Reset typing
   clearTimeout(typingTimer);
