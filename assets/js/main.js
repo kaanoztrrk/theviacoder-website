@@ -47,6 +47,12 @@ const TR = {
   "cc.lockSub": "Başa dön",
   "cc.hint": "Kapatmak için yukarı kaydır ya da boşluğa dokun",
 
+  "badge.soon": "Yakında",
+  "cat.finance": "Kişisel finans",
+  "h.screens": "Ekranlar",
+  "jarly.desc1": "Sadece bir kasa defteri değil, bir yöntem sunan bütçe uygulaması. Bir finans modeli seç — 6 Kavanoz, 50/30/20 ya da Önce Kendine Öde — Jarly gelirini o modelin kovalarına böler ve her harcamayı doğru kovadan düşer.",
+  "jarly.desc2": "Cevapladığı soru \"ne harcadım?\" değil, \"hangi kovada ne kaldı?\" Tamamen çevrimdışı: hesap yok, sunucu yok, reklam yok.",
+  "cta.soon": "Yakında Google Play'de",
   "badge.founder": "Kurucu",
   "badge.client": "Müşteri",
   "badge.live": "Play'de yayında",
@@ -438,6 +444,25 @@ drag($("#pullZone"), pullCC);
 drag(cc, {
   start: (e) => { if (e.target.closest(".cc-tile")) return false; },
   end: (dx, dy, cancelled) => !cancelled && (dy < -30 || isTap(dx, dy)) && closeCC(),
+});
+
+// Ekran görüntüsü şeridi: fareyle sürükleyerek kaydır (dokunmatikte tarayıcı zaten yapıyor)
+appScroll.addEventListener("pointerdown", (e) => {
+  const strip = e.target.closest(".shots");
+  if (!strip || e.pointerType !== "mouse" || e.button !== 0) return;
+  const x0 = e.clientX, left0 = strip.scrollLeft;
+  strip.setPointerCapture(e.pointerId);
+  strip.classList.add("dragging");
+  const onMove = (ev) => (strip.scrollLeft = left0 - (ev.clientX - x0) / k);
+  const onUp = () => {
+    strip.classList.remove("dragging");
+    strip.removeEventListener("pointermove", onMove);
+    strip.removeEventListener("pointerup", onUp);
+    strip.removeEventListener("pointercancel", onUp);
+  };
+  strip.addEventListener("pointermove", onMove);
+  strip.addEventListener("pointerup", onUp);
+  strip.addEventListener("pointercancel", onUp);
 });
 
 // Yan tuş ve logo: kilitle / kilidi aç

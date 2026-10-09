@@ -326,6 +326,12 @@ kbd {
   visibility: hidden; transform-origin: 50% 85%;
 }
 .app.open { visibility: visible; }
+/* Üst bar zemini: kaydırılan içerik durum çubuğu ve geri butonunun altında kaybolur */
+.app::before {
+  content: ""; position: absolute; top: 0; left: 0; right: 0; height: 104px; z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(var(--screen) 78%, transparent);
+}
 .app-scroll {
   position: absolute; inset: 0; overflow-y: auto; outline: none;
   padding: 104px 22px 150px; scrollbar-width: none; overscroll-behavior: contain;
@@ -384,6 +390,25 @@ kbd {
 }
 .a-sec p { font-size: 15px; line-height: 1.6; color: var(--body); }
 .a-sec p + p { margin-top: 10px; }
+/* Ekran görüntüleri: yana kaydırılan şerit (mağaza sayfası gibi) */
+.shots {
+  display: flex; gap: 10px; overflow-x: auto; margin: 0 -22px; padding: 0 22px 4px;
+  scroll-snap-type: x mandatory; scroll-padding: 0 22px; scrollbar-width: none;
+  overscroll-behavior-x: contain; cursor: grab;
+}
+.shots::-webkit-scrollbar { display: none; }
+.shots.dragging { cursor: grabbing; scroll-snap-type: none; }
+.shots img {
+  flex: none; width: 150px; height: auto; border-radius: 18px; scroll-snap-align: start;
+  border: 1px solid var(--line2); background: var(--tile);
+  user-select: none; -webkit-user-drag: none;
+}
+.a-cta.soon {
+  background: var(--glass); color: var(--muted); border: 1px dashed var(--line2);
+  box-shadow: none; cursor: default; font-family: var(--mono); font-size: 13px; font-weight: 500;
+}
+.a-cta.soon:hover { background: var(--glass); }
+.a-cta.soon:active { transform: none; }
 .chips { display: flex; flex-wrap: wrap; gap: 8px; }
 .chip { font-family: var(--mono); font-size: 11.5px; padding: 6px 10px; border-radius: 8px; border: 1px solid var(--line2); color: var(--body); }
 .rows { border-top: 1px solid var(--line); }
@@ -449,6 +474,7 @@ kbd {
   .home { padding-top: calc(14px + env(safe-area-inset-top)); }
   .app-scroll { padding-top: calc(60px + env(safe-area-inset-top)); }
   .app-back { top: calc(12px + env(safe-area-inset-top)); }
+  .app::before { height: calc(56px + env(safe-area-inset-top)); }
   .cc { padding-top: calc(24px + env(safe-area-inset-top)); }
   .dock { bottom: calc(22px + env(safe-area-inset-bottom)); }
   .app-bar { padding-bottom: calc(36px + env(safe-area-inset-bottom)); }
