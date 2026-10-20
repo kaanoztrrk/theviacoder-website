@@ -1,0 +1,426 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Jarly — a budget with a method</title>
+<meta name="description" content="Jarly splits your income into the buckets of a proven budget model — 50/30/20, Six Jars or Pay Yourself First — and shows what is left in each one. Offline, no account, no ads." />
+<link rel="canonical" href="https://theviacoder.com/jarly/" />
+<meta property="og:title" content="Jarly — what's left in each jar?" />
+<meta property="og:description" content="A budgeting app that gives you a method, not just a ledger. Offline, no account, no ads." />
+<meta property="og:url" content="https://theviacoder.com/jarly/" />
+<meta property="og:image" content="https://theviacoder.com/assets/image/jarly/screen-1.webp" />
+<meta name="theme-color" content="#1B4FD8" />
+<link rel="icon" href="../assets/image/jarly/symbol.svg" type="image/svg+xml" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --blue: #1B4FD8;
+  --blue-deep: #12379B;
+  --ink: #12151C;
+  --ink-2: #4B5263;
+  --mist: #F2F3F7;
+  --surface: #FFFFFF;
+  --line: #E1E4EC;
+  --track: #E6EAF5;
+  --on-blue: #FFFFFF;
+  --j0: #1B4FD8; --j1: #0F8C7A; --j2: #7A4FD8; --j3: #B8761F; --j4: #CC4A63; --j5: #2B7BB8;
+  --display: "Sora", system-ui, sans-serif;
+  --body: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --blue: #6C94FF; --blue-deep: #A9C0FF;
+    --ink: #F4F6FA; --ink-2: #9BA3B4;
+    --mist: #0B0D12; --surface: #16191F; --line: #262B36; --track: #232833;
+    --on-blue: #0B0D12;
+    --j0: #6C94FF; --j1: #3FC7B0; --j2: #A98BFF; --j3: #E0A245; --j4: #FF8098; --j5: #5FAEE8;
+  }
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--mist); color: var(--ink);
+  font: 17px/1.55 var(--body);
+}
+img { max-width: 100%; display: block; }
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; border-radius: 6px; }
+.wrap { width: min(1120px, 100% - 32px); margin-inline: auto; }
+
+/* Top bar */
+.bar { display: flex; align-items: center; justify-content: space-between; padding: 20px 0; gap: 12px; }
+.brand { display: flex; align-items: center; gap: 10px; text-decoration: none; font: 600 22px/1 var(--display); letter-spacing: -0.012em; }
+.brand img { width: 34px; height: 34px; }
+.bar-right { display: flex; align-items: center; gap: 8px; }
+.lang { display: flex; background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 3px; }
+.lang button { border: 0; background: none; color: var(--ink-2); font: 600 13px/1 var(--body); padding: 7px 10px; border-radius: 999px; cursor: pointer; }
+.lang button[aria-pressed="true"] { background: var(--ink); color: var(--mist); }
+
+.play {
+  display: inline-flex; align-items: center; gap: 8px; text-decoration: none;
+  background: var(--blue); color: var(--on-blue); font: 600 15px/1 var(--display);
+  padding: 13px 18px; border-radius: 14px; white-space: nowrap;
+}
+.play[aria-disabled="true"] { background: var(--surface); color: var(--ink-2); border: 1px solid var(--line); cursor: default; }
+.bar .play { padding: 10px 14px; font-size: 14px; }
+
+/* Hero */
+.hero { display: grid; grid-template-columns: 1fr 1.1fr; gap: 48px; align-items: center; padding: 40px 0 72px; }
+.hero > * { min-width: 0; }
+h1 { font: 700 clamp(40px, 6.4vw, 72px)/1.02 var(--display); letter-spacing: -0.035em; margin: 0 0 20px; }
+.lede { font-size: 19px; color: var(--ink-2); max-width: 30em; margin: 0 0 28px; }
+
+/* The splitter — the one bold thing on the page */
+.split { background: var(--surface); border-radius: 28px; padding: 24px; border: 1px solid var(--line); }
+.split-top { display: flex; flex-wrap: wrap; gap: 12px 16px; align-items: end; justify-content: space-between; margin-bottom: 20px; }
+.income label { display: block; font-size: 13px; color: var(--ink-2); margin-bottom: 4px; }
+.income-field { display: flex; align-items: baseline; gap: 4px; border-bottom: 2px solid var(--blue); }
+.income-field span { font: 600 26px/1 var(--display); color: var(--ink-2); }
+.income input {
+  width: 7ch; border: 0; background: none; color: var(--ink); padding: 4px 0;
+  font: 700 32px/1.1 var(--display); letter-spacing: -0.02em; font-variant-numeric: tabular-nums;
+}
+.income input:focus { outline: none; }
+.models { display: flex; background: var(--mist); border-radius: 12px; padding: 3px; flex-wrap: wrap; }
+.models button {
+  border: 0; background: none; color: var(--ink-2); cursor: pointer;
+  font: 600 13px/1 var(--body); padding: 9px 11px; border-radius: 10px;
+}
+.models button[aria-pressed="true"] { background: var(--surface); color: var(--ink); box-shadow: 0 1px 2px rgb(0 0 0 / .08); }
+
+.jars { display: flex; gap: 10px; height: 280px; align-items: stretch; }
+.jar { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; gap: 8px; }
+.jar-amt { font: 700 17px/1.15 var(--display); letter-spacing: -0.02em; font-variant-numeric: tabular-nums; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.jar-amt small { display: block; font: 400 12px/1.3 var(--body); color: var(--ink-2); letter-spacing: 0; white-space: normal; min-height: 2.6em; }
+.jar-glass { position: relative; flex: 1; border-radius: 14px 14px 18px 18px; background: var(--track); overflow: hidden; }
+.jar-fill {
+  position: absolute; inset: auto 0 0 0; height: 0; background: var(--c);
+  transition: height .7s cubic-bezier(.2,.8,.2,1);
+}
+.jar-pct { position: absolute; top: 8px; left: 0; right: 0; text-align: center; font: 600 12px/1 var(--body); color: var(--ink-2); }
+.jar-name { font-size: 13px; line-height: 1.25; color: var(--ink-2); min-height: 2.5em; }
+.jars.many .jar-amt { font-size: 14px; }
+.split-foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--line); flex-wrap: wrap; }
+.split-foot p { margin: 0; font-size: 14px; color: var(--ink-2); max-width: 26em; }
+.toggle { display: inline-flex; align-items: center; gap: 10px; cursor: pointer; font: 600 14px/1.2 var(--body); }
+.toggle input { appearance: none; width: 42px; height: 26px; border-radius: 999px; background: var(--track); position: relative; cursor: pointer; margin: 0; transition: background .2s; }
+.toggle input::after { content: ""; position: absolute; top: 3px; left: 3px; width: 20px; height: 20px; border-radius: 50%; background: var(--surface); box-shadow: 0 1px 3px rgb(0 0 0 / .25); transition: transform .2s; }
+.toggle input:checked { background: var(--blue); }
+.toggle input:checked::after { transform: translateX(16px); }
+
+/* Sections */
+section { padding: 72px 0; }
+h2 { font: 700 clamp(28px, 3.6vw, 40px)/1.1 var(--display); letter-spacing: -0.025em; margin: 0 0 16px; max-width: 20em; }
+.sub { color: var(--ink-2); max-width: 36em; margin: 0 0 40px; }
+
+.steps { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; counter-reset: s; }
+.steps li { counter-increment: s; }
+.steps li::before { content: counter(s); display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; background: var(--blue); color: var(--on-blue); font: 700 16px/1 var(--display); margin-bottom: 16px; }
+.steps h3 { font: 600 20px/1.25 var(--display); margin: 0 0 8px; letter-spacing: -0.01em; }
+.steps p { margin: 0; color: var(--ink-2); }
+
+.shots { display: flex; gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 12px; }
+.shots img { width: 230px; height: auto; flex: none; border-radius: 26px; scroll-snap-align: start; border: 1px solid var(--line); }
+
+.modelrows { display: grid; gap: 28px; }
+.mrow { display: grid; grid-template-columns: 220px 1fr; gap: 24px; align-items: start; }
+.mrow h3 { font: 600 22px/1.2 var(--display); margin: 0 0 6px; letter-spacing: -0.015em; }
+.mrow .who { margin: 0; color: var(--ink-2); font-size: 15px; }
+.stack { display: flex; height: 44px; border-radius: 12px; overflow: hidden; gap: 3px; }
+.stack span { background: var(--c); }
+.keys { display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 12px 0 0; padding: 0; list-style: none; font-size: 15px; }
+.keys li { display: flex; align-items: center; gap: 7px; }
+.keys li::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--c); }
+.keys b { font-weight: 600; font-variant-numeric: tabular-nums; }
+
+.promise { margin-top: 32px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+.promise h3 { font: 600 20px/1.25 var(--display); margin: 0 0 8px; }
+.promise p { margin: 0; color: var(--ink-2); }
+
+.end { background: var(--blue); color: var(--on-blue); border-radius: 32px; padding: 56px 40px; text-align: center; margin-bottom: 48px; }
+.end h2 { margin-inline: auto; }
+.end p { margin: 0 auto 28px; max-width: 30em; opacity: .85; }
+.end .play { background: var(--on-blue); color: var(--blue); }
+.end .play[aria-disabled="true"] { border: 0; }
+
+footer { border-top: 1px solid var(--line); padding: 28px 0 40px; font-size: 14px; color: var(--ink-2); }
+footer .wrap { display: flex; flex-wrap: wrap; gap: 12px 24px; justify-content: space-between; }
+footer nav { display: flex; flex-wrap: wrap; gap: 8px 20px; }
+
+@media (max-width: 880px) {
+  .hero { grid-template-columns: 1fr; gap: 32px; padding-top: 16px; }
+  .steps, .promise { grid-template-columns: 1fr; gap: 28px; }
+  .mrow { grid-template-columns: 1fr; gap: 12px; }
+  section { padding: 56px 0; }
+}
+@media (max-width: 520px) {
+  .bar .play { display: none; }
+  .split { padding: 18px; border-radius: 22px; }
+  .jars { gap: 6px; height: 240px; }
+  .jars.many .jar-amt { font-size: 12px; }
+  .jars.many .jar-amt small { display: none; }
+  .jar-name { font-size: 11.5px; }
+  .shots img { width: 200px; }
+  .end { padding: 44px 22px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .jar-fill, .toggle input, .toggle input::after { transition: none; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="bar">
+    <a class="brand" href="./"><img src="../assets/image/jarly/symbol.svg" alt="" />jarly</a>
+    <div class="bar-right">
+      <div class="lang" role="group" aria-label="Language">
+        <button type="button" data-lang="en" aria-pressed="true">EN</button>
+        <button type="button" data-lang="tr" aria-pressed="false">TR</button>
+      </div>
+      <a class="play" data-play href="#"></a>
+    </div>
+  </header>
+
+  <main>
+    <div class="hero">
+      <div>
+        <h1 data-i18n="hero.title">What's left in each jar?</h1>
+        <p class="lede" data-i18n="hero.lede">Jarly splits your income into the buckets of a proven budget model and charges every expense to the right one. So instead of asking what you spent, you see what you can still spend.</p>
+        <a class="play" data-play href="#"></a>
+      </div>
+
+      <div class="split" aria-label="Try the split">
+        <div class="split-top">
+          <div class="income">
+            <label for="income" data-i18n="split.income">Your monthly income</label>
+            <div class="income-field"><span data-cur>$</span><input id="income" inputmode="numeric" autocomplete="off" value="4,200" /></div>
+          </div>
+          <div class="models" role="group" aria-label="Budget model">
+            <button type="button" data-model="0" aria-pressed="true">50/30/20</button>
+            <button type="button" data-model="1" aria-pressed="false" data-i18n="m1.name">Six Jars</button>
+            <button type="button" data-model="2" aria-pressed="false" data-i18n="m2.name">Pay Yourself First</button>
+          </div>
+        </div>
+        <div class="jars" id="jars" aria-live="polite"></div>
+        <div class="split-foot">
+          <label class="toggle"><input type="checkbox" id="mid" /> <span data-i18n="split.mid">Jump to mid-month</span></label>
+          <p id="split-note" data-i18n="split.note">This is what Jarly gives you on day one: a plan for every bucket.</p>
+        </div>
+      </div>
+    </div>
+
+    <section>
+      <h2 data-i18n="how.title">Set up once, then just log what you spend</h2>
+      <p class="sub" data-i18n="how.sub">Setup takes about two minutes and nothing is saved until you finish it.</p>
+      <ol class="steps">
+        <li><h3 data-i18n="how.1.t">Pick a model</h3><p data-i18n="how.1.p">Answer two questions and Jarly suggests a model, with one sentence on why. The other two are right next to it.</p></li>
+        <li><h3 data-i18n="how.2.t">Make the split yours</h3><p data-i18n="how.2.p">Move the sliders until the percentages fit your life. If they don't add up to 100, Jarly tells you by how much.</p></li>
+        <li><h3 data-i18n="how.3.t">Spend from a jar</h3><p data-i18n="how.3.p">Every expense has a category, and every category belongs to a jar. Log a coffee and the right jar goes down.</p></li>
+      </ol>
+    </section>
+
+    <section aria-label="Screens">
+      <h2 data-i18n="shots.title">One screen tells you where you stand</h2>
+      <div class="shots">
+        <img src="../assets/image/jarly/screen-1.webp" width="540" height="1169" loading="lazy" decoding="async" alt="Jarly: Give every dollar a job" />
+        <img src="../assets/image/jarly/screen-2.webp" width="540" height="1169" loading="lazy" decoding="async" alt="Jarly: see where your money goes" />
+        <img src="../assets/image/jarly/screen-3.webp" width="540" height="1169" loading="lazy" decoding="async" alt="Jarly: know what's left to spend this month" />
+        <img src="../assets/image/jarly/screen-4.webp" width="540" height="1169" loading="lazy" decoding="async" alt="Jarly: Six Jars buckets" />
+        <img src="../assets/image/jarly/screen-5.webp" width="540" height="1169" loading="lazy" decoding="async" alt="Jarly: pick a proven budget plan" />
+        <img src="../assets/image/jarly/screen-6.webp" width="540" height="1169" loading="lazy" decoding="async" alt="Jarly: make the split your own" />
+      </div>
+    </section>
+
+    <section>
+      <h2 data-i18n="models.title">Three models people have budgeted with for years</h2>
+      <p class="sub" data-i18n="models.sub">Jarly didn't invent a method. It makes the well-known ones easy to stick to.</p>
+      <div class="modelrows" id="modelrows"></div>
+    </section>
+
+    <section>
+      <h2 data-i18n="promise.title">Your money stays on your phone</h2>
+      <div class="promise">
+        <div><h3 data-i18n="p1.t">No account</h3><p data-i18n="p1.p">Open the app and start. No sign-up, no email, no password to forget.</p></div>
+        <div><h3 data-i18n="p2.t">Works offline</h3><p data-i18n="p2.p">There is no server. Your budget never leaves the device, and there's no analytics.</p></div>
+        <div><h3 data-i18n="p3.t">No ads, ever</h3><p data-i18n="p3.p">Nothing to sell you and no one to sell your data to. You can lock the app with your fingerprint.</p></div>
+      </div>
+    </section>
+
+    <div class="end">
+      <h2 data-i18n="end.title">Give every paycheck a plan</h2>
+      <p data-i18n="end.p">Free on Android, in English, Turkish, Spanish and German.</p>
+      <a class="play" data-play href="#"></a>
+    </div>
+  </main>
+</div>
+
+<footer>
+  <div class="wrap">
+    <span data-i18n="foot.by">Made by theviacoder</span>
+    <nav>
+      <a href="../" data-i18n="foot.home">theviacoder.com</a>
+      <a href="https://kaanoztrrk.github.io/jarly-privacy/" data-i18n="foot.privacy">Privacy policy</a>
+      <a href="mailto:kaanoztrrk411@gmail.com" data-i18n="foot.contact">Contact</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+// Flip to true once Jarly is live on Google Play.
+const LIVE = false;
+const PLAY_URL = "https://play.google.com/store/apps/details?id=com.theviacoder.jarly";
+
+const MODELS = [
+  { name: "50/30/20", who: { en: "For a first budget that's easy to follow.", tr: "Takip etmesi kolay ilk bütçe için." },
+    jars: [[50, "Needs", "İhtiyaç"], [30, "Wants", "İstek"], [20, "Savings & debt", "Tasarruf ve borç"]] },
+  { name: "Six Jars", tr: "6 Kavanoz", who: { en: "For giving every goal its own pot of money.", tr: "Her hedefe ayrı bir para kabı açmak için." },
+    jars: [[55, "Necessities", "Zorunlu"], [10, "Financial freedom", "Finansal özgürlük"], [10, "Long-term savings", "Uzun vade"], [10, "Education", "Eğitim"], [10, "Play", "Eğlence"], [5, "Give", "Bağış"]] },
+  { name: "Pay Yourself First", tr: "Önce Kendine Öde", who: { en: "For saving first, then living on the rest.", tr: "Önce biriktirip kalanla yaşamak için." },
+    jars: [[20, "Savings", "Tasarruf"], [80, "Living", "Yaşam"]] },
+];
+// Share of each jar already spent by mid-month, by position.
+const SPENT = [0.58, 0.41, 0.12, 0.3, 0.72, 0.2];
+
+const TR = {
+  "hero.title": "Hangi kavanozda ne kaldı?",
+  "hero.lede": "Jarly gelirini denenmiş bir bütçe modelinin kovalarına böler ve her harcamayı doğru kovadan düşer. Böylece ne harcadığını değil, daha ne kadar harcayabileceğini görürsün.",
+  "split.income": "Aylık gelirin",
+  "m1.name": "6 Kavanoz",
+  "m2.name": "Önce Kendine Öde",
+  "split.mid": "Ayın ortasına geç",
+  "split.note": "Jarly'nin ilk gün verdiği şey bu: her kova için bir plan.",
+  "split.note.mid": "Ayın ortası. Kavanozlar harcadıkça azalıyor, büyük rakam her zaman kalan.",
+  "how.title": "Bir kez kur, sonra sadece harcadığını gir",
+  "how.sub": "Kurulum yaklaşık iki dakika sürüyor ve bitirene kadar hiçbir şey kaydedilmiyor.",
+  "how.1.t": "Bir model seç",
+  "how.1.p": "İki soruya cevap ver, Jarly sana bir model önersin ve nedenini bir cümleyle anlatsın. Diğer ikisi hemen yanında.",
+  "how.2.t": "Oranları kendine göre ayarla",
+  "how.2.p": "Yüzdeler hayatına uyana kadar kaydırıcıları oynat. Toplam 100 etmiyorsa Jarly kaç puan eksik ya da fazla olduğunu söyler.",
+  "how.3.t": "Kavanozdan harca",
+  "how.3.p": "Her harcamanın bir kategorisi, her kategorinin bir kavanozu var. Bir kahve gir, doğru kavanoz azalsın.",
+  "shots.title": "Tek ekran nerede durduğunu söyler",
+  "models.title": "İnsanların yıllardır kullandığı üç bütçe modeli",
+  "models.sub": "Jarly yeni bir yöntem icat etmedi. Bilinenlere sadık kalmayı kolaylaştırıyor.",
+  "promise.title": "Paran telefonunda kalır",
+  "p1.t": "Hesap yok", "p1.p": "Uygulamayı aç ve başla. Kayıt yok, e-posta yok, unutulacak şifre yok.",
+  "p2.t": "Çevrimdışı çalışır", "p2.p": "Sunucu yok. Bütçen cihazdan hiç çıkmaz, analitik de yok.",
+  "p3.t": "Reklam yok, hiçbir zaman", "p3.p": "Sana satacak bir şey ya da verini satacak biri yok. Uygulamayı parmak izinle kilitleyebilirsin.",
+  "end.title": "Her maaşa bir plan ver",
+  "end.p": "Android'de ücretsiz; Türkçe, İngilizce, İspanyolca ve Almanca.",
+  "foot.by": "theviacoder yapımı",
+  "foot.privacy": "Gizlilik politikası",
+  "foot.contact": "İletişim",
+};
+const EN_NOTE_MID = "Mid-month. Jars go down as you spend, and the big number is always what's left.";
+
+const root = document.documentElement;
+const $ = (s, el = document) => el.querySelector(s);
+const $$ = (s, el = document) => [...el.querySelectorAll(s)];
+let lang = "en";
+try { lang = localStorage.getItem("lang") === "tr" ? "tr" : (localStorage.getItem("lang") ? "en" : (navigator.language || "").startsWith("tr") ? "tr" : "en"); } catch (e) {}
+let model = 0;
+let mid = false;
+
+const EN = {};
+$$("[data-i18n]").forEach((el) => { EN[el.dataset.i18n] = el.textContent; });
+
+const money = (n) => new Intl.NumberFormat(lang === "tr" ? "tr-TR" : "en-US", {
+  style: "currency", currency: lang === "tr" ? "TRY" : "USD", maximumFractionDigits: 0,
+}).format(n);
+const compact = (n) => new Intl.NumberFormat(lang === "tr" ? "tr-TR" : "en-US", {
+  style: "currency", currency: lang === "tr" ? "TRY" : "USD", notation: "compact", maximumFractionDigits: 1,
+}).format(n);
+const parseIncome =() => Number($("#income").value.replace(/[^\d]/g, "")) || 0;
+const formatInput = (n) => new Intl.NumberFormat(lang === "tr" ? "tr-TR" : "en-US").format(n);
+
+function renderJars() {
+  const income = parseIncome();
+  const m = MODELS[model];
+  const box = $("#jars");
+  box.classList.toggle("many", m.jars.length > 3);
+  if (box.children.length !== m.jars.length) {
+    box.innerHTML = m.jars.map((_, i) => `
+      <div class="jar" style="--c:var(--j${i})">
+        <div class="jar-amt"></div>
+        <div class="jar-glass"><div class="jar-fill"></div><span class="jar-pct"></span></div>
+        <div class="jar-name"></div>
+      </div>`).join("");
+    void box.offsetHeight; // let the empty jars paint so the fill animates
+  }
+  m.jars.forEach(([pct, en, tr], i) => {
+    const el = box.children[i];
+    const plan = Math.round(income * pct / 100);
+    const left = mid ? Math.round(plan * (1 - SPENT[i])) : plan;
+    const tail = mid ? (lang === "tr" ? `kaldı · ${money(plan)} içinden` : `left of ${money(plan)}`)
+                     : (lang === "tr" ? "planlandı" : "planned");
+    const tight = m.jars.length > 3 && innerWidth <= 520;
+    $(".jar-amt", el).innerHTML = `${tight ? compact(left) : money(left)}<small>${tail}</small>`;
+    $(".jar-fill", el).style.height = (mid ? (1 - SPENT[i]) * 100 : 100) * (0.35 + pct / 100 * 0.65) + "%";
+    $(".jar-pct", el).textContent = pct + "%";
+    $(".jar-name", el).textContent = lang === "tr" ? tr : en;
+  });
+  $("#split-note").textContent = mid ? (lang === "tr" ? TR["split.note.mid"] : EN_NOTE_MID)
+                                     : (lang === "tr" ? TR["split.note"] : EN["split.note"]);
+}
+
+function renderModels() {
+  $("#modelrows").innerHTML = MODELS.map((m) => `
+    <div class="mrow">
+      <div><h3>${lang === "tr" && m.tr ? m.tr : m.name}</h3><p class="who">${m.who[lang]}</p></div>
+      <div>
+        <div class="stack" aria-hidden="true">${m.jars.map(([p], i) => `<span style="flex:${p};--c:var(--j${i})"></span>`).join("")}</div>
+        <ul class="keys">${m.jars.map(([p, en, tr], i) => `<li style="--c:var(--j${i})">${lang === "tr" ? tr : en} <b>${p}%</b></li>`).join("")}</ul>
+      </div>
+    </div>`).join("");
+}
+
+function renderPlay() {
+  $$("[data-play]").forEach((a) => {
+    if (LIVE) {
+      a.href = PLAY_URL; a.rel = "noopener"; a.removeAttribute("aria-disabled");
+      a.textContent = lang === "tr" ? "Google Play'den indir" : "Get it on Google Play";
+    } else {
+      a.removeAttribute("href"); a.setAttribute("aria-disabled", "true");
+      a.textContent = lang === "tr" ? "Yakında Google Play'de" : "Coming soon to Google Play";
+    }
+  });
+}
+
+function applyLang() {
+  root.lang = lang;
+  $$("[data-i18n]").forEach((el) => {
+    const k = el.dataset.i18n;
+    el.textContent = lang === "tr" && TR[k] ? TR[k] : EN[k];
+  });
+  $$("[data-lang]").forEach((b) => b.setAttribute("aria-pressed", b.dataset.lang === lang));
+  $("[data-cur]").textContent = lang === "tr" ? "₺" : "$";
+  if (!applyLang.done) applyLang.done = true;
+  else $("#income").value = formatInput(lang === "tr" ? 60000 : 4200);
+  renderPlay(); renderModels(); renderJars();
+}
+
+$$("[data-lang]").forEach((b) => b.addEventListener("click", () => {
+  lang = b.dataset.lang;
+  try { localStorage.setItem("lang", lang); } catch (e) {}
+  applyLang();
+}));
+$$("[data-model]").forEach((b) => b.addEventListener("click", () => {
+  model = +b.dataset.model;
+  $$("[data-model]").forEach((x) => x.setAttribute("aria-pressed", x === b));
+  renderJars();
+}));
+$("#mid").addEventListener("change", (e) => { mid = e.target.checked; renderJars(); });
+$("#income").addEventListener("input", (e) => {
+  const n = Math.min(parseIncome(), 99999999);
+  e.target.value = n ? formatInput(n) : "";
+  renderJars();
+});
+
+if (lang === "tr") $("#income").value = formatInput(60000);
+applyLang();
+</script>
+</body>
+</html>
