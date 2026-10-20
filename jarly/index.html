@@ -26,6 +26,7 @@
   --line: #E1E4EC;
   --track: #E6EAF5;
   --on-blue: #FFFFFF;
+  --bezel: #12151C;
   --j0: #1B4FD8; --j1: #0F8C7A; --j2: #7A4FD8; --j3: #B8761F; --j4: #CC4A63; --j5: #2B7BB8;
   --display: "Sora", system-ui, sans-serif;
   --body: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
@@ -36,6 +37,7 @@
     --ink: #F4F6FA; --ink-2: #9BA3B4;
     --mist: #0B0D12; --surface: #16191F; --line: #262B36; --track: #232833;
     --on-blue: #0B0D12;
+    --bezel: #2A2F3A;
     --j0: #6C94FF; --j1: #3FC7B0; --j2: #A98BFF; --j3: #E0A245; --j4: #FF8098; --j5: #5FAEE8;
   }
 }
@@ -122,8 +124,27 @@ h2 { font: 700 clamp(28px, 3.6vw, 40px)/1.1 var(--display); letter-spacing: -0.0
 .steps h3 { font: 600 20px/1.25 var(--display); margin: 0 0 8px; letter-spacing: -0.01em; }
 .steps p { margin: 0; color: var(--ink-2); }
 
-.shots { display: flex; gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 12px; }
-.shots img { width: 230px; height: auto; flex: none; border-radius: 26px; scroll-snap-align: start; border: 1px solid var(--line); }
+/* Screen tour: a phone that changes with the text beside it */
+.tour { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; margin-top: 40px; }
+.tour-phone { position: sticky; top: max(24px, calc(50vh - 330px)); align-self: start; display: flex; justify-content: center; }
+.phone {
+  position: relative; width: 300px; aspect-ratio: 540 / 1200;
+  border: 11px solid var(--bezel); border-radius: 48px; background: var(--bezel);
+  box-shadow: 0 30px 60px -20px rgb(27 79 216 / .35);
+  overflow: hidden;
+}
+.phone img { position: absolute; inset: 0; width: 100%; height: 100%; border-radius: 37px; opacity: 0; transition: opacity .35s ease; }
+.phone img.on { opacity: 1; }
+.tour-steps { display: flex; flex-direction: column; }
+.tour-step {
+  all: unset; box-sizing: border-box; cursor: pointer; display: flex; flex-direction: column; justify-content: center;
+  min-height: 62vh; padding: 0 0 0 24px; border-left: 3px solid var(--line);
+  transition: border-color .3s, opacity .3s; opacity: .45;
+}
+.tour-step[aria-pressed="true"] { opacity: 1; border-left-color: var(--blue); }
+.tour-step:focus-visible { outline: 3px solid var(--blue); outline-offset: 4px; }
+.tour-step h3 { font: 600 26px/1.2 var(--display); letter-spacing: -0.02em; margin: 0 0 12px; color: var(--ink); }
+.tour-step p { margin: 0; color: var(--ink-2); font-size: 18px; max-width: 28em; }
 
 .modelrows { display: grid; gap: 28px; }
 .mrow { display: grid; grid-template-columns: 220px 1fr; gap: 24px; align-items: start; }
@@ -154,6 +175,12 @@ footer nav { display: flex; flex-wrap: wrap; gap: 8px 20px; }
   .hero { grid-template-columns: 1fr; gap: 32px; padding-top: 16px; }
   .steps, .promise { grid-template-columns: 1fr; gap: 28px; }
   .mrow { grid-template-columns: 1fr; gap: 12px; }
+  .tour { grid-template-columns: 1fr; gap: 28px; margin-top: 28px; }
+  .tour-phone { position: static; }
+  .tour-step { min-height: 0; padding: 16px 0 16px 18px; }
+  .tour-step h3 { font-size: 20px; margin-bottom: 6px; }
+  .tour-step p { font-size: 16px; }
+  .tour-step[aria-pressed="false"] p { display: none; }
   section { padding: 56px 0; }
 }
 @media (max-width: 520px) {
@@ -163,11 +190,12 @@ footer nav { display: flex; flex-wrap: wrap; gap: 8px 20px; }
   .jars.many .jar-amt { font-size: 12px; }
   .jars.many .jar-amt small { display: none; }
   .jar-name { font-size: 11.5px; }
-  .shots img { width: 200px; }
+  .phone { width: 250px; border-width: 9px; border-radius: 40px; }
+  .phone img { border-radius: 31px; }
   .end { padding: 44px 22px; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .jar-fill, .toggle input, .toggle input::after { transition: none; }
+  .jar-fill, .toggle input, .toggle input::after, .phone img, .tour-step { transition: none; }
 }
 </style>
 </head>
@@ -222,15 +250,40 @@ footer nav { display: flex; flex-wrap: wrap; gap: 8px 20px; }
       </ol>
     </section>
 
-    <section aria-label="Screens">
+    <section>
       <h2 data-i18n="shots.title">One screen tells you where you stand</h2>
-      <div class="shots">
-        <img src="../assets/image/jarly/screen-1.webp" width="540" height="1169" loading="lazy" decoding="async" alt="Jarly: Give every dollar a job" />
-        <img src="../assets/image/jarly/screen-2.webp" width="540" height="1169" loading="lazy" decoding="async" alt="Jarly: see where your money goes" />
-        <img src="../assets/image/jarly/screen-3.webp" width="540" height="1169" loading="lazy" decoding="async" alt="Jarly: know what's left to spend this month" />
-        <img src="../assets/image/jarly/screen-4.webp" width="540" height="1169" loading="lazy" decoding="async" alt="Jarly: Six Jars buckets" />
-        <img src="../assets/image/jarly/screen-5.webp" width="540" height="1169" loading="lazy" decoding="async" alt="Jarly: pick a proven budget plan" />
-        <img src="../assets/image/jarly/screen-6.webp" width="540" height="1169" loading="lazy" decoding="async" alt="Jarly: make the split your own" />
+      <div class="tour">
+        <div class="tour-phone">
+          <div class="phone" aria-hidden="true">
+            <img class="on" src="../assets/image/jarly/app-home.webp" width="540" height="1200" decoding="async" alt="" />
+            <img src="../assets/image/jarly/app-jars.webp" width="540" height="1200" loading="lazy" decoding="async" alt="" />
+            <img src="../assets/image/jarly/app-categories.webp" width="540" height="1200" loading="lazy" decoding="async" alt="" />
+            <img src="../assets/image/jarly/app-models.webp" width="540" height="1200" loading="lazy" decoding="async" alt="" />
+            <img src="../assets/image/jarly/app-split.webp" width="540" height="1200" loading="lazy" decoding="async" alt="" />
+          </div>
+        </div>
+        <div class="tour-steps">
+          <button type="button" class="tour-step" aria-pressed="true">
+            <h3 data-i18n="t1.t">Safe to spend, first thing</h3>
+            <p data-i18n="t1.p">Open the app and the first number is what you can still spend this month. Not your balance, not your total spending. Below it: money in, money out and your latest expenses.</p>
+          </button>
+          <button type="button" class="tour-step" aria-pressed="false">
+            <h3 data-i18n="t2.t">Every jar at a glance</h3>
+            <p data-i18n="t2.p">Each jar shows what's left in big type and what you've used underneath. When one runs low, you see it before the month is over, not after.</p>
+          </button>
+          <button type="button" class="tour-step" aria-pressed="false">
+            <h3 data-i18n="t3.t">Expenses land in the right jar</h3>
+            <p data-i18n="t3.p">Groceries count as needs, dining out as wants, a debt payment as savings. Jarly comes with sensible defaults, and you can move any category to another jar with a tap.</p>
+          </button>
+          <button type="button" class="tour-step" aria-pressed="false">
+            <h3 data-i18n="t4.t">A suggestion, with a reason</h3>
+            <p data-i18n="t4.p">Answer two questions and Jarly recommends a model in one plain sentence. The other models stay right there if you'd rather pick one yourself.</p>
+          </button>
+          <button type="button" class="tour-step" aria-pressed="false">
+            <h3 data-i18n="t5.t">Percentages that fit your life</h3>
+            <p data-i18n="t5.p">Every jar explains what belongs in it. Move the sliders until it feels right. Jarly won't let you continue until the total is exactly 100%.</p>
+          </button>
+        </div>
       </div>
     </section>
 
@@ -302,6 +355,16 @@ const TR = {
   "how.3.t": "Kavanozdan harca",
   "how.3.p": "Her harcamanın bir kategorisi, her kategorinin bir kavanozu var. Bir kahve gir, doğru kavanoz azalsın.",
   "shots.title": "Tek ekran nerede durduğunu söyler",
+  "t1.t": "Önce harcanabilir tutar",
+  "t1.p": "Uygulamayı açtığında ilk gördüğün sayı, bu ay daha ne kadar harcayabileceğin. Bakiyen değil, toplam harcaman değil. Altında gelen, giden ve son harcamaların.",
+  "t2.t": "Bütün kavanozlar tek bakışta",
+  "t2.p": "Her kavanoz kalan tutarı büyük, harcananı altında küçük gösterir. Biri azalmaya başlayınca bunu ay bitmeden görürsün, bittikten sonra değil.",
+  "t3.t": "Harcamalar doğru kavanoza düşer",
+  "t3.p": "Market ihtiyaca, dışarıda yemek isteğe, borç ödemesi tasarrufa sayılır. Jarly mantıklı varsayılanlarla gelir; istediğin kategoriyi tek dokunuşla başka kavanoza taşıyabilirsin.",
+  "t4.t": "Gerekçesiyle bir öneri",
+  "t4.p": "İki soruya cevap ver, Jarly sana tek ve sade bir cümleyle bir model önersin. Kendin seçmek istersen diğer modeller hemen orada.",
+  "t5.t": "Hayatına uyan oranlar",
+  "t5.p": "Her kavanoz içine neyin girdiğini anlatır. Kaydırıcıları içine sinene kadar oynat. Toplam tam %100 olmadan Jarly ilerlemene izin vermez.",
   "models.title": "İnsanların yıllardır kullandığı üç bütçe modeli",
   "models.sub": "Jarly yeni bir yöntem icat etmedi. Bilinenlere sadık kalmayı kolaylaştırıyor.",
   "promise.title": "Paran telefonunda kalır",
@@ -418,6 +481,21 @@ $("#income").addEventListener("input", (e) => {
   e.target.value = n ? formatInput(n) : "";
   renderJars();
 });
+
+// Screen tour: tap a step, or on wide screens just scroll past it.
+const steps = $$(".tour-step");
+const screens = $$(".phone img");
+function showStep(i) {
+  steps.forEach((s, j) => s.setAttribute("aria-pressed", i === j));
+  screens.forEach((img, j) => img.classList.toggle("on", i === j));
+}
+steps.forEach((s, i) => s.addEventListener("click", () => showStep(i)));
+const wide = matchMedia("(min-width: 881px)");
+const io = new IntersectionObserver((entries) => {
+  if (!wide.matches) return;
+  entries.forEach((e) => { if (e.isIntersecting) showStep(steps.indexOf(e.target)); });
+}, { rootMargin: "-45% 0px -45% 0px" });
+steps.forEach((s) => io.observe(s));
 
 if (lang === "tr") $("#income").value = formatInput(60000);
 applyLang();
