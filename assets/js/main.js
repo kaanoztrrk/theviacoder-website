@@ -54,6 +54,7 @@ const TR = {
   "jarly.desc2": "Cevapladığı soru \"ne harcadım?\" değil, \"hangi kovada ne kaldı?\" Tamamen çevrimdışı: hesap yok, sunucu yok, reklam yok.",
   "cta.soon": "Yakında Google Play'de",
   "cta.site": "Uygulamanın sitesine git",
+  "cta.zsite": "Uygulamanın sitesine git",
   "zeroly.desc1": "Çoğu borç uygulaması ne kadar borcun olduğunu gösterir; Zeroly borcun hangi gün biteceğini. Kartlarını ve kredilerini ekle, her ay ne kadar ödeyebileceğini gir, tek bir tarih al: borçsuz olacağın ay. Girdiğin her ödeme bu tarihi değiştirir.",
   "zeroly.desc2": "Kartopu ya da çığ yöntemi, rakamlarıyla birlikte önerilir; bu ay neye ne kadar ödeyeceğin listelenir; \"Ya şöyle olsaydı?\" kaydırıcısıyla biraz fazla ödemenin etkisini görürsün. Hesapsız çalışır; isteğe bağlı bulut yedeği ve uygulama kilidi, reklam yok.",
   "badge.founder": "Kurucu",

@@ -1,0 +1,536 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Zeroly — the day your debt ends</title>
+<meta name="description" content="Zeroly turns your cards and loans into one date: the month you'll be debt-free. Snowball or avalanche, a monthly list of what to pay, and a what-if slider. No ads." />
+<link rel="canonical" href="https://theviacoder.com/zeroly/" />
+<meta property="og:title" content="Zeroly — the day your debt ends" />
+<meta property="og:description" content="Add what you owe and what you can pay. Zeroly tells you the month you'll be debt-free, and what to pay this month." />
+<meta property="og:url" content="https://theviacoder.com/zeroly/" />
+<meta property="og:image" content="https://theviacoder.com/assets/image/zeroly/screen-1.webp" />
+<meta name="theme-color" content="#0E8F6A" />
+<link rel="icon" href="../assets/image/zeroly/symbol.svg" type="image/svg+xml" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --green: #0E8F6A;
+  --green-ink: #0A7556;
+  --hero-a: #14A87C;
+  --hero-b: #0A7556;
+  --green-soft: #E3F5EE;
+  --ink: #12151C;
+  --ink-2: #4B5263;
+  --mist: #F2F3F7;
+  --surface: #FFFFFF;
+  --line: #E1E4EC;
+  --track: #E6EAF0;
+  --on-green: #FFFFFF;
+  --bezel: #12151C;
+  --amber: #9A6216;
+  --k-card: #6E5BD8; --k-loan: #2F7BE0; --k-personal: #D9822B;
+  --display: "Inter", system-ui, sans-serif;
+  --body: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --green: #34D39E; --green-ink: #34D39E; --green-soft: #0F2A22;
+    --hero-a: #0F8C68; --hero-b: #075842;
+    --ink: #F4F6FA; --ink-2: #9BA3B4;
+    --mist: #0B0D12; --surface: #16191F; --line: #262B36; --track: #232833;
+    --on-green: #0B0D12; --bezel: #2A2F3A; --amber: #E0A245;
+    --k-card: #9C8CFF; --k-loan: #6AA6FF; --k-personal: #F0A55C;
+  }
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--mist); color: var(--ink); font: 17px/1.55 var(--body); }
+img { max-width: 100%; display: block; }
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--green); outline-offset: 3px; border-radius: 6px; }
+.wrap { width: min(1120px, 100% - 32px); margin-inline: auto; }
+
+/* Top bar */
+.bar { display: flex; align-items: center; justify-content: space-between; padding: 20px 0; gap: 12px; }
+.brand { display: flex; align-items: center; gap: 10px; text-decoration: none; font: 700 22px/1 var(--display); letter-spacing: -0.02em; }
+.brand img { width: 34px; height: 34px; }
+.brand em { font-style: normal; color: var(--green); }
+.bar-right { display: flex; align-items: center; gap: 8px; }
+.lang { display: flex; background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 3px; }
+.lang button { border: 0; background: none; color: var(--ink-2); font: 600 13px/1 var(--body); padding: 7px 10px; border-radius: 999px; cursor: pointer; }
+.lang button[aria-pressed="true"] { background: var(--ink); color: var(--mist); }
+
+.play {
+  display: inline-flex; align-items: center; gap: 8px; text-decoration: none;
+  background: var(--green); color: var(--on-green); font: 600 15px/1 var(--display);
+  padding: 13px 18px; border-radius: 14px; white-space: nowrap;
+}
+.play[aria-disabled="true"] { background: var(--surface); color: var(--ink-2); border: 1px solid var(--line); cursor: default; }
+.bar .play { padding: 10px 14px; font-size: 14px; }
+
+/* Hero */
+.hero { display: grid; grid-template-columns: 1fr 1.1fr; gap: 48px; align-items: center; padding: 40px 0 72px; }
+.hero > * { min-width: 0; }
+h1 { font: 800 clamp(40px, 6.4vw, 72px)/1.02 var(--display); letter-spacing: -0.045em; margin: 0 0 20px; }
+.lede { font-size: 19px; color: var(--ink-2); max-width: 30em; margin: 0 0 28px; }
+
+/* The payoff demo — the one bold thing on the page */
+.demo { background: var(--surface); border-radius: 28px; padding: 14px; border: 1px solid var(--line); }
+.date-card {
+  position: relative; overflow: hidden; color: #fff; border-radius: 20px; padding: 22px 22px 20px;
+  background: linear-gradient(135deg, var(--hero-a), var(--hero-b));
+}
+.date-card::after {
+  content: ""; position: absolute; right: -40px; top: -40px; width: 180px; height: 180px; border-radius: 50%;
+  border: 26px solid rgb(255 255 255 / .1);
+}
+.date-label { font: 500 14px/1.2 var(--body); opacity: .85; margin: 0 0 6px; }
+.date { font: 800 clamp(34px, 4.6vw, 48px)/1.05 var(--display); letter-spacing: -0.035em; margin: 0; font-variant-numeric: tabular-nums; }
+.date-meta { display: flex; flex-wrap: wrap; gap: 6px 10px; margin-top: 14px; font: 600 13px/1 var(--body); }
+.date-meta span { background: rgb(255 255 255 / .18); padding: 7px 10px; border-radius: 999px; font-variant-numeric: tabular-nums; }
+.demo-body { padding: 18px 8px 4px; }
+.budget-row { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-bottom: 8px; }
+.budget-row label { font-size: 14px; color: var(--ink-2); }
+.budget-row output { font: 700 22px/1 var(--display); letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+input[type="range"] { width: 100%; accent-color: var(--green); margin: 0 0 16px; height: 28px; }
+.methods { display: flex; background: var(--mist); border-radius: 12px; padding: 3px; margin-bottom: 8px; }
+.methods button { flex: 1; border: 0; background: none; color: var(--ink-2); cursor: pointer; font: 600 14px/1 var(--body); padding: 10px; border-radius: 10px; }
+.methods button[aria-pressed="true"] { background: var(--surface); color: var(--ink); box-shadow: 0 1px 2px rgb(0 0 0 / .08); }
+.method-note { font-size: 14px; color: var(--ink-2); margin: 0 0 16px; min-height: 2.6em; }
+.debts { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+.debt { display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; align-items: baseline; }
+.debt-name { font-weight: 600; display: flex; align-items: center; gap: 8px; }
+.debt-name::before { content: ""; width: 10px; height: 10px; border-radius: 3px; background: var(--c); flex: none; }
+.debt-name small { font-weight: 400; color: var(--ink-2); font-size: 13px; }
+.debt-close { font-size: 14px; color: var(--ink-2); font-variant-numeric: tabular-nums; text-align: right; }
+.debt-track { grid-column: 1 / -1; height: 8px; border-radius: 999px; background: var(--track); overflow: hidden; }
+.debt-track span { display: block; height: 100%; border-radius: 999px; background: var(--c); transition: width .5s cubic-bezier(.2,.8,.2,1); }
+.demo-foot { margin: 16px 0 0; font-size: 13px; color: var(--ink-2); }
+.demo-warn { margin: 12px 0 0; font-size: 14px; color: var(--amber); }
+
+/* Sections */
+section { padding: 72px 0; }
+h2 { font: 700 clamp(28px, 3.6vw, 40px)/1.1 var(--display); letter-spacing: -0.035em; margin: 0 0 16px; max-width: 20em; }
+.sub { color: var(--ink-2); max-width: 36em; margin: 0 0 40px; }
+
+.steps { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; counter-reset: s; }
+.steps li { counter-increment: s; }
+.steps li::before { content: counter(s); display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; background: var(--green); color: var(--on-green); font: 700 16px/1 var(--display); margin-bottom: 16px; }
+.steps h3 { font: 600 20px/1.25 var(--display); margin: 0 0 8px; letter-spacing: -0.02em; }
+.steps p { margin: 0; color: var(--ink-2); }
+
+/* Screen tour: a phone that changes with the text beside it */
+.tour { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; margin-top: 40px; }
+.tour-phone { position: sticky; top: max(24px, calc(50vh - 330px)); align-self: start; display: flex; justify-content: center; }
+.phone {
+  position: relative; width: 300px; aspect-ratio: 540 / 1200;
+  border: 11px solid var(--bezel); border-radius: 48px; background: var(--bezel);
+  box-shadow: 0 30px 60px -20px rgb(14 143 106 / .35);
+  overflow: hidden;
+}
+.phone img { position: absolute; inset: 0; width: 100%; height: 100%; border-radius: 37px; opacity: 0; transition: opacity .35s ease; }
+.phone img.on { opacity: 1; }
+.tour-steps { display: flex; flex-direction: column; }
+.tour-step {
+  all: unset; box-sizing: border-box; cursor: pointer; display: flex; flex-direction: column; justify-content: center;
+  min-height: 62vh; padding: 0 0 0 24px; border-left: 3px solid var(--line);
+  transition: border-color .3s, opacity .3s; opacity: .45;
+}
+.tour-step[aria-pressed="true"] { opacity: 1; border-left-color: var(--green); }
+.tour-step:focus-visible { outline: 3px solid var(--green); outline-offset: 4px; }
+.tour-step h3 { font: 600 26px/1.2 var(--display); letter-spacing: -0.025em; margin: 0 0 12px; color: var(--ink); }
+.tour-step p { margin: 0; color: var(--ink-2); font-size: 18px; max-width: 28em; }
+
+.versus { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.versus > div { background: var(--surface); border: 1px solid var(--line); border-radius: 24px; padding: 28px; }
+.versus h3 { font: 700 24px/1.2 var(--display); letter-spacing: -0.025em; margin: 0 0 4px; }
+.versus .tag { margin: 0 0 14px; color: var(--green-ink); font-weight: 600; font-size: 15px; }
+.versus p { margin: 0; color: var(--ink-2); }
+.versus-note { margin: 24px 0 0; color: var(--ink-2); max-width: 40em; }
+
+.promise { margin-top: 32px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+.promise h3 { font: 600 20px/1.25 var(--display); margin: 0 0 8px; letter-spacing: -0.02em; }
+.promise p { margin: 0; color: var(--ink-2); }
+
+.end { background: linear-gradient(135deg, var(--hero-a), var(--hero-b)); color: #fff; border-radius: 32px; padding: 56px 40px; text-align: center; margin-bottom: 48px; }
+.end h2 { margin-inline: auto; }
+.end p { margin: 0 auto 28px; max-width: 30em; opacity: .85; }
+.end .play { background: #fff; color: var(--hero-b); }
+.end .play[aria-disabled="true"] { border: 0; }
+
+footer { border-top: 1px solid var(--line); padding: 28px 0 40px; font-size: 14px; color: var(--ink-2); }
+footer .wrap { display: flex; flex-wrap: wrap; gap: 12px 24px; justify-content: space-between; }
+footer nav { display: flex; flex-wrap: wrap; gap: 8px 20px; }
+
+@media (max-width: 880px) {
+  .hero { grid-template-columns: 1fr; gap: 32px; padding-top: 16px; }
+  .steps, .promise, .versus { grid-template-columns: 1fr; gap: 28px; }
+  .versus { gap: 16px; }
+  section { padding: 56px 0; }
+  .tour { grid-template-columns: 1fr; gap: 28px; margin-top: 28px; }
+  .tour-phone { position: static; }
+  .tour-step { min-height: 0; padding: 16px 0 16px 18px; }
+  .tour-step h3 { font-size: 20px; margin-bottom: 6px; }
+  .tour-step p { font-size: 16px; }
+  .tour-step[aria-pressed="false"] p { display: none; }
+}
+@media (max-width: 520px) {
+  .bar .play { display: none; }
+  .demo { padding: 10px; border-radius: 22px; }
+  .demo-body { padding: 16px 6px 4px; }
+  .phone { width: 250px; border-width: 9px; border-radius: 40px; }
+  .phone img { border-radius: 31px; }
+  .versus > div { padding: 22px; }
+  .end { padding: 44px 22px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .debt-track span, .phone img, .tour-step { transition: none; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="bar">
+    <a class="brand" href="./"><img src="../assets/image/zeroly/symbol.svg" alt="" /><span>Zer<em>o</em>ly</span></a>
+    <div class="bar-right">
+      <div class="lang" role="group" aria-label="Language">
+        <button type="button" data-lang="en" aria-pressed="true">EN</button>
+        <button type="button" data-lang="tr" aria-pressed="false">TR</button>
+      </div>
+      <a class="play" data-play href="#"></a>
+    </div>
+  </header>
+
+  <main>
+    <div class="hero">
+      <div>
+        <h1 data-i18n="hero.title">Know the month your debt ends</h1>
+        <p class="lede" data-i18n="hero.lede">Most debt apps show what you owe. Zeroly shows the day it ends. Add your cards and loans, set what you can pay each month, and get one date. Every payment you log moves it.</p>
+        <a class="play" data-play href="#"></a>
+      </div>
+
+      <div class="demo" aria-label="Try it">
+        <div class="date-card" aria-live="polite">
+          <p class="date-label" data-i18n="demo.label">Debt-free in</p>
+          <p class="date" id="date">—</p>
+          <div class="date-meta"><span id="togo"></span><span id="interest"></span></div>
+        </div>
+        <div class="demo-body">
+          <div class="budget-row">
+            <label for="budget" data-i18n="demo.budget">What you can pay each month</label>
+            <output id="budget-out" for="budget"></output>
+          </div>
+          <input type="range" id="budget" />
+          <div class="methods" role="group" aria-label="Method">
+            <button type="button" data-method="snowball" aria-pressed="true" data-i18n="m.snowball">Snowball</button>
+            <button type="button" data-method="avalanche" aria-pressed="false" data-i18n="m.avalanche">Avalanche</button>
+          </div>
+          <p class="method-note" id="method-note"></p>
+          <ul class="debts" id="debts"></ul>
+          <p class="demo-foot" data-i18n="demo.foot">Sample debts. In the app, you add your own.</p>
+        </div>
+      </div>
+    </div>
+
+    <section>
+      <h2 data-i18n="how.title">Three answers, one date</h2>
+      <p class="sub" data-i18n="how.sub">Setup takes a few minutes. Copy the numbers from your statements and Zeroly does the math.</p>
+      <ol class="steps">
+        <li><h3 data-i18n="how.1.t">Add what you owe</h3><p data-i18n="how.1.p">Cards, loans, money you borrowed from someone. Enter the balance, the interest rate and the minimum payment as they appear on your statement.</p></li>
+        <li><h3 data-i18n="how.2.t">Say what you can pay</h3><p data-i18n="how.2.p">One monthly amount for all your debts together. If it doesn't cover the minimums, Zeroly tells you exactly how much is missing.</p></li>
+        <li><h3 data-i18n="how.3.t">Pay what the list says</h3><p data-i18n="how.3.p">Each month you get a short list of what to pay and where. Log a payment and your date updates.</p></li>
+      </ol>
+    </section>
+
+    <section>
+      <h2 data-i18n="shots.title">Everything points to one date</h2>
+      <div class="tour">
+        <div class="tour-phone">
+          <div class="phone" aria-hidden="true">
+            <img class="on" src="../assets/image/zeroly/app-home.webp" width="540" height="1200" decoding="async" alt="" />
+            <img src="../assets/image/zeroly/app-whatif.webp" width="540" height="1200" loading="lazy" decoding="async" alt="" />
+            <img src="../assets/image/zeroly/app-plan.webp" width="540" height="1200" loading="lazy" decoding="async" alt="" />
+            <img src="../assets/image/zeroly/app-debts.webp" width="540" height="1200" loading="lazy" decoding="async" alt="" />
+            <img src="../assets/image/zeroly/app-debt-form.webp" width="540" height="1200" loading="lazy" decoding="async" alt="" />
+          </div>
+        </div>
+        <div class="tour-steps">
+          <button type="button" class="tour-step" aria-pressed="true">
+            <h3 data-i18n="t1.t">Your date, and what to pay now</h3>
+            <p data-i18n="t1.p">The home screen opens on the month you'll be debt-free. Below it is this month's list, with the debt to focus on at the top and a Pay button on each line.</p>
+          </button>
+          <button type="button" class="tour-step" aria-pressed="false">
+            <h3 data-i18n="t2.t">What if you paid a little more?</h3>
+            <p data-i18n="t2.p">Drag the slider and watch the date move. Zeroly shows how many months sooner you'd finish and how much interest you'd save, and can make it your new budget in one tap.</p>
+          </button>
+          <button type="button" class="tour-step" aria-pressed="false">
+            <h3 data-i18n="t3.t">Snowball or avalanche, with the numbers</h3>
+            <p data-i18n="t3.p">Zeroly runs both methods on your debts and recommends one, with the debt-free month and total interest for each. If the difference is small, it tells you so.</p>
+          </button>
+          <button type="button" class="tour-step" aria-pressed="false">
+            <h3 data-i18n="t4.t">All your debts in one list</h3>
+            <p data-i18n="t4.p">Each debt shows its rate, its minimum and what's left. When one is growing because its minimum doesn't cover the interest, Zeroly warns you.</p>
+          </button>
+          <button type="button" class="tour-step" aria-pressed="false">
+            <h3 data-i18n="t5.t">Entered the way your statement reads</h3>
+            <p data-i18n="t5.p">Monthly rate or APR. A fixed minimum or a percentage of the balance with a floor. Add a due day and Zeroly can remind you before it comes.</p>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2 data-i18n="vs.title">Two proven methods. Zeroly picks with you.</h2>
+      <p class="sub" data-i18n="vs.sub">Both pay every minimum. They differ in where the extra money goes.</p>
+      <div class="versus">
+        <div>
+          <h3 data-i18n="m.snowball">Snowball</h3>
+          <p class="tag" data-i18n="vs.s.tag">Smallest balance first</p>
+          <p data-i18n="vs.s.p">You close a debt early, and its payment rolls into the next one. Quick wins keep you going.</p>
+        </div>
+        <div>
+          <h3 data-i18n="m.avalanche">Avalanche</h3>
+          <p class="tag" data-i18n="vs.a.tag">Highest interest first</p>
+          <p data-i18n="vs.a.p">The most expensive debt goes first, so you pay the least interest overall. It can take longer to see the first one close.</p>
+        </div>
+      </div>
+      <p class="versus-note" data-i18n="vs.note">During setup Zeroly asks what keeps you going, compares both methods on your real debts, and explains its pick in one sentence. You can switch at any time.</p>
+    </section>
+
+    <section>
+      <h2 data-i18n="promise.title">Your debts are nobody's business</h2>
+      <div class="promise">
+        <div><h3 data-i18n="p1.t">No account needed</h3><p data-i18n="p1.p">Everything works on your phone without signing up. Your numbers stay on the device.</p></div>
+        <div><h3 data-i18n="p2.t">Backup if you want it</h3><p data-i18n="p2.p">Turn on cloud backup only if you'd like to restore on a new phone. You can lock the app with your fingerprint.</p></div>
+        <div><h3 data-i18n="p3.t">No ads</h3><p data-i18n="p3.p">Nobody pays to show you a loan offer here. Zeroly is for getting out of debt, not into more.</p></div>
+      </div>
+    </section>
+
+    <div class="end">
+      <h2 data-i18n="end.title">Pick a date to aim for</h2>
+      <p data-i18n="end.p">Free on Android, in English, Turkish, Spanish and German.</p>
+      <a class="play" data-play href="#"></a>
+    </div>
+  </main>
+</div>
+
+<footer>
+  <div class="wrap">
+    <span data-i18n="foot.by">Made by theviacoder</span>
+    <nav>
+      <a href="../" data-i18n="foot.home">theviacoder.com</a>
+      <a href="https://kaanoztrrk.github.io/zeroly-privacy/" data-i18n="foot.privacy">Privacy policy</a>
+      <a href="mailto:kaanoztrrk411@gmail.com" data-i18n="foot.contact">Contact</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+// Flip to true once Zeroly is live on Google Play.
+const LIVE = false;
+const PLAY_URL = "https://play.google.com/store/apps/details?id=com.theviacoder.zeroly";
+
+// Sample debts per language. rate = yearly; minimum = fixed, or pct of balance with a floor.
+const SCENARIOS = {
+  en: {
+    currency: "USD", locale: "en-US", budget: { min: 450, max: 1500, step: 10, value: 650 },
+    debts: [
+      { name: "Visa card", kind: "card", bal: 4800, rate: 0.2799, pct: 0.02, floor: 35 },
+      { name: "Store card", kind: "card", bal: 1250, rate: 0.1799, pct: 0.03, floor: 25 },
+      { name: "Car loan", kind: "loan", bal: 9600, rate: 0.079, fixed: 295 },
+    ],
+  },
+  tr: {
+    currency: "TRY", locale: "tr-TR", budget: { min: 22000, max: 60000, step: 500, value: 25000 },
+    debts: [
+      { name: "Kredi kartı", kind: "card", bal: 60000, rate: 0.51, pct: 0.2, floor: 0 },
+      { name: "İhtiyaç kredisi", kind: "loan", bal: 150000, rate: 0.42, fixed: 8000 },
+      { name: "Ablama borç", kind: "personal", bal: 20000, rate: 0, fixed: 2000 },
+    ],
+  },
+};
+
+function simulate(debts, budget, method) {
+  const ds = debts.map((d) => ({ ...d, closed: 0 }));
+  let interest = 0, month = 0;
+  while (ds.some((d) => d.bal > 0.005) && month < 600) {
+    month++;
+    let left = budget;
+    for (const d of ds) {
+      if (d.bal <= 0.005) continue;
+      const i = d.bal * d.rate / 12;
+      d.bal += i; interest += i;
+      const min = Math.min(d.bal, d.fixed ?? Math.max(d.bal * d.pct, d.floor));
+      d.bal -= min; left -= min;
+    }
+    if (left < 0) return null;
+    const order = ds.filter((d) => d.bal > 0.005)
+      .sort((a, b) => method === "snowball" ? a.bal - b.bal : b.rate - a.rate);
+    for (const d of order) { const p = Math.min(left, d.bal); d.bal -= p; left -= p; }
+    for (const d of ds) if (!d.closed && d.bal <= 0.005) d.closed = month;
+  }
+  return { months: month, interest, closes: ds.map((d) => d.closed) };
+}
+
+const TR = {
+  "hero.title": "Borcunun biteceği ayı bil",
+  "hero.lede": "Çoğu borç uygulaması ne kadar borçlu olduğunu gösterir. Zeroly borcun biteceği günü gösterir. Kartlarını ve kredilerini ekle, her ay ne kadar ödeyebileceğini yaz ve tek bir tarih al. Girdiğin her ödeme o tarihi değiştirir.",
+  "demo.label": "Borçsuz olacağın ay",
+  "demo.budget": "Her ay ödeyebileceğin",
+  "m.snowball": "Kartopu",
+  "m.avalanche": "Çığ",
+  "demo.foot": "Örnek borçlar. Uygulamada kendi borçlarını eklersin.",
+  "how.title": "Üç cevap, tek tarih",
+  "how.sub": "Kurulum birkaç dakika sürer. Rakamları ekstrelerinden kopyala, hesabı Zeroly yapsın.",
+  "how.1.t": "Borçlarını ekle",
+  "how.1.p": "Kartlar, krediler, birinden aldığın borç. Bakiyeyi, faiz oranını ve asgari ödemeyi ekstrende yazdığı gibi gir.",
+  "how.2.t": "Ne ödeyebileceğini söyle",
+  "how.2.p": "Tüm borçların için tek bir aylık tutar. Asgarileri karşılamıyorsa Zeroly tam olarak ne kadar eksik olduğunu söyler.",
+  "how.3.t": "Listede yazanı öde",
+  "how.3.p": "Her ay neyi nereye ödeyeceğini gösteren kısa bir liste alırsın. Ödemeyi gir, tarihin güncellensin.",
+  "shots.title": "Her şey tek bir tarihi gösterir",
+  "t1.t": "Tarihin ve şimdi ne ödeyeceğin",
+  "t1.p": "Ana ekran borçsuz olacağın ayla açılır. Altında bu ayın listesi var: odaklanılacak borç en üstte, her satırda bir Öde butonu.",
+  "t2.t": "Biraz daha fazla ödesen?",
+  "t2.p": "Kaydırıcıyı çek, tarihin öne geldiğini gör. Zeroly kaç ay erken biteceğini ve ne kadar faizden kurtulacağını gösterir; tek dokunuşla yeni bütçen yapar.",
+  "t3.t": "Kartopu mu çığ mı, rakamlarıyla",
+  "t3.p": "Zeroly iki yöntemi de senin borçlarınla hesaplar ve birini önerir; her biri için borçsuz ayı ve toplam faizi gösterir. Fark küçükse bunu da söyler.",
+  "t4.t": "Tüm borçların tek listede",
+  "t4.p": "Her borç faizini, asgarisini ve kalanını gösterir. Asgari ödemesi faizi karşılamadığı için büyüyen bir borç varsa Zeroly seni uyarır.",
+  "t5.t": "Ekstrende yazdığı gibi gir",
+  "t5.p": "Aylık faiz ya da yıllık. Sabit asgari ya da bakiyenin yüzdesi ve bir alt sınır. Ödeme gününü eklersen Zeroly gelmeden hatırlatır.",
+  "vs.title": "Kanıtlanmış iki yöntem. Zeroly seninle seçer.",
+  "vs.sub": "İkisi de tüm asgarileri öder. Fark, fazladan paranın nereye gittiğinde.",
+  "vs.s.tag": "Önce en küçük bakiye",
+  "vs.s.p": "Bir borcu erkenden kapatırsın ve onun ödemesi sıradakine eklenir. Hızlı kazanımlar seni devam ettirir.",
+  "vs.a.tag": "Önce en yüksek faiz",
+  "vs.a.p": "En pahalı borç önce gider, böylece toplamda en az faizi ödersin. İlk borcun kapandığını görmek daha uzun sürebilir.",
+  "vs.note": "Kurulumda Zeroly seni neyin motive ettiğini sorar, iki yöntemi gerçek borçlarınla karşılaştırır ve seçimini tek cümleyle açıklar. İstediğin zaman değiştirebilirsin.",
+  "promise.title": "Borçların kimseyi ilgilendirmez",
+  "p1.t": "Hesap gerekmez", "p1.p": "Her şey kayıt olmadan telefonunda çalışır. Rakamların cihazda kalır.",
+  "p2.t": "İstersen yedek", "p2.p": "Bulut yedeğini yalnızca yeni bir telefona geri yüklemek istersen aç. Uygulamayı parmak izinle kilitleyebilirsin.",
+  "p3.t": "Reklam yok", "p3.p": "Burada kimse sana kredi teklifi göstermek için para ödemiyor. Zeroly borçtan çıkmak için, daha fazlasına girmek için değil.",
+  "end.title": "Hedefleyeceğin bir tarih seç",
+  "end.p": "Android'de ücretsiz; Türkçe, İngilizce, İspanyolca ve Almanca.",
+  "foot.by": "theviacoder yapımı",
+  "foot.privacy": "Gizlilik politikası",
+  "foot.contact": "İletişim",
+};
+
+const root = document.documentElement;
+const $ = (s, el = document) => el.querySelector(s);
+const $$ = (s, el = document) => [...el.querySelectorAll(s)];
+let lang = "en";
+try { lang = localStorage.getItem("lang") === "tr" ? "tr" : (localStorage.getItem("lang") ? "en" : (navigator.language || "").startsWith("tr") ? "tr" : "en"); } catch (e) {}
+let method = "snowball";
+
+const EN = {};
+$$("[data-i18n]").forEach((el) => { EN[el.dataset.i18n] = el.textContent; });
+const tx = (k) => (lang === "tr" && TR[k]) || EN[k];
+
+const sc = () => SCENARIOS[lang];
+const money = (n) => new Intl.NumberFormat(sc().locale, { style: "currency", currency: sc().currency, maximumFractionDigits: 0 }).format(n);
+// The first payment is this month, so month n of the plan is n - 1 months from now.
+const monthName = (offset) => {
+  const d = new Date(); d.setDate(1); d.setMonth(d.getMonth() + offset - 1);
+  return new Intl.DateTimeFormat(sc().locale, { month: "long", year: "numeric" }).format(d);
+};
+const shortMonth = (offset) => {
+  const d = new Date(); d.setDate(1); d.setMonth(d.getMonth() + offset - 1);
+  return new Intl.DateTimeFormat(sc().locale, { month: "short", year: "numeric" }).format(d);
+};
+const plural = (n, en1, enN, tr) => lang === "tr" ? `${n} ${tr}` : `${n} ${n === 1 ? en1 : enN}`;
+
+function renderDemo() {
+  const budget = +$("#budget").value;
+  $("#budget-out").textContent = money(budget);
+  const debts = sc().debts;
+  const r = simulate(debts, budget, method);
+  const other = simulate(debts, budget, method === "snowball" ? "avalanche" : "snowball");
+  if (!r) return;
+  const date = monthName(r.months);
+  $("#date").textContent = date.charAt(0).toUpperCase() + date.slice(1);
+  $("#togo").textContent = lang === "tr" ? `${r.months} ay kaldı` : plural(r.months, "month to go", "months to go");
+  $("#interest").textContent = lang === "tr" ? `${money(r.interest)} toplam faiz` : `${money(r.interest)} total interest`;
+
+  const diff = Math.round(other.interest - r.interest);
+  const dm = other.months - r.months;
+  let note;
+  if (method === "snowball") {
+    note = lang === "tr"
+      ? `Önce en küçük bakiye. Çığ ${money(-diff)} daha az faiz öderdi${-dm > 0 ? `, ${-dm} ay erken biterdi` : ""}.`
+      : `Smallest balance first. Avalanche would pay ${money(-diff)} less interest${-dm > 0 ? ` and finish ${plural(-dm, "month", "months")} sooner` : ""}.`;
+  } else {
+    note = lang === "tr"
+      ? `Önce en yüksek faiz. Kartopuna göre ${money(diff)} daha az faiz.`
+      : `Highest interest first. ${money(diff)} less interest than snowball.`;
+  }
+  if (Math.abs(diff) < 1) note = lang === "tr" ? "Bu borçlarda iki yöntem de aynı tutuyor." : "On these debts both methods cost the same.";
+  $("#method-note").textContent = note;
+
+  $("#debts").innerHTML = debts.map((d, i) => `
+    <li class="debt" style="--c:var(--k-${d.kind})">
+      <span class="debt-name">${d.name} <small>${money(d.bal)}</small></span>
+      <span class="debt-close">${shortMonth(r.closes[i])}</span>
+      <span class="debt-track"><span style="width:${(r.closes[i] / r.months * 100).toFixed(1)}%"></span></span>
+    </li>`).join("");
+}
+
+function setupBudget() {
+  const b = sc().budget, el = $("#budget");
+  el.min = b.min; el.max = b.max; el.step = b.step; el.value = b.value;
+}
+
+function renderPlay() {
+  $$("[data-play]").forEach((a) => {
+    if (LIVE) {
+      a.href = PLAY_URL; a.rel = "noopener"; a.removeAttribute("aria-disabled");
+      a.textContent = lang === "tr" ? "Google Play'den indir" : "Get it on Google Play";
+    } else {
+      a.removeAttribute("href"); a.setAttribute("aria-disabled", "true");
+      a.textContent = lang === "tr" ? "Yakında Google Play'de" : "Coming soon to Google Play";
+    }
+  });
+}
+
+function applyLang() {
+  root.lang = lang;
+  $$("[data-i18n]").forEach((el) => { el.textContent = tx(el.dataset.i18n); });
+  $$("[data-lang]").forEach((b) => b.setAttribute("aria-pressed", b.dataset.lang === lang));
+  setupBudget(); renderPlay(); renderDemo();
+}
+
+$$("[data-lang]").forEach((b) => b.addEventListener("click", () => {
+  lang = b.dataset.lang;
+  try { localStorage.setItem("lang", lang); } catch (e) {}
+  applyLang();
+}));
+$$("[data-method]").forEach((b) => b.addEventListener("click", () => {
+  method = b.dataset.method;
+  $$("[data-method]").forEach((x) => x.setAttribute("aria-pressed", x === b));
+  renderDemo();
+}));
+$("#budget").addEventListener("input", renderDemo);
+
+// Screen tour: tap a step, or on wide screens just scroll past it.
+const steps = $$(".tour-step");
+const screens = $$(".phone img");
+function showStep(i) {
+  steps.forEach((s, j) => s.setAttribute("aria-pressed", i === j));
+  screens.forEach((img, j) => img.classList.toggle("on", i === j));
+}
+steps.forEach((s, i) => s.addEventListener("click", () => showStep(i)));
+const wide = matchMedia("(min-width: 881px)");
+const io = new IntersectionObserver((entries) => {
+  if (!wide.matches) return;
+  entries.forEach((e) => { if (e.isIntersecting) showStep(steps.indexOf(e.target)); });
+}, { rootMargin: "-45% 0px -45% 0px" });
+steps.forEach((s) => io.observe(s));
+
+applyLang();
+</script>
+</body>
+</html>
