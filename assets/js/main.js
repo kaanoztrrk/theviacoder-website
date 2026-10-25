@@ -53,6 +53,8 @@ const TR = {
   "jarly.desc1": "Sadece bir kasa defteri değil, bir yöntem sunan bütçe uygulaması. Bir finans modeli seç — 6 Kavanoz, 50/30/20 ya da Önce Kendine Öde — Jarly gelirini o modelin kovalarına böler ve her harcamayı doğru kovadan düşer.",
   "jarly.desc2": "Cevapladığı soru \"ne harcadım?\" değil, \"hangi kovada ne kaldı?\" Tamamen çevrimdışı: hesap yok, sunucu yok, reklam yok.",
   "cta.soon": "Yakında Google Play'de",
+  "soon.jarly": "Yöntemi olan bir bütçe",
+  "soon.zeroly": "Borcunun biteceği günü gör",
   "cta.site": "Uygulamanın sitesine git",
   "cta.zsite": "Uygulamanın sitesine git",
   "zeroly.desc1": "Çoğu borç uygulaması ne kadar borcun olduğunu gösterir; Zeroly borcun hangi gün biteceğini. Kartlarını ve kredilerini ekle, her ay ne kadar ödeyebileceğini gir, tek bir tarih al: borçsuz olacağın ay. Girdiğin her ödeme bu tarihi değiştirir.",

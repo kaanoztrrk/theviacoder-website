@@ -39,7 +39,7 @@
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Birthstone&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Birthstone&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="assets/css/style.css" />
 <noscript>
   <style>
@@ -72,8 +72,8 @@
   </header>
 
   <aside class="side left">
-    <p class="eyebrow" data-i18n="side.eyebrow">Mobile developer · Flutter</p>
     <h1>M. Kaan Öztürk</h1>
+    <p class="role-line" data-i18n="side.eyebrow">Mobile developer · Flutter</p>
     <p data-i18n="side.intro">I design, build and ship mobile apps. So this site works like one — unlock it and look around.</p>
   </aside>
 
@@ -108,7 +108,7 @@
 
         <!-- Kilit ekranı -->
         <div class="lock" id="lock" role="button" tabindex="0" data-i18n-aria="aria.unlock" aria-label="Unlock: swipe up, click or press Enter">
-          <div class="lock-date mono" data-date></div>
+          <div class="lock-date" data-date></div>
           <div class="lock-time" data-time>--:--</div>
           <div class="lock-id"><b>M. Kaan Öztürk</b><span data-i18n="role">Flutter mobile developer</span></div>
           <div class="notifs">
@@ -129,7 +129,7 @@
               </span>
             </button>
           </div>
-          <div class="lock-foot mono"><span class="arrow">↑</span><span data-i18n="lock.foot">Swipe up to explore</span></div>
+          <div class="lock-foot"><span class="arrow">↑</span><span data-i18n="lock.foot">Swipe up to explore</span></div>
         </div>
 
         <!-- Ana ekran -->
@@ -155,6 +155,11 @@
             <a class="tile" href="#matchvest" data-app="matchvest" style="--i:7"><span class="ic"><img src="assets/image/apps/matchvest_image.png" alt="" /></span><span class="nm">MatchVest</span></a>
             <a class="tile" href="#nullnull" data-app="nullnull" style="--i:8"><span class="ic"><img src="assets/image/apps/nullnull_image.png" alt="" /></span><span class="nm">NullNull</span></a>
           </nav>
+          <section class="widget soon-w" style="--i: 9" aria-labelledby="soonTitle">
+            <h3 id="soonTitle" data-i18n="cta.soon">Coming soon to Google Play</h3>
+            <a href="#jarly"><img src="assets/image/apps/jarly_image.png" alt="" /><span><b>Jarly</b><span data-i18n="soon.jarly">A budget with a method</span></span></a>
+            <a href="#zeroly"><img src="assets/image/apps/zeroly_image.png" alt="" /><span><b>Zeroly</b><span data-i18n="soon.zeroly">See the day your debt ends</span></span></a>
+          </section>
           <nav class="dock" aria-label="Menu">
             <a class="tile" href="#about" data-app="about" style="--i:9"><span class="ic" data-glyph="about"></span><span class="nm" data-i18n="app.about">About</span></a>
             <a class="tile" href="#skills" data-app="skills" style="--i:10"><span class="ic" data-glyph="skills"></span><span class="nm" data-i18n="app.skills">Skills</span></a>
