@@ -92,7 +92,7 @@ const TR = {
   "row.exp": "Deneyim",
   "row.expVal": "4+ yıl",
   "row.shipped": "Projeler",
-  "row.shippedVal": "6 proje",
+  "row.shippedVal": "8 proje",
   "row.email": "E-posta",
   "skills.sub": "Her gün kullandıklarım",
   "sk.core": "Temel",
