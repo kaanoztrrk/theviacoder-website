@@ -1,0 +1,385 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Pennyroom — save regularly, grow your room</title>
+<meta name="description" content="Pennyroom is a cozy pixel-art room that grows as you save. Coins come from saving regularly, never from how much — 50 or 5,000 counts the same. Offline, no account, amounts never shown to anyone." />
+<link rel="canonical" href="https://theviacoder.com/pennyroom/" />
+<meta property="og:title" content="Pennyroom — your room grows as you save" />
+<meta property="og:description" content="A cozy pixel room where saving every week earns coins, whatever the amount." />
+<meta property="og:url" content="https://theviacoder.com/pennyroom/" />
+<meta property="og:image" content="https://theviacoder.com/assets/image/pennyroom/room.png" />
+<meta name="theme-color" content="#6B4FD8" />
+<link rel="icon" href="../assets/image/pennyroom/icon.svg" type="image/svg+xml" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Jersey+10&family=Nunito:wght@500;700;800&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --cream: #FFF6EC;
+  --cream-2: #FCEBD7;
+  --peach: #F9D3BC;
+  --lav: #6B4FD8;
+  --lav-deep: #4E36B0;
+  --lav-soft: #ECE6FB;
+  --coral: #E8643C;
+  --coral-deep: #B9462A;
+  --mint: #6FD3A8;
+  --mint-ink: #1E6B4B;
+  --gold: #F2B43C;
+  --gold-deep: #B97A14;
+  --ink: #2D2440;
+  --ink-2: #625877;
+  --line: #EADCCB;
+  --surface: #FFFFFF;
+  --night: #2E2A5C;
+  --pixel: "Jersey 10", ui-monospace, monospace;
+  --body: "Nunito", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0; background: var(--cream); color: var(--ink);
+  font: 500 17px/1.6 var(--body); -webkit-font-smoothing: antialiased;
+  background-image: radial-gradient(circle at 12% 8%, #FFE7D3 0, transparent 38%), radial-gradient(circle at 88% 4%, #EFE6FF 0, transparent 34%);
+}
+img { max-width: 100%; height: auto; display: block; }
+a { color: var(--lav); }
+.wrap { width: min(1120px, 100% - 32px); margin-inline: auto; }
+h1, h2, h3 { font-family: var(--pixel); font-weight: 400; letter-spacing: .5px; line-height: 1; margin: 0; }
+h1 { font-size: clamp(56px, 9vw, 104px); }
+h2 { font-size: clamp(40px, 6vw, 64px); }
+h3 { font-size: 30px; }
+p { margin: 0; }
+.sub { color: var(--ink-2); max-width: 60ch; margin-top: 12px; }
+
+/* Chunky game buttons and cards, like the app. */
+.btn {
+  display: inline-flex; align-items: center; gap: 10px; border: 0; cursor: pointer; text-decoration: none;
+  font: 800 18px/1 var(--body); color: #fff; background: var(--coral); padding: 16px 24px; border-radius: 18px;
+  box-shadow: 0 6px 0 var(--coral-deep); transition: transform .12s, box-shadow .12s;
+}
+.btn:hover { transform: translateY(-2px); box-shadow: 0 8px 0 var(--coral-deep); }
+.btn:active { transform: translateY(4px); box-shadow: 0 2px 0 var(--coral-deep); }
+.btn.soon { background: var(--lav-soft); color: var(--lav-deep); box-shadow: 0 6px 0 #D5CBF3; cursor: default; }
+.btn.soon:hover, .btn.soon:active { transform: none; box-shadow: 0 6px 0 #D5CBF3; }
+.card { background: var(--surface); border-radius: 26px; box-shadow: 0 6px 0 var(--line); }
+
+/* Header */
+.bar { display: flex; align-items: center; justify-content: space-between; padding: 18px 0; }
+.bar .logo img { height: 52px; width: auto; }
+.lang { display: flex; background: var(--surface); border-radius: 999px; padding: 4px; box-shadow: 0 3px 0 var(--line); }
+.lang button { border: 0; background: none; color: var(--ink-2); font: 800 14px/1 var(--body); padding: 8px 12px; border-radius: 999px; cursor: pointer; }
+.lang button[aria-pressed="true"] { background: var(--lav); color: #fff; }
+
+/* Hero */
+.hero { display: grid; grid-template-columns: 1.05fr 1fr; gap: 40px; align-items: center; padding: 28px 0 72px; }
+.hero h1 span { color: var(--lav); display: block; }
+.lede { font-size: 20px; color: var(--ink-2); margin: 20px 0 28px; max-width: 34ch; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; }
+.chip { font: 800 14px/1 var(--body); background: var(--surface); padding: 9px 13px; border-radius: 999px; box-shadow: 0 3px 0 var(--line); color: var(--ink-2); }
+.stage { position: relative; aspect-ratio: 880 / 740; border-radius: 34px; background: linear-gradient(160deg, #FFF1E2, var(--peach)); box-shadow: 0 10px 0 #EBC4AB; overflow: hidden; }
+.stage img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; image-rendering: pixelated; transition: opacity .6s; }
+.stage img.off { opacity: 0; }
+.stage .tag { position: absolute; left: 16px; bottom: 16px; background: rgba(255,255,255,.92); padding: 8px 12px; border-radius: 14px; font: 800 14px/1.2 var(--body); color: var(--ink); box-shadow: 0 3px 0 rgba(0,0,0,.08); }
+.coin { position: absolute; width: 26px; height: 26px; border-radius: 50%; background: radial-gradient(circle at 38% 34%, #FFE28A 0 22%, var(--gold) 23% 62%, var(--gold-deep) 63%); box-shadow: inset 0 0 0 3px var(--gold-deep); animation: rise 3.2s ease-in infinite; opacity: 0; pointer-events: none; }
+@keyframes rise { 0% { transform: translateY(20px) scale(.6); opacity: 0; } 15% { opacity: 1; } 80% { opacity: 1; } 100% { transform: translateY(-120px) scale(1); opacity: 0; } }
+
+section { padding: 64px 0; }
+
+/* The rule demo */
+.rule { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; align-items: stretch; margin-top: 32px; }
+.panel { padding: 28px; }
+.panel label { display: block; font-weight: 800; margin-bottom: 8px; }
+.panel .val { font: 400 44px/1 var(--pixel); color: var(--lav); }
+input[type=range] { width: 100%; accent-color: var(--lav); margin: 10px 0 22px; }
+.out { display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; gap: 8px; padding: 28px; background: #FFF3D6; box-shadow: 0 6px 0 #F0D79F; }
+.out .big { font: 400 96px/1 var(--pixel); color: var(--gold-deep); display: flex; align-items: center; gap: 14px; }
+.out .big i { width: 64px; height: 64px; border-radius: 50%; background: radial-gradient(circle at 38% 34%, #FFE28A 0 22%, var(--gold) 23% 62%, var(--gold-deep) 63%); box-shadow: inset 0 0 0 6px var(--gold-deep); }
+.out .why { color: #7A5A1E; font-weight: 700; max-width: 32ch; }
+.bump { animation: bump .35s ease; }
+@keyframes bump { 40% { transform: scale(1.12); } }
+
+/* Mirror */
+.mirror { display: grid; grid-template-columns: 1.1fr 1fr; gap: 32px; margin-top: 32px; align-items: start; }
+.mirror .stage { position: sticky; top: 24px; }
+.mlist { display: grid; gap: 14px; }
+.mitem { padding: 20px 22px; display: grid; grid-template-columns: 52px 1fr; gap: 16px; align-items: center; cursor: pointer; border: 3px solid transparent; transition: border-color .2s, transform .2s; text-align: left; font: inherit; color: inherit; }
+.mitem:hover, .mitem[aria-pressed="true"] { border-color: var(--lav); transform: translateX(4px); }
+.mitem .ico { width: 52px; height: 52px; border-radius: 16px; display: grid; place-items: center; font: 400 30px/1 var(--pixel); color: #fff; }
+.mitem h3 { font-size: 26px; }
+.mitem p { color: var(--ink-2); font-size: 15.5px; margin-top: 4px; }
+
+/* Feature trio with phones */
+.trio { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 36px; }
+.phone { background: var(--ink); border-radius: 34px; padding: 10px; box-shadow: 0 8px 0 #1C1629; }
+.phone img { border-radius: 26px; width: 100%; height: auto; }
+.trio h3 { margin-top: 20px; }
+.trio p { color: var(--ink-2); margin-top: 8px; }
+
+/* Life in the room */
+.life { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 32px; }
+.life figure { margin: 0; }
+.life figure .stage { aspect-ratio: 880 / 740; }
+.life figcaption { margin-top: 14px; font-weight: 700; color: var(--ink-2); }
+
+/* Promises */
+.promise { background: var(--night); color: #EDE9FF; border-radius: 36px; padding: 48px clamp(24px, 5vw, 56px); }
+.promise h2 { color: #fff; }
+.pgrid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; margin-top: 30px; }
+.pgrid h3 { font-size: 28px; color: var(--gold); }
+.pgrid p { color: #C9C2EC; font-size: 15.5px; margin-top: 6px; }
+
+/* End */
+.end { text-align: center; padding: 80px 0 64px; }
+.end p { color: var(--ink-2); margin: 14px auto 26px; max-width: 46ch; }
+footer { padding: 28px 0 40px; color: var(--ink-2); font-size: 14px; border-top: 2px dashed var(--line); }
+footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; }
+footer nav { display: flex; gap: 18px; flex-wrap: wrap; }
+
+@media (max-width: 860px) {
+  .hero, .rule, .mirror, .life { grid-template-columns: 1fr; }
+  .mirror .stage { position: relative; top: 0; }
+  .trio { grid-template-columns: 1fr; max-width: 360px; margin-inline: auto; }
+  .pgrid { grid-template-columns: 1fr 1fr; }
+  .hero { padding-bottom: 40px; }
+}
+@media (max-width: 520px) { .pgrid { grid-template-columns: 1fr; } .out .big { font-size: 72px; } }
+@media (prefers-reduced-motion: reduce) { .coin { display: none; } * { transition: none !important; animation: none !important; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="bar">
+    <a class="logo" href="./" aria-label="Pennyroom"><img src="../assets/image/pennyroom/wordmark.svg" width="1316" height="488" alt="PennyRoom" /></a>
+    <div class="lang" role="group" aria-label="Language">
+      <button type="button" data-lang="en" aria-pressed="true">EN</button>
+      <button type="button" data-lang="tr" aria-pressed="false">TR</button>
+    </div>
+  </header>
+
+  <main>
+    <div class="hero">
+      <div>
+        <h1><span data-i18n="hero.a">Save a little.</span> <span data-i18n="hero.b">Grow a room.</span></h1>
+        <p class="lede" data-i18n="hero.lede">Pennyroom is a cozy pixel room that grows as you save. Put money in a jar every week, earn coins, and spend them on furniture, outfits and a bigger home.</p>
+        <a class="btn cta" href="#get"><span data-i18n="cta.soon">Coming soon to Google Play</span></a>
+        <div class="chips">
+          <span class="chip" data-i18n="chip.1">87 pieces of furniture</span>
+          <span class="chip" data-i18n="chip.2">90 outfits</span>
+          <span class="chip" data-i18n="chip.3">Offline, no account</span>
+        </div>
+      </div>
+      <div class="stage" id="hero-stage">
+        <img src="../assets/image/pennyroom/room.png" width="880" height="740" alt="A pixel-art bedroom with a bed, desk and plants; moving boxes and supplies sit in the corners" />
+      </div>
+    </div>
+
+    <section id="rule">
+      <h2 data-i18n="rule.title">Coins come from rhythm, not amount</h2>
+      <p class="sub" data-i18n="rule.sub">A student putting away 50 a week moves exactly as fast as someone putting away 5,000. Try it.</p>
+      <div class="rule">
+        <div class="card panel">
+          <label for="amount" data-i18n="rule.amount">This week you save</label>
+          <div class="val" id="amount-out">50</div>
+          <input type="range" id="amount" min="0" max="100" value="0" />
+          <label for="weeks" data-i18n="rule.weeks">Weeks in a row</label>
+          <div class="val" id="weeks-out">1</div>
+          <input type="range" id="weeks" min="1" max="15" value="1" />
+        </div>
+        <div class="card out" aria-live="polite">
+          <div class="big"><i aria-hidden="true"></i><span id="coins">40</span></div>
+          <p class="why" id="why" data-i18n="rule.why1">40 coins for saving this week. The amount doesn't change it.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="mirror">
+      <h2 data-i18n="mirror.title">Your room is a mirror</h2>
+      <p class="sub" data-i18n="mirror.sub">It changes by itself as your jars fill. It shows progress, never amounts.</p>
+      <div class="mirror">
+        <div class="stage" id="mirror-stage">
+          <img src="../assets/image/pennyroom/room.png" width="880" height="740" alt="" />
+          <span class="tag" id="mirror-tag" data-i18n="m.debt.tag">Moving boxes: a debt still open</span>
+        </div>
+        <div class="mlist">
+          <button class="card mitem" type="button" data-m="debt" aria-pressed="true"><span class="ico" style="background:#B07A4A">#</span><span><h3 data-i18n="m.debt.t">Debt boxes</h3><p data-i18n="m.debt.p">While a debt is open, moving boxes clutter the front corner. Every quarter you pay off, one goes. Clear the debt and the room breathes.</p></span></button>
+          <button class="card mitem" type="button" data-m="fund" aria-pressed="false"><span class="ico" style="background:#4A86C8">+</span><span><h3 data-i18n="m.fund.t">Emergency supplies</h3><p data-i18n="m.fund.p">An emergency fund stocks the back corner, a crate per third. When it's full, a first-aid kit joins them.</p></span></button>
+          <button class="card mitem" type="button" data-m="goal" aria-pressed="false"><span class="ico" style="background:var(--lav)">?</span><span><h3 data-i18n="m.goal.t">A ghost of your goal</h3><p data-i18n="m.goal.p">Saving for a sofa? It waits in the middle of the room, see-through, getting clearer as the jar fills. Fill it and it's yours.</p></span></button>
+          <button class="card mitem" type="button" data-m="streak" aria-pressed="false"><span class="ico" style="background:#3E9A6A">*</span><span><h3 data-i18n="m.streak.t">A plant that keeps time</h3><p data-i18n="m.streak.p">By the window, a sprout grows week by week of your streak, all the way to a palm. Skip a week and the room slips into evening light.</p></span></button>
+        </div>
+      </div>
+    </section>
+
+    <section id="life">
+      <h2 data-i18n="life.title">Someone lives here</h2>
+      <p class="sub" data-i18n="life.sub">Your character walks around on their own. Tap a chair and they sit down; tap a plant and they walk over to water it.</p>
+      <div class="life">
+        <figure><div class="stage"><img src="../assets/image/pennyroom/room-sit.png" width="880" height="740" loading="lazy" alt="The character sitting at the desk chair" /></div><figcaption data-i18n="life.1">Sitting at the desk, facing the way the chair does.</figcaption></figure>
+        <figure><div class="stage"><img src="../assets/image/pennyroom/room-water.png" width="880" height="740" loading="lazy" alt="The character standing next to a plant to water it" /></div><figcaption data-i18n="life.2">Off to water the plant. That's one of today's little tasks.</figcaption></figure>
+      </div>
+    </section>
+
+    <section id="screens">
+      <h2 data-i18n="scr.title">Jars, a shop and a wardrobe</h2>
+      <div class="trio">
+        <div><div class="phone"><img src="../assets/image/pennyroom/screen-jars.png" width="540" height="1200" loading="lazy" alt="Pennyroom jars: a debt, a goal with a reward and an emergency fund" /></div><h3 data-i18n="s1.t">Jars with a purpose</h3><p data-i18n="s1.p">A goal, an emergency fund or a debt. Give a goal a reward and it lands in your room when the jar is full.</p></div>
+        <div><div class="phone"><img src="../assets/image/pennyroom/screen-shop.png" width="540" height="1200" loading="lazy" alt="The Pennyroom shop, arranged in shelves" /></div><h3 data-i18n="s2.t">A shop in shelves</h3><p data-i18n="s2.p">What you can afford right now comes first, then a shelf each for seating, beds, tables, plants, rugs and more. Swipe, don't dig.</p></div>
+        <div><div class="phone"><img src="../assets/image/pennyroom/screen-wardrobe.png" width="540" height="1200" loading="lazy" alt="The wardrobe with hairstyles" /></div><h3 data-i18n="s3.t">Dress them up</h3><p data-i18n="s3.p">Two characters, six skin tones, any hair colour, and 90 hairstyles, tops, bottoms and shoes to collect.</p></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="promise">
+        <h2 data-i18n="pr.title">Fair by design</h2>
+        <div class="pgrid">
+          <div><h3 data-i18n="pr.1.t">Amounts stay yours</h3><p data-i18n="pr.1.p">No one sees what you save. No leaderboards, no comparing.</p></div>
+          <div><h3 data-i18n="pr.2.t">Coins are earned</h3><p data-i18n="pr.2.p">You can't buy coins or progress. Gems only buy looks.</p></div>
+          <div><h3 data-i18n="pr.3.t">No account</h3><p data-i18n="pr.3.p">Everything lives on your phone and works offline.</p></div>
+          <div><h3 data-i18n="pr.4.t">No bank link</h3><p data-i18n="pr.4.p">You type what you saved. Pennyroom never touches your money.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="end" id="get">
+      <h2 data-i18n="end.title">Your first jar is waiting</h2>
+      <p data-i18n="end.p">Pennyroom is coming to Android first, in English and Turkish.</p>
+      <a class="btn cta" href="#get"><span data-i18n="cta.soon">Coming soon to Google Play</span></a>
+    </section>
+  </main>
+</div>
+
+<footer>
+  <div class="wrap">
+    <span data-i18n="foot.by">Made by theviacoder · Room and furniture art by Pixel_Salvaje, characters by Klimmos</span>
+    <nav>
+      <a href="../" data-i18n="foot.home">theviacoder.com</a>
+      <a href="mailto:kaanoztrrk411@gmail.com" data-i18n="foot.contact">Contact</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+// Flip to true once Pennyroom is live on Google Play.
+const LIVE = false;
+const PLAY_URL = "https://play.google.com/store/apps/details?id=com.theviacoder.pennyroom";
+
+// Mirrors lib/core/economy/economy.dart.
+const WEEKLY = 40, BONUS_PER_WEEK = 5, BONUS_CAP = 50;
+const AMOUNTS = [50, 100, 250, 500, 1000, 2500, 5000, 10000, 25000, 50000];
+
+const TR = {
+  "hero.a": "Biraz biriktir.",
+  "hero.b": "Odanı büyüt.",
+  "hero.lede": "Pennyroom, biriktirdikçe büyüyen sıcacık bir piksel oda. Her hafta bir kavanoza para koy, coin kazan; coin'lerle mobilya, kıyafet ve daha büyük bir ev al.",
+  "cta.soon": "Yakında Google Play'de",
+  "cta.play": "Google Play'den indir",
+  "chip.1": "87 mobilya ve süs",
+  "chip.2": "90 kıyafet",
+  "chip.3": "Çevrimdışı, hesapsız",
+  "rule.title": "Coin miktardan değil, düzenden gelir",
+  "rule.sub": "Haftada 50 lira biriktiren öğrenci, 5.000 lira biriktirenle tam olarak aynı hızda ilerler. Dene bakalım.",
+  "rule.amount": "Bu hafta biriktirdiğin",
+  "rule.weeks": "Üst üste hafta",
+  "rule.why1": "Bu hafta birikim yaptığın için 40 coin. Miktar bunu değiştirmez.",
+  "rule.whyN": "40 coin haftalık, artı {b} coin {w} haftalık seri için. Miktar yine fark etmez.",
+  "mirror.title": "Odan bir ayna",
+  "mirror.sub": "Kavanozların doldukça kendiliğinden değişir. İlerlemeyi gösterir, tutarı asla.",
+  "m.debt.tag": "Koliler: kapanmamış bir borç",
+  "m.fund.tag": "Erzak kutuları: dolan acil durum fonu",
+  "m.goal.tag": "Hayalet koltuk: biriktirdiğin hedef",
+  "m.streak.tag": "Pencere bitkisi: haftalık serin",
+  "m.debt.t": "Borç kolileri",
+  "m.debt.p": "Bir borcun açık olduğu sürece ön köşede taşınma kolileri durur. Her çeyreğini ödedikçe biri kalkar. Borç bitince oda ferahlar.",
+  "m.fund.t": "Acil durum erzakı",
+  "m.fund.p": "Acil durum fonu arka köşeyi doldurur, her üçte birde bir kutu. Fon dolunca yanlarına ilk yardım çantası gelir.",
+  "m.goal.t": "Hedefinin hayaleti",
+  "m.goal.p": "Bir koltuk için mi biriktiriyorsun? Odanın ortasında yarı saydam bekler, kavanoz doldukça netleşir. Doldur, senin olsun.",
+  "m.streak.t": "Zamanı tutan bitki",
+  "m.streak.p": "Pencerenin yanındaki filiz serinle hafta hafta büyür, ta palmiye olana kadar. Bir hafta atlarsan oda akşam ışığına bürünür.",
+  "life.title": "Burada biri yaşıyor",
+  "life.sub": "Karakterin kendi kendine dolaşır. Bir sandalyeye dokun, gidip otursun; bir bitkiye dokun, yanına gidip sulasın.",
+  "life.1": "Masada oturuyor, sandalye hangi yöne bakıyorsa o yöne.",
+  "life.2": "Bitkiyi sulamaya gidiyor. Bu da bugünün küçük görevlerinden biri.",
+  "scr.title": "Kavanozlar, mağaza ve gardırop",
+  "s1.t": "Amacı olan kavanozlar",
+  "s1.p": "Bir hedef, acil durum fonu ya da borç. Hedefe bir ödül bağla, kavanoz dolunca odana gelsin.",
+  "s2.t": "Raf raf mağaza",
+  "s2.p": "Önce şu an alabileceklerin, sonra oturma, yatak, masa, bitki, halı ve dahası için birer raf. Kaydır, arama.",
+  "s3.t": "Giydir, süsle",
+  "s3.p": "İki karakter, altı ten rengi, istediğin saç rengi ve toplanacak 90 saç, üst, alt ve ayakkabı.",
+  "pr.title": "Baştan adil",
+  "pr.1.t": "Tutarlar sende kalır", "pr.1.p": "Ne biriktirdiğini kimse görmez. Sıralama yok, kıyaslama yok.",
+  "pr.2.t": "Coin kazanılır", "pr.2.p": "Coin ya da ilerleme satın alınmaz. Elmas yalnızca görünüm alır.",
+  "pr.3.t": "Hesap yok", "pr.3.p": "Her şey telefonunda durur ve internetsiz çalışır.",
+  "pr.4.t": "Banka bağlantısı yok", "pr.4.p": "Biriktirdiğini sen yazarsın. Pennyroom parana hiç dokunmaz.",
+  "end.title": "İlk kavanozun seni bekliyor",
+  "end.p": "Pennyroom önce Android'e geliyor, Türkçe ve İngilizce.",
+  "foot.by": "theviacoder yapımı · Oda ve mobilya çizimleri Pixel_Salvaje, karakterler Klimmos",
+  "foot.contact": "İletişim",
+};
+const EN = { "rule.whyN": "40 coins for the week, plus {b} for a {w}-week streak. Still not the amount.", "cta.play": "Get it on Google Play" };
+const TAGS = { debt: "m.debt.tag", fund: "m.fund.tag", goal: "m.goal.tag", streak: "m.streak.tag" };
+const EN_TAGS = { "m.debt.tag": "Moving boxes: a debt still open", "m.fund.tag": "Supply crates: a growing emergency fund", "m.goal.tag": "The ghost sofa: the goal you're saving for", "m.streak.tag": "The window plant: your weekly streak" };
+
+const $ = (s, el = document) => el.querySelector(s);
+const $$ = (s, el = document) => [...el.querySelectorAll(s)];
+const originals = new Map($$("[data-i18n]").map((el) => [el, el.textContent]));
+let lang = "en";
+try { lang = localStorage.getItem("pennyroom.lang") || ((navigator.language || "").startsWith("tr") ? "tr" : "en"); } catch (e) {}
+
+function t(key) { return lang === "tr" ? (TR[key] ?? EN[key] ?? EN_TAGS[key]) : (EN[key] ?? EN_TAGS[key]); }
+function applyLang() {
+  document.documentElement.lang = lang;
+  for (const [el, en] of originals) el.textContent = lang === "tr" && TR[el.dataset.i18n] ? TR[el.dataset.i18n] : en;
+  $$(".lang button").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.lang === lang)));
+  if (LIVE) $$(".cta").forEach((a) => { a.href = PLAY_URL; a.target = "_blank"; a.rel = "noopener noreferrer"; a.classList.remove("soon"); $("span", a).textContent = t("cta.play"); });
+  else $$(".cta").forEach((a) => a.classList.add("soon"));
+  updateRule(false);
+  $("#mirror-tag").textContent = t(TAGS[current]);
+}
+$$(".lang button").forEach((b) => b.addEventListener("click", () => { lang = b.dataset.lang; try { localStorage.setItem("pennyroom.lang", lang); } catch (e) {} applyLang(); }));
+
+// The rule demo: the amount slider moves, the coins don't.
+const fmt = (n) => n.toLocaleString(lang === "tr" ? "tr-TR" : "en-US");
+function updateRule(animate = true) {
+  const amount = AMOUNTS[Math.round(+$("#amount").value / 100 * (AMOUNTS.length - 1))];
+  const weeks = +$("#weeks").value;
+  const bonus = Math.min((weeks - 1) * BONUS_PER_WEEK, BONUS_CAP);
+  $("#amount-out").textContent = (lang === "tr" ? "₺" : "") + fmt(amount);
+  $("#weeks-out").textContent = weeks;
+  const coins = $("#coins");
+  const next = String(WEEKLY + bonus);
+  if (coins.textContent !== next && animate) { coins.parentElement.classList.remove("bump"); void coins.offsetWidth; coins.parentElement.classList.add("bump"); }
+  coins.textContent = next;
+  $("#why").textContent = bonus === 0 ? (lang === "tr" ? TR["rule.why1"] : originals.get($("#why"))) : t("rule.whyN").replace("{b}", bonus).replace("{w}", weeks);
+}
+$("#amount").addEventListener("input", () => updateRule());
+$("#weeks").addEventListener("input", () => updateRule());
+
+// The mirror list: pick a card, the tag on the room says what to look for.
+let current = "debt";
+$$(".mitem").forEach((b) => b.addEventListener("click", () => {
+  current = b.dataset.m;
+  $$(".mitem").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+  $("#mirror-tag").textContent = t(TAGS[current]);
+}));
+
+// A few coins floating up over the hero room.
+if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  const stage = $("#hero-stage");
+  for (let i = 0; i < 6; i++) {
+    const c = document.createElement("span");
+    c.className = "coin";
+    c.style.left = 12 + i * 14 + "%";
+    c.style.bottom = 18 + (i % 3) * 8 + "%";
+    c.style.animationDelay = i * .55 + "s";
+    stage.appendChild(c);
+  }
+}
+
+applyLang();
+</script>
+</body>
+</html>
